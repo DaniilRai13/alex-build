@@ -1,0 +1,50 @@
+// Основные цвета (синий)
+$primary-50: #eff6ff;
+$primary-100: #dbeafe;
+$primary-200: #bfdbfe;
+$primary-300: #93c5fd;
+$primary-400: #60a5fa;
+$primary-900: #111827;
+
+// Акцентные цвета
+$green: #10b981;
+$green-dark: #059669;
+$red: #e98074;
+$red-dark: #e85a4f;
+
+// Цвета фона
+$bg-main: #eae7dc;
+$bg-card: #ffffff;
+$bg-secondary: #f1f5f9;
+$bg-dark: #1e293b;
+
+// Цвета текста
+$text-primary: #1e293b;
+$text-secondary: #64748b;
+$text-light: #94a3b8;
+$text-white: #ffffff;
+
+// Цвета границ
+$border-light: #e2e8f0;
+$border-medium: #cbd5e1;
+
+// Тени (простые)
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+$radius-lg: 1.2rem;
+$radius-xl: 10rem;
+
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+
+$screen-xs: 375px;
+$screen-sm: 480px;
+$screen-md: 640px;
+
+$screen-tb: 768px;
+$screen-tb-lg: 834px;
+$screen-tb-lg2: 950px;
+$screen-tb-xl: 1024px;
+
+$header-height: 70px;

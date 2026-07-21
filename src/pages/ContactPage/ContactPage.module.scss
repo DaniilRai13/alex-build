@@ -1,0 +1,133 @@
+@import '@styles/abstracts/var';
+.contacts {
+	.contactsInner {
+		.grid {
+			display: grid;
+			grid-template-columns: 1.3fr 1fr;
+			gap: 60px;
+			align-items: center;
+			.left {
+				.contactText {
+					position: relative;
+					padding-left: 20px;
+					margin-bottom: 1.5rem;
+					&::before {
+						content: '';
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: 4px;
+						height: 100%;
+						border-radius: 10px;
+						background: $red;
+					}
+					.contactHeading {
+						text-transform: uppercase;
+						margin-bottom: 10px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-tb-lg2) {
+	.contacts {
+		.contactsInner {
+			.grid {
+				gap: 30px;
+			}
+		}
+	}
+}
+@media (max-width: $screen-tb) {
+	.contacts {
+		.contactsInner {
+			.grid {
+				grid-template-columns: 1fr;
+				gap: 30px;
+				align-items: stretch;
+
+				.left {
+					order: 1;
+				}
+
+				.right {
+					order: 2;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-md) {
+	.contacts {
+		.contactsInner {
+			.grid {
+				gap: 28px;
+
+				.left {
+					.contactText {
+						margin-bottom: 1.25rem;
+
+						.contactHeading {
+							font-size: 1.75rem;
+							line-height: 1.2;
+						}
+
+						.contactSubtitle {
+							font-size: 0.9rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-sm) {
+	.contacts {
+		.contactsInner {
+			.grid {
+				gap: 24px;
+
+				.left {
+					.contactText {
+						.contactHeading {
+							font-size: 1.5rem;
+						}
+
+						.contactSubtitle {
+							font-size: 0.875rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-xs) {
+	.contacts {
+		.contactsInner {
+			.grid {
+				gap: 20px;
+
+				.left {
+					.contactText {
+						margin-bottom: 1rem;
+
+						.contactHeading {
+							font-size: 1.35rem;
+						}
+
+						.contactSubtitle {
+							font-size: 0.8rem;
+							line-height: 1.5;
+						}
+					}
+				}
+			}
+		}
+	}
+}

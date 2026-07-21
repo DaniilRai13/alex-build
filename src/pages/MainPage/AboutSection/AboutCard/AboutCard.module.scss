@@ -1,0 +1,78 @@
+@import '@styles/abstracts/var';
+$cardWidth: 250px;
+$cardHeight: 180px;
+
+$cardWidth-md: 220px;
+$cardHeight-md: 165px;
+
+.card {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: $cardWidth;
+	height: $cardHeight;
+	text-align: center;
+	cursor: pointer;
+	z-index: 1;
+	transition: all 0.2s;
+	@media (min-width: $screen-tb-lg2) and (max-width: $screen-tb-xl) {
+		width: $cardWidth-md;
+		height: $cardHeight-md;
+	}
+	@media (max-width: $screen-tb-lg2) {
+		width: 100%;
+	}
+	// @media (max-width: $screen-md) {
+	// 	width: 90%;
+	// 	margin: 0 auto;
+	// }
+	.content {
+		background-color: #ffffff;
+		color: $text-secondary;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		padding: 0 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		border-radius: 8px;
+
+		.cardTitle {
+			font-size: 2.5rem;
+			line-height: 1.1;
+			font-weight: 800;
+			color: #1e293b;
+			margin-bottom: 0.75rem;
+			transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			display: inline-block;
+			background: linear-gradient(135deg, #1e293b, #334155);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+
+			@media (min-width: $screen-tb-lg2) and (max-width: $screen-tb-xl) {
+				font-size: 2.2rem;
+			}
+
+			@media (max-width: $screen-tb) {
+				font-size: 1.6rem;
+			}
+		}
+		.cardSub {
+			font-size: 1rem;
+			color: #64748b;
+			font-weight: 500;
+			letter-spacing: 0.02em;
+			transition: color 0.3s ease;
+			position: relative;
+			z-index: 1;
+
+			@media (min-width: $screen-tb) {
+				font-size: 0.875rem;
+			}
+		}
+	}
+}

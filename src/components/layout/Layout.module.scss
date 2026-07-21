@@ -1,0 +1,17 @@
+@import '@styles/abstracts/var';
+.layout {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	.main {
+		flex: 1;
+		padding-top: 1rem;
+		padding-bottom: 4rem;
+		@media (max-width: $screen-tb-lg2) {
+			padding-bottom: 3rem;
+		}
+		@media (max-width: $screen-tb) {
+			padding-bottom: 2.5rem;
+		}
+	}
+}

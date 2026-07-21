@@ -1,0 +1,136 @@
+@import '@styles/abstracts/var';
+
+.services {
+	padding-top: 80px;
+	.servicesHeader {
+		margin-bottom: 40px;
+		.heading {
+			text-transform: uppercase;
+			color: $red;
+			margin-bottom: 10px;
+		}
+	}
+	.grid {
+		margin-bottom: 30px;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 24px;
+		.card {
+			background: rgb(255 255 255 / 57%);
+			border-radius: 28px;
+			padding: 30px 20px;
+			cursor: pointer;
+			transition: 0.25s;
+
+			&:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+				.arrow {
+					opacity: 1;
+					transform: translateX(4px);
+				}
+			}
+			.icons {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 12px;
+
+				svg {
+					stroke-width: 1.5;
+				}
+			}
+			.content {
+				.title {
+					font-size: 20px;
+					line-height: 1.2;
+					font-weight: 600;
+					margin-bottom: 14px;
+				}
+
+				p {
+					color: #707070;
+					line-height: 1.7;
+				}
+			}
+			.arrow {
+				opacity: 0;
+				transition: 0.25s;
+			}
+			.mobileArrow {
+				display: none;
+			}
+		}
+	}
+	.buttonWrapper {
+		display: flex;
+		.button {
+			font-size: 1.2rem;
+			padding: 0.875rem 2rem;
+			margin: 0 auto;
+			color: $text-white;
+		}
+	}
+}
+
+@media (max-width: 992px) {
+	.services {
+		padding: 80px 0 0;
+		.grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.services {
+		padding: 60px 0 0;
+		.grid {
+			grid-template-columns: 1fr;
+			gap: 16px;
+			.card {
+				display: flex;
+				align-items: flex-start;
+				gap: 20px;
+				padding: 24px;
+				position: relative;
+				.icon {
+					margin-bottom: 0;
+				}
+				.content {
+					flex: 1;
+
+					h3 {
+						font-size: 18px;
+					}
+
+					p {
+						font-size: 14px;
+					}
+				}
+				.desktopArrow {
+					display: none;
+				}
+				.mobileArrow {
+					display: block;
+					opacity: 1;
+					margin-top: 0;
+				}
+				.button {
+					font-size: 1.1rem;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-md) {
+	.services {
+		.buttonWrapper {
+			.button {
+				padding: 0.65em 1.7rem;
+			}
+		}
+	}
+}

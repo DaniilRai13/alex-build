@@ -1,0 +1,91 @@
+@import '@styles/abstracts/var';
+
+.legal {
+	max-width: 860px;
+	margin: 0 auto;
+	padding: 1rem 0 3rem;
+
+	.header {
+		position: relative;
+		padding-left: 20px;
+		margin-bottom: 2rem;
+
+		&::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 4px;
+			height: 100%;
+			border-radius: 10px;
+			background: $red;
+		}
+
+		.title {
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+
+		.updated {
+			color: $text-light;
+			font-size: 0.9rem;
+		}
+	}
+
+	.intro {
+		color: $text-secondary;
+		font-size: 1.05rem;
+		line-height: 1.7;
+		margin-bottom: 2rem;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.section {
+		.sectionTitle {
+			display: flex;
+			gap: 0.5rem;
+			font-size: 1.3rem;
+			font-weight: 700;
+			line-height: 1.3;
+			color: $text-primary;
+			margin-bottom: 0.75rem;
+
+			.num {
+				color: $red-dark;
+			}
+		}
+
+		.paragraph {
+			color: $text-secondary;
+			line-height: 1.7;
+			margin-bottom: 0.75rem;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.legal {
+		padding: 0.5rem 0 2rem;
+
+		.header {
+			margin-bottom: 1.5rem;
+		}
+
+		.content {
+			gap: 1.5rem;
+		}
+
+		.section .sectionTitle {
+			font-size: 1.15rem;
+		}
+	}
+}

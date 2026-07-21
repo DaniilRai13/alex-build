@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Rekonstrukce a design interiérů | Название компании</title>
+    <meta
+      name="description"
+      content="Kompletní rekonstrukce bytů a domů na klíč: návrh interiéru, kosmetické i kompletní rekonstrukce, pokládka podlah a instalatérské práce. Pevná cena bez skrytých poplatků."
+    />
+    <meta name="theme-color" content="#111111" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:site_name" content="Название компании" />
+    <meta property="og:title" content="Rekonstrukce a design interiérů" />
+    <meta
+      property="og:description"
+      content="Kompletní rekonstrukce bytů a domů na klíč. Pevná cena, transparentní vyúčtování, záruka na veškeré práce."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:image" content="https://example.com/og-image.jpg" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Структурированные данные: локальный бизнес (JSON-LD).
+         TODO: заменить домен, название, телефон, e-mail и адрес на реальные. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "GeneralContractor",
+        "name": "Название компании",
+        "url": "https://example.com",
+        "image": "https://example.com/og-image.jpg",
+        "telephone": "+375000000000",
+        "email": "info@realestate.ru",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Minsk",
+          "addressCountry": "BY"
+        },
+        "areaServed": "Minsk",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "20:00"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

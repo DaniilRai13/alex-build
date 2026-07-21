@@ -1,0 +1,28 @@
+@import '@styles/abstracts/var';
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6rem;
+	padding: 0.5rem 1rem;
+	font-weight: 500;
+	border-radius: $radius-lg;
+	transition: all 0.2s ease;
+	cursor: pointer;
+	border: none;
+	font-size: 1rem;
+	color: $text-primary;
+	background-color: $red;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	.title{
+		margin-bottom: 0;
+	}
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+	&:hover {
+		box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+		transform: translateY(-1px);
+	}
+}

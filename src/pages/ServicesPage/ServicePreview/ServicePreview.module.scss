@@ -1,0 +1,156 @@
+@import '@styles/abstracts/var';
+
+.preview {
+	position: relative;
+	isolation: isolate;
+	background: rgba(#e8e2d5, 1);
+	border-radius: $radius-lg;
+	box-shadow: $shadow-md;
+	overflow: hidden;
+	padding: 40px;
+	gap: 40px;
+	min-height: 540px;
+	align-items: center;
+	.overlay {
+		position: absolute;
+		inset: 0;
+
+		background: linear-gradient(90deg, rgba(40, 40, 40, 0.35) 0%);
+
+		z-index: 1;
+	}
+	.bg {
+		position: absolute;
+		right: 0;
+		bottom: 20px;
+		height: 70%;
+		mix-blend-mode: multiply;
+	}
+	.info {
+		position: relative;
+		z-index: 2;
+		.heading {
+			font-size: clamp(2rem, 3vw, 3rem);
+			font-weight: 600;
+			line-height: 1.15;
+			letter-spacing: -0.02em;
+			margin-bottom: 25px;
+			color: #fff;
+		}
+
+		.description {
+			color: rgba(255, 255, 255, 0.85);
+			font-size: 1.05rem;
+			line-height: 1.8;
+			font-weight: 400;
+			margin-bottom: 22px;
+			max-width: 450px;
+		}
+
+		.list {
+			display: flex;
+			flex-direction: column;
+			gap: 18px;
+			margin-bottom: 30px;
+			width: fit-content;
+			padding: 20px;
+			border-radius: $radius-lg;
+			background: rgba(255, 255, 255, 0.12);
+			backdrop-filter: blur(12px);
+			.item {
+				font-size: 1.1rem;
+				list-style: none;
+				font-weight: 600;
+				display: flex;
+				align-items: center;
+				gap: 18px;
+
+				color: #fff;
+
+				&::before {
+					content: '✓';
+					color: $red;
+					font-size: 1.3rem;
+					font-weight: bold;
+				}
+			}
+		}
+		.button {
+			background: $red;
+			padding: 0.7rem 2rem;
+			color: #fff;
+		}
+	}
+
+	// .image {
+	// 	position: absolute;
+	// 	bottom: 5px;
+	// 	right: 0px;
+	// 	height: 65%;
+	// 	img {
+	// 		mix-blend-mode: multiply;
+	// 		height: 100%;
+	// 		display: block;
+	// 		object-fit: contain;
+	// 		// opacity: 0.85;
+	// 	}
+	// }
+}
+
+@media (max-width: 1024px) {
+	.preview {
+		padding: 45px;
+		min-height: 500px;
+		.bg{
+			height: 70%;
+		}
+		.info {
+			max-width: 460px;
+			.heading {
+				font-size: 2.4rem;
+			}
+			.description{
+				font-size: 1rem;
+			}
+		}
+	}
+}
+@media (max-width: 950px) {
+	.preview {
+		.info {
+			.heading {
+				font-size: 2.1rem;
+				margin-bottom: 15px;
+			}
+			.description{
+				font-size: .875rem;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.preview {
+		min-height: auto;
+		padding: 35px 30px 28px;
+		align-items: flex-start;
+	}
+
+	.bg {
+		width: 100%;
+		height: 260px;
+
+		top: auto;
+		bottom: 0;
+
+		object-fit: contain;
+		object-position: center bottom;
+	}
+
+	.info {
+		max-width: 100%;
+		.list {
+			width: 100%;
+		}
+	}
+}

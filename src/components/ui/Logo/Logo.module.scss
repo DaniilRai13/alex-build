@@ -1,0 +1,21 @@
+@import '@styles/abstracts/var';
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	text-decoration: none;
+	font-weight: 700;
+
+	.logoIcon {
+		font-size: 1.5rem;
+
+		@media (min-width: 950px) {
+			font-size: 1.75rem;
+		}
+	}
+
+	.logoText {
+		font-size: 1.2rem;
+		color: $text-primary;
+	}
+}

@@ -1,0 +1,67 @@
+@import '@styles/abstracts/var';
+
+.aboutSection {
+	
+	background-color: transparent;
+	display: flex;
+	justify-content: space-between;
+	padding-top: 80px;
+	gap: 20px;
+
+	@media (max-width: $screen-tb-lg2) {
+		flex-wrap: wrap;
+		gap: 40px;
+		padding: 50px 0 0;
+	}
+
+	.info {
+		.infoContainer {
+			position: sticky;
+			top: calc($header-height);
+			.infoText {
+				width: 100%;
+
+				.infoTitle {
+					text-transform: uppercase;
+					letter-spacing: 0.05em;
+					color: $red;
+					margin-bottom: 0.75rem;
+				}
+
+				.infoSubtitle {
+					margin-bottom: 1.5rem;
+				}
+			}
+		}
+		.partners {
+			display: flex;
+			gap: 20px;
+			.img {
+				height: 40px;
+				@media (max-width: $screen-md) {
+					height: 35px;
+				}
+				@media (max-width: $screen-sm) {
+					height: 31px;
+				}
+				@media (max-width: $screen-xs) {
+					height: 28px;
+				}
+			}
+		}
+	}
+
+	// Stats grid
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+		@media (max-width: $screen-tb-lg2) {
+			width: 100%;
+			gap: 1.5rem;
+		}
+		@media (max-width: $screen-xs) {
+			grid-template-columns: 1fr;
+		}
+	}
+}

@@ -1,0 +1,81 @@
+@import '@styles/abstracts/var';
+
+.filters {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 12px;
+	margin-bottom: 50px;
+}
+
+.button {
+	flex: 1 1 80px;
+	text-transform: uppercase;
+	border: 1px solid rgba($text-secondary, 0.7);
+
+	border-radius: 10px;
+	font-size: 1rem;
+	background-color: transparent;
+	cursor: pointer;
+
+	color: $text-secondary;
+
+	transition: 0.25s;
+	&:not(.active):hover {
+		border-color: rgba($red, 1);
+		color: $red;
+	}
+}
+
+.active {
+	background: $red;
+	color: white;
+	border-color: $red;
+	&:hover {
+		transform: none;
+		box-shadow: none;
+		cursor: default;
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.filters {
+		gap: 10px;
+		margin-bottom: 40px;
+	}
+
+	.button {
+		flex: 1 1 140px;
+		padding: 0.55rem 1rem;
+		font-size: 0.95rem;
+	}
+}
+
+/* ===================== 480px ===================== */
+
+@media (max-width: $screen-sm) {
+	.filters {
+		gap: 8px;
+		margin-bottom: 32px;
+	}
+
+	.button {
+		flex: 1 1 calc(50% - 4px);
+		padding: 0.5rem 0.8rem;
+		font-size: 0.9rem;
+	}
+}
+
+/* ===================== 375px ===================== */
+
+@media (max-width: 330px) {
+	.filters {
+		gap: 8px;
+	}
+
+	.button {
+		flex: 1 1 100%;
+		padding: 0.3rem 1rem;
+		font-size: 0.8rem;
+	}
+}
