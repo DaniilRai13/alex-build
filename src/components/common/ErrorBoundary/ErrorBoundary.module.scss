@@ -1,0 +1,56 @@
+@import '@styles/abstracts/var';
+
+.fallback {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 16px;
+	min-height: 50vh;
+	padding: 40px 20px;
+}
+
+.title {
+	font-size: 28px;
+	font-weight: 700;
+	color: $text-primary;
+}
+
+.text {
+	font-size: 16px;
+	color: $text-secondary;
+	max-width: 420px;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	align-items: center;
+	justify-content: center;
+	margin-top: 8px;
+}
+
+.button {
+	padding: 14px 28px;
+	border-radius: $radius-lg;
+	background: $red;
+	color: $text-white;
+	font-weight: 600;
+	transition: $transition-normal;
+
+	&:hover {
+		background: $red-dark;
+	}
+}
+
+.link {
+	color: $text-secondary;
+	text-decoration: underline;
+	transition: $transition-fast;
+
+	&:hover {
+		color: $text-primary;
+	}
+}

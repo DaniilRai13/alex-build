@@ -1,5 +1,6 @@
 import { useEffect, type FC } from 'react';
 import { Outlet, useLocation } from 'react-router';
+import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import styles from './Layout.module.scss';
@@ -15,7 +16,9 @@ const Layout: FC = () => {
 			<Header />
 			<main className={styles.main}>
 				<div className='container'>
-					<Outlet />
+					<ErrorBoundary key={pathname}>
+						<Outlet />
+					</ErrorBoundary>
 				</div>
 			</main>
 			<Footer />
