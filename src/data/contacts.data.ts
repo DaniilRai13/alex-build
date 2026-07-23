@@ -3,18 +3,18 @@ import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
 export const contacts: IContacts[] = [
 	{
 		icon: 'Phone',
-		href: 'tel:+79991234567',
-		label: '+333333333',
+		href: 'tel:+420774896027',
+		label: '+420774896027',
 		type: 'link',
 	},
 	{
 		icon: 'Mail',
-		href: 'mailto:info@realestate.ru',
-		label: 'info@realestate.ru',
+		href: 'mailto:alexej.ivanovskij@gmail.com',
+		label: 'alexej.ivanovskij@gmail.com',
 		type: 'link',
 	},
-	{ icon: 'MapPin', label: 'Минск', type: 'text' },
-	{ icon: 'Clock', label: 'Пн-Пт: 9:00 - 20:00', type: 'text' },
+	{ icon: 'MapPin', label: 'Teplice, Česká republika', type: 'text' },
+	{ icon: 'Clock', label: 'Po–Pá: 9:00–18:00', type: 'text' },
 ];
 
 interface IContacts {
