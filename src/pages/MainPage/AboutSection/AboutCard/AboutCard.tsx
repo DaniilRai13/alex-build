@@ -6,7 +6,9 @@ const AboutCard: FC<{ item: IStatisticsData }> = ({ item }) => {
 	return (
 		<div className={styles.card}>
 			<div className={styles.content}>
-				<Heading as='div' children={item.title} className={styles.cardTitle} />
+				<Heading as='div' className={styles.cardTitle}>
+					{item.title}
+				</Heading>
 				<p className={styles.cardSub}>{item.sub} </p>
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { contactValidation } from '@/config/contactValidation';
 import { emailService } from '@/services/email.service';
 import type { FormValues } from '@/types/contactInfo.interface';
@@ -72,12 +73,12 @@ const ContactForm = () => {
 			/>
 
 			{status === 'success' && (
-				<p role='status' style={{ color: '#2e7d32', marginTop: 12 }}>
+				<p role='status' className={cn(styles.status, styles.success)}>
 					Děkujeme! Vaše zpráva byla odeslána.
 				</p>
 			)}
 			{status === 'error' && (
-				<p role='alert' style={{ color: '#c62828', marginTop: 12 }}>
+				<p role='alert' className={cn(styles.status, styles.error)}>
 					Zprávu se nepodařilo odeslat. Zkuste to prosím znovu.
 				</p>
 			)}

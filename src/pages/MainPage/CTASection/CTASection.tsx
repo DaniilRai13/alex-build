@@ -13,10 +13,9 @@ const CTASection = () => {
 				</div>
 
 				<div className={styles.content}>
-					<Heading
-						children='Pojďme společně vytvořit něco výjimečného'
-						className={styles.CTAHeading}
-					/>
+					<Heading className={styles.CTAHeading}>
+						Pojďme společně vytvořit něco výjimečného
+					</Heading>
 
 					<p>
 						Připraveni proměnit váš prostor? Kontaktujte nás pro bezplatnou

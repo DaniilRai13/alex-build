@@ -16,7 +16,7 @@ const ServicePreview = ({ service }: Props) => {
 			<div className={styles.overlay}></div>
 			<img src={service.img} alt='' className={styles.bg}/>
 			<div className={styles.info}>
-				<Heading children={service.title} className={styles.heading} />
+				<Heading className={styles.heading}>{service.title}</Heading>
 
 				<p className={styles.description}>{service.description}</p>
 

@@ -20,8 +20,10 @@ const ContactPage: FC = () => {
 							<Heading className={styles.contactHeading}>
 								Kontaktujte nás
 							</Heading>
-							<Subtitle className={styles.contactSubtitle} children='Zašlete nám žádost a my probereme váš projekt, harmonogram realizace i případné dotazy.' />
-								
+							<Subtitle className={styles.contactSubtitle}>
+								Zašlete nám žádost a my probereme váš projekt, harmonogram
+								realizace i případné dotazy.
+							</Subtitle>
 						</div>
 						<ContactForm />
 					</div>

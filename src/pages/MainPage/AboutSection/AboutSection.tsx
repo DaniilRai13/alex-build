@@ -26,7 +26,7 @@ const AboutSection: FC = () => {
 							}}
 							variants={animations.fadeLeft}
 						>
-							<Heading className={styles.infoTitle} children='O společnosti' />
+							<Heading className={styles.infoTitle}>O společnosti</Heading>
 						</motion.div>
 						<motion.div
 							initial='hidden'
@@ -34,12 +34,12 @@ const AboutSection: FC = () => {
 							transition={animationTransition.defaultTransition}
 							variants={animations.fadeLeft}
 						>
-							<Subtitle
-								className={styles.infoSubtitle}
-								children='Specializujeme se na kompletní rekonstrukce bytů a domů. Spojujeme
-						kvalitní řemeslné zpracování, moderní design a individuální přístup,
-						abychom vytvořili interiéry, které budou sloužit mnoho let.'
-							/>
+							<Subtitle className={styles.infoSubtitle}>
+								Specializujeme se na kompletní rekonstrukce bytů a domů. Spojujeme
+								kvalitní řemeslné zpracování, moderní design a individuální
+								přístup, abychom vytvořili interiéry, které budou sloužit mnoho
+								let.
+							</Subtitle>
 						</motion.div>
 					</div>
 					<motion.div

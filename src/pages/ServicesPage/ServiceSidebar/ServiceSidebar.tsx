@@ -13,7 +13,7 @@ const ServiceSidebar = ({ activeId, onSelect }: Props) => {
 	return (
 		<aside className={styles.sidebar}>
 			<div className={styles.mainText}>
-				<Heading children='Naše služby' className={styles.heading} />
+				<Heading className={styles.heading}>Naše služby</Heading>
 
 				<p className={styles.description}>
 					Vyberte si oblast, která vás zajímá, a zjistěte více.

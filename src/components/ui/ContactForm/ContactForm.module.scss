@@ -45,6 +45,19 @@
 		font-weight: 600;
 		transition: 0.3s;
 	}
+
+	.status {
+		margin-top: 12px;
+		font-size: 15px;
+
+		&.success {
+			color: #2e7d32;
+		}
+
+		&.error {
+			color: #c62828;
+		}
+	}
 }
 
 @media (max-width: $screen-tb-xl) {

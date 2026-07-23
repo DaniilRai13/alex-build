@@ -95,12 +95,11 @@ const PortfolioModal = ({ project, onClose }: Props) => {
 					<div className={styles.info}>
 						<span className={styles.category}>{project.categoryLabel}</span>
 
-						<Heading children={project.title} className={styles.title} />
+						<Heading className={styles.title}>{project.title}</Heading>
 
-						<Subtitle
-							children={project.description}
-							className={styles.description}
-						/>
+						<Subtitle className={styles.description}>
+							{project.description}
+						</Subtitle>
 
 						<div className={styles.meta}>
 							<div>

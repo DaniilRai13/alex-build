@@ -52,8 +52,7 @@ const Button: FC<ButtonProps> = ({
 			disabled={disabled || loading}
 			className={cn(styles.button, className)}
 		>
-			{title && <h3 className={styles.title}>{title}</h3>}
-			{icon && <Icon icon={icon} size={iconSize} />}
+			{content}
 		</button>
 	);
 };

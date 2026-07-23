@@ -59,11 +59,10 @@ export const PortfolioSection = () => {
 					variants={animations.fadeLeft}
 					transition={{ ...animationTransition.defaultTransition, delay: 0.4 }}
 				>
-					<Subtitle
-						className={styles.description}
-						children='Prohlédněte si naše vybrané práce, které demonstrují náš závazek k
-					designu, excelenci, inovaci a spokojenosti klientů.'
-					/>
+					<Subtitle className={styles.description}>
+						Prohlédněte si naše vybrané práce, které demonstrují náš závazek k
+						designu, excelenci, inovaci a spokojenosti klientů.
+					</Subtitle>
 				</motion.div>
 			</div>
 

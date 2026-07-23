@@ -23,11 +23,11 @@ const ServicesSection: FC = () => {
 				transition={{ ...animationTransition.defaultTransition, delay: 0 }}
 				variants={animations.fadeLeft}
 			>
-				<Heading className={styles.heading} children='Naše služby' />
-				<Subtitle
-					className={styles.description}
-					children='Vybíráme řešení pro úkoly jakékoli složitosti – od konceptu až po realizaci.'
-				/>
+				<Heading className={styles.heading}>Naše služby</Heading>
+				<Subtitle className={styles.description}>
+					Vybíráme řešení pro úkoly jakékoli složitosti – od konceptu až po
+					realizaci.
+				</Subtitle>
 			</motion.div>
 			<div className={styles.grid}>
 				{services.slice(0, 4).map(service => {
@@ -54,7 +54,9 @@ const ServicesSection: FC = () => {
 								/>
 							</div>
 							<div className={styles.content}>
-								<Heading as='h3' children={service.title} className={styles.title} />
+								<Heading as='h3' className={styles.title}>
+									{service.title}
+								</Heading>
 								<p>{service.description}</p>
 							</div>
 							<ChevronRight
