@@ -42,7 +42,11 @@ const ContactForm = () => {
 				</div>
 
 				<div className={styles.field}>
-					<input placeholder='E-mail' {...register('email')} />
+					<input
+						placeholder='E-mail'
+						{...register('email', contactValidation.email)}
+					/>
+					{errors.email && <span>{errors.email.message}</span>}
 				</div>
 			</div>
 

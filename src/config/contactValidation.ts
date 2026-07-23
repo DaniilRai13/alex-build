@@ -4,7 +4,6 @@ export const contactValidation = {
 	},
 
 	email: {
-		required: 'Zadejte e-mail',
 		pattern: {
 			value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
 			message: 'Neplatný e-mail',
