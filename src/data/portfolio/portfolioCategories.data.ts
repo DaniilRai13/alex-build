@@ -26,4 +26,8 @@ export const portfolioCategories: IPortfolioCategory[] = [
 		id: 'commercial',
 		title: 'Komerční',
 	},
+	{
+		id: 'facade',
+		title: 'Fasády',
+	},
 ];

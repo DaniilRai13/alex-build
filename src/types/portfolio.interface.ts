@@ -3,7 +3,8 @@ export type PortfolioCategory =
 	| 'interior'
 	| 'renovation'
 	| 'house'
-	| 'commercial';
+	| 'commercial'
+	| 'facade';
 
 export interface IPortfolioProject {
 	id: number;
