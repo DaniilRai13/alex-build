@@ -1,3 +1,7 @@
+import Button from '@/components/ui/Button/Button';
+import Heading from '@/components/ui/Heading/Heading';
+import Subtitle from '@/components/ui/Subtitle/Subtitle';
+import { ROUTES } from '@/config/routes';
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import styles from './ErrorBoundary.module.scss';
 
@@ -28,21 +32,25 @@ class ErrorBoundary extends Component<Props, State> {
 		if (this.state.hasError) {
 			return (
 				<div className={styles.fallback} role='alert'>
-					<h2 className={styles.title}>Něco se pokazilo</h2>
-					<p className={styles.text}>
+					<Heading className={styles.title}>Něco se pokazilo</Heading>
+
+					<Subtitle className={styles.text}>
 						Omlouváme se, došlo k neočekávané chybě. Zkuste to prosím znovu.
-					</p>
+					</Subtitle>
+
 					<div className={styles.actions}>
-						<button
-							type='button'
-							className={styles.button}
+						<Button
+							title='Zkusit znovu'
+							icon='RotateCcw'
 							onClick={this.handleReset}
-						>
-							Zkusit znovu
-						</button>
-						<a className={styles.link} href='/'>
-							Zpět na domovskou stránku
-						</a>
+							className={styles.retry}
+						/>
+						<Button
+							title='Zpět na domovskou stránku'
+							icon='House'
+							to={ROUTES.HOME}
+							className={styles.homeButton}
+						/>
 					</div>
 				</div>
 			);

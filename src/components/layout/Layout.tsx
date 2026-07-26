@@ -6,7 +6,7 @@ import Header from './Header/Header';
 import styles from './Layout.module.scss';
 
 const Layout: FC = () => {
-	const { pathname } = useLocation();
+	const { pathname, key } = useLocation();
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -16,7 +16,9 @@ const Layout: FC = () => {
 			<Header />
 			<main className={styles.main}>
 				<div className='container'>
-					<ErrorBoundary key={pathname}>
+					{/* key = jedinečný pro každou navigaci → ErrorBoundary se resetuje
+					    při jakémkoli přechodu, i když se pathname nemění (např. změna query). */}
+					<ErrorBoundary key={key}>
 						<Outlet />
 					</ErrorBoundary>
 				</div>
