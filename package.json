@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "optimize:images": "node scripts/optimize-portfolio-images.mjs",
     "prepare": "husky"
   },
   "dependencies": {
@@ -36,6 +37,7 @@
     "globals": "^17.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
+    "sharp": "^0.35.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.10"
