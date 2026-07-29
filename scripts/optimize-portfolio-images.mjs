@@ -4,8 +4,13 @@
 //
 //   npm run optimize:images
 //
+// Titulní snímky (main.*) mají jemnější profil (větší rozměr a vyšší
+// kvalitu), protože se zobrazují jako náhled i na celou obrazovku v
+// lightboxu. Ostatní fotky galerie se komprimují víc.
+//
 // Malé soubory (už optimalizované) se přeskočí, aby se opakovaným
-// kódováním nezhoršila kvalita.
+// kódováním nezhoršila kvalita. POZOR: skript přepisuje originály –
+// před spuštěním měj zdrojové fotky zálohované mimo repozitář.
 
 import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -19,10 +24,14 @@ sharp.cache(false);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..', 'src', 'assets', 'portfolio');
 
-const MAX_DIM = 2000; // nejdelší strana v px
-const QUALITY = 80; // JPEG kvalita
-const SKIP_UNDER_BYTES = 600 * 1024; // menší a dost malé rozlišení neřešíme
+// Jemnější profil pro titulní snímky, agresivnější pro zbytek galerie.
+// skipUnder je zvolen tak, aby se už zpracované soubory při dalším běhu
+// znovu nekomprimovaly (idempotence).
+const MAIN_PROFILE = { maxDim: 2560, quality: 88, skipUnder: 1300 * 1024 };
+const GALLERY_PROFILE = { maxDim: 2000, quality: 80, skipUnder: 700 * 1024 };
+
 const IMAGE_RE = /\.(jpe?g|png)$/i;
+const MAIN_RE = /(^|[\\/])main\.(jpe?g|png)$/i;
 
 const kb = bytes => `${(bytes / 1024).toFixed(0)} KB`;
 
@@ -41,20 +50,25 @@ async function run() {
 	let skipped = 0;
 
 	for await (const file of walk(ROOT)) {
+		const profile = MAIN_RE.test(file) ? MAIN_PROFILE : GALLERY_PROFILE;
+
 		const { size } = await stat(file);
 		const input = await readFile(file);
 		const meta = await sharp(input).metadata();
 		const longest = Math.max(meta.width ?? 0, meta.height ?? 0);
 
-		if (size <= SKIP_UNDER_BYTES && longest <= MAX_DIM) {
+		if (size <= profile.skipUnder && longest <= profile.maxDim) {
 			skipped++;
 			continue;
 		}
 
 		const buffer = await sharp(input)
 			.rotate() // respektuj EXIF orientaci
-			.resize(MAX_DIM, MAX_DIM, { fit: 'inside', withoutEnlargement: true })
-			.jpeg({ quality: QUALITY, mozjpeg: true })
+			.resize(profile.maxDim, profile.maxDim, {
+				fit: 'inside',
+				withoutEnlargement: true,
+			})
+			.jpeg({ quality: profile.quality, mozjpeg: true })
 			.toBuffer();
 
 		await writeFile(file, buffer);
