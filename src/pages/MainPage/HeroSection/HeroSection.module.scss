@@ -3,20 +3,20 @@
 .banner {
 	position: relative;
 	height: 700px;
-	overflow: hidden;
-	border-radius: 32px;
 	border-bottom-left-radius: 1px;
 
 	.image {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		border-radius: $radius-lg;
 		display: block;
 	}
 
 	.overlay {
 		position: absolute;
 		inset: 0;
+		border-radius: $radius-lg;
 		background: rgba(0, 0, 0, 0.35);
 	}
 
@@ -88,8 +88,9 @@
 			letter-spacing: 2px;
 			transition: 0.25s ease;
 			&:hover {
+				background: $red-dark;
 				transform: translateY(-3px);
-				box-shadow: none;
+				box-shadow: 0 10px 26px rgba($red, 0.5);
 			}
 		}
 	}

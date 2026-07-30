@@ -33,7 +33,7 @@
 			width: clamp(6rem, 20vw, 11rem);
 			height: clamp(6rem, 20vw, 11rem);
 			border-radius: 50%;
-			background: rgba(233, 128, 116, 0.14);
+			background: rgba($red, 0.14);
 			color: $red-dark;
 			box-shadow: $shadow-md;
 

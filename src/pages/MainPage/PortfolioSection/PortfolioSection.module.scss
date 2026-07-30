@@ -34,6 +34,11 @@
 	text-transform: uppercase;
 	padding: 13px;
 	width: 100%;
+
+	&:hover {
+		color: #fff;
+		border-color: $red-dark;
+	}
 }
 .gallery {
 	display: contents;

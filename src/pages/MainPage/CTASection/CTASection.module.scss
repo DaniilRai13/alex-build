@@ -21,9 +21,9 @@
 
 			border-radius: 50%;
 
-			background: rgba(239, 92, 74, 0.1);
+			background: rgba($red, 0.1);
 
-			color: #ef5c4a;
+			color: $red;
 		}
 
 		.content {
@@ -44,6 +44,11 @@
 
 		.button {
 			color: $text-white;
+			padding: 16px 40px;
+			font-size: 1.05rem;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+			white-space: nowrap;
 		}
 	}
 }

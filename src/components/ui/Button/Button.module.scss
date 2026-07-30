@@ -7,7 +7,7 @@
 	padding: 0.5rem 1rem;
 	font-weight: 500;
 	border-radius: $radius-lg;
-	transition: all 0.2s ease;
+	transition: all 0.25s ease;
 	cursor: pointer;
 	border: none;
 	font-size: 1rem;
@@ -21,8 +21,14 @@
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
-	&:hover {
-		box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+	&:hover:not(:disabled) {
+		background-color: $red-dark;
+		transform: translateY(-3px);
+		box-shadow: 0 8px 22px rgba($red, 0.4);
+	}
+
+	&:active:not(:disabled) {
 		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba($red, 0.3);
 	}
 }

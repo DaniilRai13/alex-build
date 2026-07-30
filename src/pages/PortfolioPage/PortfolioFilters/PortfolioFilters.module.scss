@@ -23,7 +23,7 @@
 	transition: 0.25s;
 	&:not(.active):hover {
 		border-color: rgba($red, 1);
-		color: $red;
+		color: #FFF;
 	}
 }
 
