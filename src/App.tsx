@@ -1,13 +1,16 @@
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import { ROUTES } from './config/routes';
-import ContactPage from './pages/ContactPage/ContactPage';
-import MainPage from './pages/MainPage/MainPage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import PortfolioPage from './pages/PortfolioPage/PortfolioPage';
-import ServicesPage from './pages/ServicesPage/ServicesPage';
-import PrivacyPage from './pages/legal/PrivacyPage';
-import TermsPage from './pages/legal/TermsPage';
+
+// Stránky se načítají líně – každá je vlastní chunk (code-splitting).
+const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage/PortfolioPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage/ServicesPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage/ContactPage'));
+const PrivacyPage = lazy(() => import('./pages/legal/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/legal/TermsPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 function App() {
 	return (

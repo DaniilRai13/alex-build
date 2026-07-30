@@ -5,6 +5,23 @@ import { defineConfig } from 'vite';
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [react()],
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks(id) {
+					if (!id.includes('node_modules')) return;
+					if (id.includes('framer-motion') || id.includes('/motion/'))
+						return 'framer-motion';
+					if (id.includes('react-router') || id.includes('@remix-run'))
+						return 'router';
+					if (id.includes('yet-another-react-lightbox')) return 'lightbox';
+					if (id.includes('react-hook-form')) return 'form';
+					if (id.includes('lucide-react')) return 'icons';
+					return 'vendor';
+				},
+			},
+		},
+	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),

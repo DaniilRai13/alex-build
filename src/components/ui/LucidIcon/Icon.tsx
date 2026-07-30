@@ -1,11 +1,65 @@
-import type { INavigateSideProps } from '@/config/routes';
-import { icons, type LucideProps } from 'lucide-react';
+import {
+	ArrowLeft,
+	ArrowUpRight,
+	Brush,
+	Building2,
+	ChevronDown,
+	ChevronLeft,
+	ChevronRight,
+	CircleCheck,
+	CircleX,
+	Clock,
+	Hammer,
+	House,
+	Image,
+	Info,
+	LayoutGrid,
+	Mail,
+	MapPin,
+	Menu,
+	Paintbrush,
+	Phone,
+	RotateCcw,
+	Wrench,
+	X,
+	type LucideIcon,
+	type LucideProps,
+} from 'lucide-react';
 import type { FC } from 'react';
 
-type IconProps = Pick<INavigateSideProps, 'icon'> & LucideProps;
+// Registr jen skutečně použitých ikon – aby se do bundlu nedostal celý lucide.
+const iconMap = {
+	ArrowLeft,
+	ArrowUpRight,
+	Brush,
+	Building2,
+	ChevronDown,
+	ChevronLeft,
+	ChevronRight,
+	CircleCheck,
+	CircleX,
+	Clock,
+	Hammer,
+	House,
+	Image,
+	Info,
+	LayoutGrid,
+	Mail,
+	MapPin,
+	Menu,
+	Paintbrush,
+	Phone,
+	RotateCcw,
+	Wrench,
+	X,
+} satisfies Record<string, LucideIcon>;
 
-export const Icon: FC<IconProps> = ({ icon,size, ...props }) => {
-	const LucideIcon = icons[icon];
+export type IconNames = keyof typeof iconMap;
 
-	return <LucideIcon {...props} size={size}/>;
+type IconProps = { icon: IconNames } & LucideProps;
+
+export const Icon: FC<IconProps> = ({ icon, size, ...props }) => {
+	const LucideIcon = iconMap[icon];
+
+	return <LucideIcon {...props} size={size} />;
 };

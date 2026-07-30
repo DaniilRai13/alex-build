@@ -1,4 +1,4 @@
-import { useEffect, type FC } from 'react';
+import { Suspense, useEffect, type FC } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
 import Footer from './Footer/Footer';
@@ -19,7 +19,9 @@ const Layout: FC = () => {
 					{/* key = jedinečný pro každou navigaci → ErrorBoundary se resetuje
 					    při jakémkoli přechodu, i když se pathname nemění (např. změna query). */}
 					<ErrorBoundary key={key}>
-						<Outlet />
+						<Suspense fallback={<div className={styles.loader} />}>
+							<Outlet />
+						</Suspense>
 					</ErrorBoundary>
 				</div>
 			</main>
