@@ -17,7 +17,7 @@
 
 		input,
 		textarea {
-			border: 2px solid #fab4b4;
+			border: 2px solid rgb($red, 0.3);
 			background: transparent;
 			border-radius: 20px;
 			padding: 18px 22px;
@@ -28,7 +28,7 @@
 				border-color: $red;
 			}
 		}
-		textarea{
+		textarea {
 			resize: none;
 		}
 		span {
@@ -44,19 +44,6 @@
 		color: white;
 		font-weight: 600;
 		transition: 0.3s;
-	}
-
-	.status {
-		margin-top: 12px;
-		font-size: 15px;
-
-		&.success {
-			color: #2e7d32;
-		}
-
-		&.error {
-			color: #c62828;
-		}
 	}
 }
 

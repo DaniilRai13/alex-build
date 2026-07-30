@@ -1,13 +1,18 @@
-import cn from 'classnames';
 import { contactValidation } from '@/config/contactValidation';
 import { emailService } from '@/services/email.service';
 import type { FormValues } from '@/types/contactInfo.interface';
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import Button from '../Button/Button';
+import Notification from '../Notification/Notification';
 import styles from './ContactForm.module.scss';
 
 type SubmitStatus = 'idle' | 'success' | 'error';
+
+const messages = {
+	success: 'Děkujeme! Vaše zpráva byla odeslána.',
+	error: 'Zprávu se nepodařilo odeslat. Zkuste to prosím znovu.',
+};
 
 const ContactForm = () => {
 	const {
@@ -30,59 +35,58 @@ const ContactForm = () => {
 			setStatus('error');
 		}
 	};
+
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-			<div className={styles.row}>
-				<div className={styles.field}>
-					<input
-						placeholder='Vaše jméno'
-						{...register('name', contactValidation.name)}
-					/>
+		<>
+			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+				<div className={styles.row}>
+					<div className={styles.field}>
+						<input
+							placeholder='Vaše jméno'
+							{...register('name', contactValidation.name)}
+						/>
 
-					{errors.name && <span>{errors.name.message}</span>}
+						{errors.name && <span>{errors.name.message}</span>}
+					</div>
+
+					<div className={styles.field}>
+						<input
+							placeholder='E-mail'
+							{...register('email', contactValidation.email)}
+						/>
+						{errors.email && <span>{errors.email.message}</span>}
+					</div>
 				</div>
 
 				<div className={styles.field}>
 					<input
-						placeholder='E-mail'
-						{...register('email', contactValidation.email)}
+						placeholder='Telefon'
+						{...register('phone', contactValidation.phone)}
 					/>
-					{errors.email && <span>{errors.email.message}</span>}
+					{errors.phone && <span>{errors.phone.message}</span>}
 				</div>
-			</div>
 
-			<div className={styles.field}>
-				<input
-					placeholder='Telefon'
-					{...register('phone', contactValidation.phone)}
+				<div className={styles.field}>
+					<textarea
+						rows={6}
+						placeholder='Řekněte nám o svém projektu'
+						{...register('message')}
+					/>
+				</div>
+				<Button
+					type='submit'
+					title={isSubmitting ? 'Odesílání…' : 'Odeslat zprávu'}
+					disabled={isSubmitting}
 				/>
-				{errors.phone && <span>{errors.phone.message}</span>}
-			</div>
+			</form>
 
-			<div className={styles.field}>
-				<textarea
-					rows={6}
-					placeholder='Řekněte nám o svém projektu'
-					{...register('message')}
-				/>
-			</div>
-			<Button
-				type='submit'
-				title={isSubmitting ? 'Odesílání…' : 'Odeslat zprávu'}
-				disabled={isSubmitting}
+			<Notification
+				type={status === 'error' ? 'error' : 'success'}
+				message={status === 'error' ? messages.error : messages.success}
+				isOpen={status !== 'idle'}
+				onClose={() => setStatus('idle')}
 			/>
-
-			{status === 'success' && (
-				<p role='status' className={cn(styles.status, styles.success)}>
-					Děkujeme! Vaše zpráva byla odeslána.
-				</p>
-			)}
-			{status === 'error' && (
-				<p role='alert' className={cn(styles.status, styles.error)}>
-					Zprávu se nepodařilo odeslat. Zkuste to prosím znovu.
-				</p>
-			)}
-		</form>
+		</>
 	);
 };
 

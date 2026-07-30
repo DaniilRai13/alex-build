@@ -1,0 +1,94 @@
+@import '@styles/abstracts/var';
+
+.viewport {
+	position: fixed;
+	top: 60px;
+	right: 24px;
+	z-index: 1000;
+
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	pointer-events: none;
+
+	@media (max-width: $screen-sm) {
+		left: 16px;
+		right: 16px;
+		top: 16px;
+	}
+}
+
+.toast {
+	pointer-events: auto;
+
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	min-width: 300px;
+	max-width: 420px;
+	padding: 15px 16px;
+
+	background: $bg-main;
+	border-radius: 14px;
+	border: 2px solid rgba(0, 0, 0, 0.08);
+	border-left: 4px solid $text-light;
+	box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+
+	@media (max-width: $screen-sm) {
+		min-width: 0;
+		width: 100%;
+	}
+
+	.icon {
+		display: flex;
+		flex-shrink: 0;
+	}
+
+	.message {
+		flex: 1;
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.35;
+		color: $text-primary;
+	}
+
+	.close {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		border: none;
+		background: transparent;
+		color: $text-light;
+		cursor: pointer;
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: $text-primary;
+		}
+	}
+}
+
+.success {
+	border-left-color: $green;
+	.icon {
+		color: $green;
+	}
+}
+
+.error {
+	border-left-color: $red;
+	.icon {
+		color: $red;
+	}
+}
+
+.info {
+	border-left-color: $primary-400;
+	.icon {
+		color: $primary-400;
+	}
+}
