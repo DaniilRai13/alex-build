@@ -9,6 +9,9 @@ import preview4 from '@/assets/portfolio/project4/main.jpg';
 import preview5 from '@/assets/portfolio/project5/main.jpg';
 // project6 je rekonstrukce bytu – jako náhled volíme interiér, ne fasádu domu.
 import preview6 from '@/assets/portfolio/project6/17.jpg';
+import preview7 from '@/assets/portfolio/project7/main.jpg';
+import preview8 from '@/assets/portfolio/project8/main.jpg';
+import preview9 from '@/assets/portfolio/project9/main.jpg';
 
 // Všechny fotky ze složek projektů. Nové soubory se přidají automaticky.
 const allImages = import.meta.glob(
@@ -122,12 +125,63 @@ export const portfolioData: IPortfolioProject[] = [
 			'dekorem a černou pracovní deskou, koupelna se sprchovým koutem, nové ' +
 			'podlahy a světlé stěny. Byt se nachází v domě, na kterém probíhala i ' +
 			'obnova fasády.',
-		category: 'renovation',
-		categoryLabel: 'Rekonstrukce',
+		category: 'interior',
+		categoryLabel: 'Interiér',
 		location: 'Teplice',
 		area: 30,
 		year: 2025,
 		preview: preview6,
 		images: galleryOf('project6', preview6),
+	},
+	{
+		id: 7,
+		slug: 'rekonstrukce-bytu-zelena-kuchyne',
+		title: 'Kompletní rekonstrukce bytu',
+		description:
+			'Kompletní rekonstrukce bytu od demontáže původního jádra až po finální ' +
+			'detaily. Nová kuchyň v jemném pastelově zeleném odstínu s bílým obkladem ' +
+			'cihličkou, koupelna se sprchovým koutem a novými podlahami. Součástí ' +
+			'galerie je i původní stav před rekonstrukcí.',
+		category: 'renovation',
+		categoryLabel: 'Rekonstrukce',
+		location: 'Teplice',
+		area: 44,
+		year: 2024,
+		preview: preview7,
+		images: galleryOf('project7', preview7),
+	},
+	{
+		id: 8,
+		slug: 'rekonstrukce-bytu-moderni-kuchyne',
+		title: 'Rekonstrukce bytu s novou kuchyní',
+		description:
+			'Rekonstrukce bytu s novou kuchyní a koupelnou. Kuchyňská linka kombinuje ' +
+			'bílý lesk, dřevodekor a černou pracovní desku se dřezem, koupelna je ' +
+			'obložena velkoformátovou dlažbou v dekoru šedého mramoru se závěsným WC. ' +
+			'Fotogalerie zachycuje i průběh prací a původní stav.',
+		category: 'renovation',
+		categoryLabel: 'Rekonstrukce',
+		location: 'Teplice',
+		area: 38,
+		year: 2025,
+		preview: preview8,
+		images: galleryOf('project8', preview8),
+	},
+	{
+		id: 9,
+		slug: 'rekonstrukce-bytu-radova-kuchyne',
+		title: 'Rekonstrukce bytu s řadovou kuchyní',
+		description:
+			'Rekonstrukce bytu s moderní řadovou kuchyní. Bílé lesklé skříňky, ' +
+			'dřevěný obklad s LED podsvícením a betonová pracovní deska s černým ' +
+			'dřezem, nové podlahy a koupelna s velkoformátovou dlažbou. Světlý a ' +
+			'čistý interiér připravený k bydlení.',
+		category: 'interior',
+		categoryLabel: 'Interiér',
+		location: 'Teplice',
+		area: 50,
+		year: 2025,
+		preview: preview9,
+		images: galleryOf('project9', preview9),
 	},
 ];

@@ -19,14 +19,6 @@ export const portfolioCategories: IPortfolioCategory[] = [
 		title: 'Rekonstrukce',
 	},
 	{
-		id: 'house',
-		title: 'Domy',
-	},
-	{
-		id: 'commercial',
-		title: 'Komerční',
-	},
-	{
 		id: 'facade',
 		title: 'Fasády',
 	},

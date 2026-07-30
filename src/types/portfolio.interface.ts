@@ -1,10 +1,4 @@
-export type PortfolioCategory =
-	| 'all'
-	| 'interior'
-	| 'renovation'
-	| 'house'
-	| 'commercial'
-	| 'facade';
+export type PortfolioCategory = 'all' | 'interior' | 'renovation' | 'facade';
 
 export interface IPortfolioProject {
 	id: number;
