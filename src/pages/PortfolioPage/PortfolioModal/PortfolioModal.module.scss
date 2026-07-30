@@ -17,15 +17,17 @@
 	position: relative;
 
 	display: grid;
-	grid-template-columns: 1.2fr 1fr;
+	grid-template-columns: 1.1fr 1fr;
 	width: 100%;
+	max-width: 1040px;
+	max-height: 90vh;
 	background: $bg-main;
 	border-radius: 20px;
 	overflow: hidden;
 }
 
 .image {
-	height: 700px;
+	height: min(80vh, 680px);
 	position: relative;
 	img {
 		display: block;
@@ -68,9 +70,25 @@
 	.next {
 		right: 20px;
 	}
+
+	.counter {
+		position: absolute;
+		right: 16px;
+		bottom: 16px;
+		z-index: 5;
+
+		padding: 6px 12px;
+		border-radius: 999px;
+		background: rgba(0, 0, 0, 0.55);
+		color: #fff;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
 }
 
 .info {
+	height: min(80vh, 680px);
+	overflow-y: auto;
 	padding: 40px;
 
 	display: flex;
@@ -172,10 +190,12 @@
 	}
 
 	.image {
-		height: 350px;
+		height: min(60vh, 460px);
 	}
 
 	.info {
+		height: auto;
+		overflow: visible;
 		padding: 25px 20px;
 		.category {
 			margin-bottom: 10px;

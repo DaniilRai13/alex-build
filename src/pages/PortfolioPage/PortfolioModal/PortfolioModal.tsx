@@ -90,6 +90,10 @@ const PortfolioModal = ({ project, onClose }: Props) => {
 						>
 							<Icon icon='ChevronRight' />
 						</button>
+
+						<span className={styles.counter}>
+							{currentImg + 1} / {project.images.length}
+						</span>
 					</div>
 
 					<div className={styles.info}>
