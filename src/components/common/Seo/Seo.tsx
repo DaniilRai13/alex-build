@@ -1,8 +1,10 @@
+import { company } from '@/config/company';
 import type { FC } from 'react';
+import { Head } from 'vite-react-ssg';
 
-const SITE_NAME = 'Название компании';
-const SITE_URL = 'https://example.com'; 
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`; 
+const SITE_NAME = company.brand;
+const SITE_URL = company.url;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 interface SeoProps {
 	title: string;
@@ -17,7 +19,7 @@ const Seo: FC<SeoProps> = ({ title, description, path, image }) => {
 	const ogImage = image ?? DEFAULT_OG_IMAGE;
 
 	return (
-		<>
+		<Head>
 			<title>{fullTitle}</title>
 			<meta name='description' content={description} />
 			<link rel='canonical' href={url} />
@@ -36,7 +38,7 @@ const Seo: FC<SeoProps> = ({ title, description, path, image }) => {
 			<meta name='twitter:title' content={fullTitle} />
 			<meta name='twitter:description' content={description} />
 			<meta name='twitter:image' content={ogImage} />
-		</>
+		</Head>
 	);
 };
 

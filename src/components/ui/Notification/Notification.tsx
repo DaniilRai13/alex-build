@@ -1,10 +1,15 @@
 import cn from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, type FC } from 'react';
+import { useEffect, useRef, useSyncExternalStore, type FC } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '../LucidIcon/Icon';
 import type { IconNames } from '../LucidIcon/LucidIcons.types';
 import styles from './Notification.module.scss';
+
+// Detekce klienta (bez setState v efektu) – při SSG/SSR vrací false.
+const subscribeNoop = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 export type NotificationType = 'success' | 'error' | 'info';
 
@@ -30,16 +35,23 @@ const Notification: FC<NotificationProps> = ({
 	duration = 4500,
 }) => {
 	const onCloseRef = useRef(onClose);
-
-useEffect(() => {
-	onCloseRef.current = onClose;
-}, [onClose]);
+	useEffect(() => {
+		onCloseRef.current = onClose;
+	}, [onClose]);
 
 	useEffect(() => {
 		if (!isOpen || duration <= 0) return;
 		const id = setTimeout(() => onCloseRef.current(), duration);
 		return () => clearTimeout(id);
 	}, [isOpen, duration, message]);
+
+	// Portál jen na klientu – při SSG/SSR není document k dispozici.
+	const isClient = useSyncExternalStore(
+		subscribeNoop,
+		getClientSnapshot,
+		getServerSnapshot,
+	);
+	if (!isClient) return null;
 
 	return createPortal(
 		<div className={styles.viewport}>

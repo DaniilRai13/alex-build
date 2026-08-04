@@ -8,45 +8,29 @@
     <link rel="apple-touch-icon" href="/favicon-180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Rekonstrukce a design interiérů | Название компании</title>
-    <meta
-      name="description"
-      content="Kompletní rekonstrukce bytů a domů na klíč: návrh interiéru, kosmetické i kompletní rekonstrukce, pokládka podlah a instalatérské práce. Pevná cena bez skrytých poplatků."
-    />
     <meta name="theme-color" content="#111111" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="cs_CZ" />
-    <meta property="og:site_name" content="Название компании" />
-    <meta property="og:title" content="Rekonstrukce a design interiérů" />
-    <meta
-      property="og:description"
-      content="Kompletní rekonstrukce bytů a domů na klíč. Pevná cena, transparentní vyúčtování, záruka na veškeré práce."
-    />
-    <meta property="og:url" content="https://example.com/" />
-    <meta property="og:image" content="https://example.com/og-image.jpg" />
+    <!-- <title>, description a OG/Twitter řeší per-route komponenta Seo
+         (vite-react-ssg <Head>), aby se neduplikovaly. -->
 
-    <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <!-- Структурированные данные: локальный бизнес (JSON-LD).
-         TODO: заменить домен, название, телефон, e-mail и адрес на реальные. -->
+    <!-- Strukturovaná data: místní firma (JSON-LD). TODO: doplnit IČO. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "GeneralContractor",
-        "name": "Название компании",
-        "url": "https://example.com",
-        "image": "https://example.com/og-image.jpg",
-        "telephone": "+375000000000",
-        "email": "info@realestate.ru",
+        "name": "KartStav Development s.r.o.",
+        "url": "https://kartstav.cz",
+        "image": "https://kartstav.cz/og-image.jpg",
+        "telephone": "+420774896027",
+        "email": "info@karstav.cz",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Minsk",
-          "addressCountry": "BY"
+          "streetAddress": "Čenětická 2413/1a, Chodov",
+          "postalCode": "149 00",
+          "addressLocality": "Praha",
+          "addressCountry": "CZ"
         },
-        "areaServed": "Minsk",
+        "areaServed": "Praha",
         "openingHoursSpecification": [
           {
             "@type": "OpeningHoursSpecification",
@@ -58,7 +42,7 @@
               "Friday"
             ],
             "opens": "09:00",
-            "closes": "20:00"
+            "closes": "18:00"
           }
         ]
       }
