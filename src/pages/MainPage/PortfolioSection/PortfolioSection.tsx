@@ -50,7 +50,7 @@ export const PortfolioSection = () => {
 					transition={animationTransition.defaultTransition}
 				>
 					<Heading className={styles.infoTitle}>
-						Naše portfolio průkopnického designu
+						Naše portfolio
 					</Heading>
 				</motion.div>
 				<motion.div
