@@ -1,3 +1,4 @@
+import { company } from '@/config/company';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { contacts } from '@/data/contacts.data';
 import { services } from '@/data/services.data';
@@ -26,8 +27,7 @@ const Footer: FC = () => {
 						<FooterAccordionSection>
 							<Logo />
 							<p className={styles.description}>
-								Více než jen rekonstrukce. Navrhujeme, plánujeme a realizujeme
-								interiéry, které spojují estetiku, kvalitu a dlouhou životnost.
+								Více než jen rekonstrukce. Kvalitně realizujeme interiéry i exteriéry s důrazem na precizní provedení.
 							</p>
 						</FooterAccordionSection>
 						<FooterAccordionSection
@@ -75,7 +75,9 @@ const Footer: FC = () => {
 						</FooterAccordionSection>
 					</div>
 					<div className={styles.bottom}>
-						<p>© {currentYear} Nemovitosti. Všechna práva vyhrazena..</p>
+						<p>
+							© {currentYear} {company.name}. Všechna práva vyhrazena.
+						</p>
 						<div className={styles.bottomLinks}>
 							<Link to='/privacy'>Zásady ochrany osobních údajů</Link>
 							<Link to='/terms'>Uživatelská smlouva</Link>
