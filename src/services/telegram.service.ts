@@ -1,8 +1,9 @@
 import type { FormValues } from '@/types/contactInfo.interface';
 
-// Posílá data formuláře na Netlify Function, která je předá do Telegramu.
-// Token bota zůstává na serveru (env), do prohlížeče se nedostane.
-const ENDPOINT = '/.netlify/functions/send-telegram';
+// Posílá data formuláře na PHP endpoint (Forpsi/Apache), který je předá do
+// Telegramu. Token bota zůstává na serveru (telegram-config.php), do
+// prohlížeče se nedostane.
+const ENDPOINT = '/send-telegram.php';
 
 export const telegramService = {
 	send: async (data: FormValues) => {
