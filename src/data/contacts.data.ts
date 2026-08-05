@@ -9,8 +9,8 @@ export const contacts: IContacts[] = [
 	},
 	{
 		icon: 'Mail',
-		href: 'mailto:info@karstav.cz',
-		label: 'info@karstav.cz',
+		href: 'mailto:info@kartstav.cz',
+		label: 'info@kartstav.cz',
 		type: 'link',
 	},
 	{ icon: 'MapPin', label: 'Čenětická 2413/1a, Chodov, 149 00 Praha', type: 'text' },

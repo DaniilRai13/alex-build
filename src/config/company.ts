@@ -6,7 +6,7 @@ export const company = {
 	brand: 'KartStav',
 	address: 'Čenětická 2413/1a, Chodov, 149 00 Praha',
 	id: '[IČO]',
-	email: 'info@karstav.cz',
+	email: 'info@kartstav.cz',
 	domain: 'kartstav.cz',
 	url: 'https://kartstav.cz',
 };
