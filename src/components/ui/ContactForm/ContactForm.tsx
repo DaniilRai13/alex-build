@@ -1,5 +1,6 @@
 import { contactValidation } from '@/config/contactValidation';
 import { emailService } from '@/services/email.service';
+import { telegramService } from '@/services/telegram.service';
 import type { FormValues } from '@/types/contactInfo.interface';
 import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
@@ -26,12 +27,21 @@ const ContactForm = () => {
 
 	const onSubmit: SubmitHandler<FormValues> = async data => {
 		setStatus('idle');
-		try {
-			await emailService.send(data);
+
+		const results = await Promise.allSettled([
+			emailService.send(data),
+			telegramService.send(data),
+		]);
+
+		results
+			.filter(result => result.status === 'rejected')
+			.forEach(result => console.error(result.reason));
+
+		// Úspěch, pokud prošel aspoň jeden kanál (e-mail nebo Telegram).
+		if (results.some(result => result.status === 'fulfilled')) {
 			reset();
 			setStatus('success');
-		} catch (error) {
-			console.error(error);
+		} else {
 			setStatus('error');
 		}
 	};
