@@ -2,6 +2,7 @@ import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
 import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { ROUTES } from '@/config/routes';
+import { portfolioData } from '@/data/portfolio/portfolio.data';
 import { motion } from 'framer-motion';
 import PortfolioItem from './PortfolioItem/PortfolioItem';
 import styles from './PortfolioSection.module.scss';
@@ -13,32 +14,21 @@ export interface IPortfolioItems {
 	className: string;
 }
 
-const portfolioItems: IPortfolioItems[] = [
-	{
-		title: 'New York Office',
-		image:
-			'https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600&auto=format&fit=crop',
-		className: styles.office,
-	},
-	{
-		title: 'Commercial Restaurant',
-		image:
-			'https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1600&auto=format&fit=crop',
-		className: styles.restaurant,
-	},
-	{
-		title: 'Hotel Rooms',
-		image:
-			'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop',
-		className: styles.hotel,
-	},
-	{
-		title: 'Private House',
-		image:
-			'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop',
-		className: styles.house,
-	},
+// Náhledy reálných projektů z portfolia (první čtyři).
+const layoutClasses = [
+	styles.office,
+	styles.restaurant,
+	styles.hotel,
+	styles.house,
 ];
+
+const portfolioItems: IPortfolioItems[] = portfolioData
+	.slice(0, 4)
+	.map((project, index) => ({
+		title: project.title,
+		image: project.preview,
+		className: layoutClasses[index],
+	}));
 export const PortfolioSection = () => {
 	return (
 		<section className={styles.portfolio}>
@@ -72,6 +62,7 @@ export const PortfolioSection = () => {
 				))}
 			</div>
 			<motion.div
+				className={styles.buttonWrapper}
 				initial='hidden'
 				whileInView='visible'
 				variants={animations.fadeUp}

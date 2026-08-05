@@ -4,9 +4,11 @@
 	position: relative;
 	overflow: hidden;
 	border-radius: $radius-lg;
-	min-height: 260px;
+	min-height: 0;
 
 	img {
+		position: absolute;
+		inset: 0;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -43,15 +45,6 @@
 			font-size: 18px;
 			font-weight: 600;
 		}
-	}
-}
-
-@media (max-width: $screen-tb-xl) {
-	.house,
-	.office,
-	.restaurant,
-	.hotel {
-		min-height: 320px;
 	}
 }
 

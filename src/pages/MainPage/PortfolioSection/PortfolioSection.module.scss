@@ -7,6 +7,7 @@
 		'info restaurant house'
 		'office hotel house'
 		'office hotel button';
+	grid-template-rows: 260px 260px 60px;
 
 	gap: 15px;
 	padding-top: 80px;
@@ -27,9 +28,11 @@
 	}
 }
 
-.button {
+.buttonWrapper {
 	grid-area: button;
+}
 
+.button {
 	background-color: transparent;
 	border: 1px solid $red;
 	text-transform: uppercase;
@@ -66,6 +69,7 @@
 			'office restaurant'
 			'hotel house'
 			'button button';
+		grid-template-rows: auto 300px 300px auto;
 
 		.info {
 			width: 80%;
