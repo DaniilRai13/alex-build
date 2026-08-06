@@ -43,7 +43,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'bílý lesk s dubem a keramickým obkladem, obývací část s jídelním koutem, ' +
 			'klidná ložnice a koupelna s mramorovým dekorem Calacatta.',
 		category: 'renovation',
-		categoryLabel: 'Rekonstrukce',
+		categoryLabel: 'BYT',
 		location: 'Teplice',
 		area: 40,
 		year: 2025,
@@ -60,7 +60,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'koupelna s vanou a béžovým velkoformátovým obkladem, nové podlahy, dveře ' +
 			'a světlé čisté prostory.',
 		category: 'interior',
-		categoryLabel: 'Interiér',
+		categoryLabel: 'Kosmetika',
 		location: 'Teplice',
 		area: 32,
 		year: 2024,
@@ -77,7 +77,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'proměnily zastaralý byt v příjemné bydlení. Součástí fotogalerie je i ' +
 			'původní stav před rekonstrukcí.',
 		category: 'renovation',
-		categoryLabel: 'Rekonstrukce',
+		categoryLabel: 'BYT',
 		location: 'Teplice',
 		area: 54,
 		year: 2024,
@@ -93,7 +93,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'jsme nahradili novou zděnou koupelnou, osadili kuchyňskou linku a ' +
 			'položili nové podlahy. Fotografie zachycují i průběh stavebních prací.',
 		category: 'renovation',
-		categoryLabel: 'Rekonstrukce',
+		categoryLabel: 'BYT',
 		location: 'Teplice',
 		area: 46,
 		year: 2023,
@@ -126,7 +126,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'podlahy a světlé stěny. Byt se nachází v domě, na kterém probíhala i ' +
 			'obnova fasády.',
 		category: 'interior',
-		categoryLabel: 'Interiér',
+		categoryLabel: 'Kosmetika',
 		location: 'Teplice',
 		area: 30,
 		year: 2025,
@@ -143,7 +143,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'cihličkou, koupelna se sprchovým koutem a novými podlahami. Součástí ' +
 			'galerie je i původní stav před rekonstrukcí.',
 		category: 'renovation',
-		categoryLabel: 'Rekonstrukce',
+		categoryLabel: 'BYT',
 		location: 'Teplice',
 		area: 44,
 		year: 2024,
@@ -160,7 +160,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'obložena velkoformátovou dlažbou v dekoru šedého mramoru se závěsným WC. ' +
 			'Fotogalerie zachycuje i průběh prací a původní stav.',
 		category: 'renovation',
-		categoryLabel: 'Rekonstrukce',
+		categoryLabel: 'BYT',
 		location: 'Teplice',
 		area: 38,
 		year: 2025,
@@ -177,7 +177,7 @@ export const portfolioData: IPortfolioProject[] = [
 			'dřezem, nové podlahy a koupelna s velkoformátovou dlažbou. Světlý a ' +
 			'čistý interiér připravený k bydlení.',
 		category: 'interior',
-		categoryLabel: 'Interiér',
+		categoryLabel: 'Kosmetika',
 		location: 'Teplice',
 		area: 50,
 		year: 2025,

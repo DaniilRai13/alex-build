@@ -3,14 +3,14 @@ export interface IStatisticsData {
 	sub: string;
 }
 export const statisticsData: IStatisticsData[] = [
-	{ title: '12+', sub: 'Dokončených projektů' },
+	{ title: '40+', sub: 'Dokončených projektů' },
 	{
 		title: 'Pevná cena',
 		sub: 'bez skrytých poplatků',
 	},
 	{
-		title: '100%',
-		sub: 'Transparentní vyúčtování',
+		title: '24/7',
+		sub: 'Rychlá komunikace',
 	},
 	{
 		title: '2+',

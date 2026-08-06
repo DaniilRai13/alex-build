@@ -12,11 +12,11 @@ export const portfolioCategories: IPortfolioCategory[] = [
 	},
 	{
 		id: 'interior',
-		title: 'Interiéry',
+		title: 'Kosmetika',
 	},
 	{
 		id: 'renovation',
-		title: 'Rekonstrukce',
+		title: 'BYT',
 	},
 	{
 		id: 'facade',
