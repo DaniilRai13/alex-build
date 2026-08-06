@@ -33,22 +33,6 @@
 				}
 			}
 		}
-		.partners {
-			display: flex;
-			gap: 20px;
-			.img {
-				height: 40px;
-				@media (max-width: $screen-md) {
-					height: 35px;
-				}
-				@media (max-width: $screen-sm) {
-					height: 31px;
-				}
-				@media (max-width: $screen-xs) {
-					height: 28px;
-				}
-			}
-		}
 	}
 
 	// Stats grid

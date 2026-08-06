@@ -1,5 +1,5 @@
 import { contactValidation } from '@/config/contactValidation';
-import { emailService } from '@/services/email.service';
+import { mailService } from '@/services/mail.service';
 import { telegramService } from '@/services/telegram.service';
 import type { FormValues } from '@/types/contactInfo.interface';
 import { useState } from 'react';
@@ -29,7 +29,7 @@ const ContactForm = () => {
 		setStatus('idle');
 
 		const results = await Promise.allSettled([
-			emailService.send(data),
+			mailService.send(data),
 			telegramService.send(data),
 		]);
 

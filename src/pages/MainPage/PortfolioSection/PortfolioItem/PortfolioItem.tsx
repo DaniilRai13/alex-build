@@ -1,12 +1,29 @@
 import { type FC } from 'react';
 import styles from './PortfolioItem.module.scss';
 import type { IPortfolioItems } from '../PortfolioSection';
-const PortfolioItem: FC<{ item: IPortfolioItems }> = ({ item }) => {
+import type { IPortfolioProject } from '@/types/portfolio.interface';
+
+interface Props {
+	item: IPortfolioItems;
+	onOpen(project: IPortfolioProject): void;
+}
+
+const PortfolioItem: FC<Props> = ({ item, onOpen }) => {
+	const { project, className } = item;
+
 	return (
-		<article className={`${styles.card} ${item.className}`}>
-			<img src={item.image} alt={item.title} />
+		<article
+			className={`${styles.card} ${className}`}
+			onClick={() => onOpen(project)}
+		>
+			<img
+				src={project.preview}
+				alt={project.title}
+				loading='lazy'
+				decoding='async'
+			/>
 			<div className={styles.overlay}>
-				<span>{item.title}</span>
+				<span>{project.title}</span>
 			</div>
 		</article>
 	);

@@ -9,18 +9,17 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "optimize:images": "node scripts/optimize-portfolio-images.mjs",
-    "postinstall": "node scripts/patch-react-router.mjs",
     "prepare": "husky"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "classnames": "^2.5.1",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.80.0",
-    "react-router-dom": "^7.14.2",
+    "react-router": "^6.30.4",
+    "react-router-dom": "^6.30.4",
     "sass": "^1.99.0",
     "yet-another-react-lightbox": "^3.32.0"
   },
