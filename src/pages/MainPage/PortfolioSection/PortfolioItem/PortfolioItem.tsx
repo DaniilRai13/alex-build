@@ -16,7 +16,12 @@ const PortfolioItem: FC<Props> = ({ item, onOpen }) => {
 			className={`${styles.card} ${className}`}
 			onClick={() => onOpen(project)}
 		>
-			<img src={project.preview} alt={project.title} />
+			<img
+				src={project.preview}
+				alt={project.title}
+				loading='lazy'
+				decoding='async'
+			/>
 			<div className={styles.overlay}>
 				<span>{project.title}</span>
 			</div>
