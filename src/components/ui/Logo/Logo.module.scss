@@ -1,0 +1,20 @@
+@import '@styles/abstracts/var';
+.logo {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+
+	.logoImg {
+		display: block;
+		height: 40px;
+		width: auto;
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.logo{
+		.logoImg{
+			height: 35px;
+		}
+	}
+}

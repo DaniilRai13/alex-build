@@ -1,0 +1,7 @@
+@import '@styles/abstracts/var';
+.subtitle {
+	font-size: clamp(1rem, 4vw, 1.2rem);
+	line-height: 1.2;
+	letter-spacing: 1px;
+	color: $text-secondary;
+}

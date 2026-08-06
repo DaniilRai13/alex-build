@@ -1,0 +1,8 @@
+@import '@styles/abstracts/var';
+.heading {
+	font-size: clamp(2.3rem, 4vw, 3.2rem);
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: 1px;
+	color: $text-primary;
+}

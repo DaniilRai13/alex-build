@@ -1,0 +1,49 @@
+name: Deploy to Forpsi
+
+# Sestaví web při pushi do main a nahraje dist/ na Forpsi přes FTP.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # umožní ruční spuštění z GitHubu
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Telegram config (token mimo git) – vygeneruje se ze secrets.
+      - name: Create Telegram config
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          printf "<?php\nreturn ['token' => '%s', 'chat_id' => '%s'];\n" "$TG_TOKEN" "$TG_CHAT" > public/telegram-config.php
+
+      - name: Build
+        env:
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+        run: npm run build
+
+      - name: Deploy to Forpsi via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps # explicitní TLS; když Forpsi nepodporuje, změň na ftp
+          port: 21
+          local-dir: ./dist/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}

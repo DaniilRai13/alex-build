@@ -1,0 +1,45 @@
+@import '@styles/abstracts/var';
+
+.fallback {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 16px;
+	min-height: 50vh;
+	padding: 40px 20px;
+}
+
+.title {
+	color: $text-primary;
+}
+
+.text {
+	max-width: 420px;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	align-items: center;
+	justify-content: center;
+	margin-top: 8px;
+}
+.retry {
+	color: #ffffff;
+	background-color: rgb($red, 0.9);
+	padding: 10px 20px;
+}
+// Vedlejší akce – jen obrys, aby primární tlačítko vyniklo.
+.homeButton {
+	background-color: transparent;
+	border: 2px solid $red;
+	box-shadow: none;
+	padding: 10px 20px;
+	&:hover {
+		color: #ffffff;
+		background-color: $red;
+	}
+}

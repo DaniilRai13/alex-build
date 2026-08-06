@@ -1,0 +1,118 @@
+@import '@styles/abstracts/var';
+
+.cta {
+	padding-top: 60px;
+
+	.ctaInner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.8rem 3rem;
+		background: $bg-main;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+		border-radius: $radius-lg;
+		.icon {
+			width: 80px;
+			height: 80px;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			border-radius: 50%;
+
+			background: rgba($red, 0.1);
+
+			color: $red;
+		}
+
+		.content {
+			flex: 1;
+			margin-left: 30px;
+
+			.CTAHeading {
+				font-size: 1.8rem;
+				font-weight: 600;
+				margin-bottom: 10px;
+				line-height: 1.1;
+			}
+
+			p {
+				color: $text-secondary;
+			}
+		}
+
+		.button {
+			color: $text-white;
+			padding: 16px 40px;
+			font-size: 1.05rem;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+			white-space: nowrap;
+		}
+	}
+}
+
+@media (max-width: $screen-tb-lg2) {
+	.cta {
+		.ctaInner {
+			flex-wrap: wrap;
+			gap: 24px;
+			padding: 2rem;
+
+			.content {
+				margin-left: 0;
+				.CTAHeading {
+					font-size: 1.8rem;
+				}
+			}
+
+			.button {
+				width: 100%;
+			}
+		}
+	}
+}
+@media (max-width: $screen-tb) {
+	.cta {
+		padding-top: 60px;
+		.ctaInner {
+			flex-direction: column;
+			text-align: center;
+
+			padding: 1.5rem;
+			gap: 15px;
+
+			.icon {
+				width: 64px;
+				height: 64px;
+			}
+
+			.content {
+				.CTAHeading {
+					font-size: 1.7rem;
+				}
+
+				p {
+					font-size: 0.95rem;
+				}
+			}
+
+			.button {
+				width: 100%;
+			}
+		}
+	}
+}
+@media (max-width: $screen-sm) {
+	.cta {
+		.ctaInner {
+			padding: 1rem;
+			.content {
+				.CTAHeading {
+					font-size: 1.5rem;
+				}
+			}
+		}
+	}
+}

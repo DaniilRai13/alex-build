@@ -1,0 +1,128 @@
+@import '@styles/abstracts/var';
+
+.portfolio {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-areas:
+		'info restaurant house'
+		'office hotel house'
+		'office hotel button';
+	grid-template-rows: 260px 260px 60px;
+
+	gap: 15px;
+	padding-top: 80px;
+}
+
+.info {
+	grid-area: info;
+
+	.infoTitle {
+		margin-bottom: 20px;
+		text-transform: uppercase;
+		letter-spacing: 8px;
+		color: $red;
+	}
+
+	.description {
+		line-height: 1.4;
+	}
+}
+
+.buttonWrapper {
+	grid-area: button;
+}
+
+.button {
+	background-color: transparent;
+	border: 1px solid $red;
+	text-transform: uppercase;
+	padding: 13px;
+	width: 100%;
+
+	&:hover {
+		color: #fff;
+		border-color: $red-dark;
+	}
+}
+.gallery {
+	display: contents;
+	.office {
+		grid-area: office;
+	}
+
+	.restaurant {
+		grid-area: restaurant;
+	}
+
+	.hotel {
+		grid-area: hotel;
+	}
+	.house {
+		grid-area: house;
+	}
+}
+@media (max-width: $screen-tb-xl) {
+	.portfolio {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-areas:
+			'info info'
+			'office restaurant'
+			'hotel house'
+			'button button';
+		grid-template-rows: auto 300px 300px auto;
+
+		.info {
+			width: 80%;
+			margin-bottom: 15px;
+			.infoTitle {
+				letter-spacing: 2px;
+			}
+			.description {
+				margin-top: 10px;
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.portfolio {
+		display: flex;
+		flex-direction: column;
+		padding-top: 60px;
+		.info {
+			margin-bottom: 10px;
+			width: 100%;
+		}
+	}
+	.button {
+		font-size: 1rem;
+		padding: 12px 0;
+	}
+	.gallery {
+		display: flex;
+		gap: 15px;
+
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		padding-bottom: 12px;
+
+		&::-webkit-scrollbar {
+			height: 4px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: rgba($red, 0.1);
+			border-radius: 999px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: rgba($red, 0.8);
+			border-radius: 999px;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background: rgba(0, 0, 0, 0.4);
+		}
+	}
+}
+

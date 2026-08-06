@@ -1,0 +1,41 @@
+@import '@styles/abstracts/var';
+.layout {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	.main {
+		flex: 1;
+		padding-top: 1rem;
+		padding-bottom: 4rem;
+		@media (max-width: $screen-tb-lg2) {
+			padding-bottom: 3rem;
+		}
+		@media (max-width: $screen-tb) {
+			padding-bottom: 2.5rem;
+		}
+	}
+}
+
+// Fallback při líném načítání stránky (Suspense)
+.loader {
+	min-height: 60vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&::after {
+		content: '';
+		width: 42px;
+		height: 42px;
+		border: 3px solid rgba($red, 0.25);
+		border-top-color: $red;
+		border-radius: 50%;
+		animation: spin 0.8s linear infinite;
+	}
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
