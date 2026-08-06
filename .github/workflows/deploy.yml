@@ -43,7 +43,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps # explicitní TLS; když Forpsi nepodporuje, změň na ftp
+          protocol: ftp # Forpsi tomuto účtu odmítá FTPS login (530), obyčejné FTP funguje
           port: 21
           local-dir: ./dist/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
