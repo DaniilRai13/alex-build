@@ -1,10 +1,16 @@
-import { lazy } from 'react';
+import type { ComponentType } from 'react';
 import type { RouteRecord } from 'vite-react-ssg';
 import Layout from './components/layout/Layout';
 import { ROUTES } from './config/routes';
 
-// Data-routes pro vite-react-ssg. Stránky se načítají líně (code-splitting)
-// a zároveň se prerenderují do statického HTML.
+// react-router `lazy` očekává modul s exportem `Component`; naše stránky mají
+// default export, proto adaptér. Díky routeru (ne React.lazy + Suspense) se
+// obsah renderuje rovnou do shellu → čistá hydratace bez duplikace layoutu.
+const page =
+	(load: () => Promise<{ default: ComponentType }>) => async () => ({
+		Component: (await load()).default,
+	});
+
 export const routes: RouteRecord[] = [
 	{
 		path: ROUTES.HOME,
@@ -13,31 +19,31 @@ export const routes: RouteRecord[] = [
 		children: [
 			{
 				index: true,
-				Component: lazy(() => import('./pages/MainPage/MainPage')),
+				lazy: page(() => import('./pages/MainPage/MainPage')),
 			},
 			{
 				path: ROUTES.PORTFOLIO,
-				Component: lazy(() => import('./pages/PortfolioPage/PortfolioPage')),
+				lazy: page(() => import('./pages/PortfolioPage/PortfolioPage')),
 			},
 			{
 				path: ROUTES.SERVICES,
-				Component: lazy(() => import('./pages/ServicesPage/ServicesPage')),
+				lazy: page(() => import('./pages/ServicesPage/ServicesPage')),
 			},
 			{
 				path: ROUTES.CONTACTS,
-				Component: lazy(() => import('./pages/ContactPage/ContactPage')),
+				lazy: page(() => import('./pages/ContactPage/ContactPage')),
 			},
 			{
 				path: ROUTES.PRIVACY,
-				Component: lazy(() => import('./pages/legal/PrivacyPage')),
+				lazy: page(() => import('./pages/legal/PrivacyPage')),
 			},
 			{
 				path: ROUTES.TERMS,
-				Component: lazy(() => import('./pages/legal/TermsPage')),
+				lazy: page(() => import('./pages/legal/TermsPage')),
 			},
 			{
 				path: '*',
-				Component: lazy(() => import('./pages/NotFoundPage/NotFoundPage')),
+				lazy: page(() => import('./pages/NotFoundPage/NotFoundPage')),
 			},
 		],
 	},
