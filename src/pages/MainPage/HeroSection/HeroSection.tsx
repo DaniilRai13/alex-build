@@ -1,4 +1,6 @@
 import Button from '@/components/ui/Button/Button';
+import Heading from '@/components/ui/Heading/Heading';
+import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { ROUTES } from '@/config/routes';
 import img from '@assets/hero-bg.jpg';
 import { motion } from 'framer-motion';
@@ -19,15 +21,15 @@ const HeroSection: FC = () => {
 				transition={{ ...animationTransition.defaultTransition, delay: 0.2 }}
 				variants={animations.fadeLeft}
 			>
-				<h1>
+				<Heading as='h1' className={styles.title}>
 					Vaše první volba pro
 					<br />
 					kompletní stavby a rekonstrukce.
-				</h1>
-				<p>
+				</Heading>
+				<Subtitle className={styles.description}>
 					Měníme vaše představy v realitu s důrazem na poctivé řemeslo a
 					špičkový výsledek.
-				</p>
+				</Subtitle>
 			</motion.div>
 			<div className={styles.buttonContainer}>
 				<motion.div
