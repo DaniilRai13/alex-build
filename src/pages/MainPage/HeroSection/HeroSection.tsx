@@ -20,13 +20,13 @@ const HeroSection: FC = () => {
 				variants={animations.fadeLeft}
 			>
 				<h1>
-					Navrhování prostorů
+					Vaše první volba pro
 					<br />
-					Které inspirují a vydrží
+					kompletní stavby a rekonstrukce.
 				</h1>
 				<p>
-					Proměňujeme vize v nadčasovou architekturu, spojujeme inovativní
-					design s funkční dokonalostí.
+					Měníme vaše představy v realitu s důrazem na poctivé řemeslo a
+					špičkový výsledek.
 				</p>
 			</motion.div>
 			<div className={styles.buttonContainer}>
