@@ -1,10 +1,29 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
+import type { ViteReactSSGOptions } from 'vite-react-ssg';
+
+// React 19 vkládá pro každý ne-lazy <img> <link rel="preload" as="image"> a
+// vite-react-ssg je nechá na začátku <div id="root"> (renderuje app do kontejneru,
+// ne do celého dokumentu). Preload hinty ale patří do <head> – přesuneme je tam,
+// aby #root začínal rovnou layoutem a prohlížeč načítal obrázky co nejdřív.
+const ssgOptions: ViteReactSSGOptions = {
+	onPageRendered(_route, html) {
+		const rootLinks = /(<div\s+id="root"[^>]*>)((?:\s*<link\b[^>]*>)+)/i;
+		const match = html.match(rootLinks);
+		if (!match) return html;
+
+		const links = match[2].trim();
+		return html
+			.replace(rootLinks, '$1')
+			.replace('</head>', `${links}</head>`);
+	},
+};
 
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [react()],
+	ssgOptions,
 	build: {
 		rollupOptions: {
 			output: {
