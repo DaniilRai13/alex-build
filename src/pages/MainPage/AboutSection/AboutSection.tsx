@@ -3,9 +3,6 @@ import { animations } from '@/components/common/animation/variants';
 import Heading from '@/components/ui/Heading/Heading';
 import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { statisticsData } from '@/data/statistics.data';
-import asana from '@assets/asana.svg';
-import gumroad from '@assets/gumroad.svg';
-import linear from '@assets/linear.svg';
 import { motion } from 'framer-motion';
 import type { FC } from 'react';
 import AboutCard from './AboutCard/AboutCard';
@@ -42,27 +39,6 @@ const AboutSection: FC = () => {
 							</Subtitle>
 						</motion.div>
 					</div>
-					<motion.div
-						className={styles.partners}
-						initial='hidden'
-						whileInView='visible'
-						variants={animations.container}
-						viewport={{ once: true }}
-					>
-						{[
-							{ src: asana, alt: 'Asana' },
-							{ src: linear, alt: 'Linear' },
-							{ src: gumroad, alt: 'Gumroad' },
-						].map(logo => (
-							<motion.img
-								key={logo.src}
-								src={logo.src}
-								alt={logo.alt}
-								className={styles.img}
-								variants={animations.fadeUp}
-							/>
-						))}
-					</motion.div>
 				</div>
 			</section>
 			<motion.section
