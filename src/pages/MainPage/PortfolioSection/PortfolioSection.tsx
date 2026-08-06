@@ -3,14 +3,16 @@ import Heading from '@/components/ui/Heading/Heading';
 import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { ROUTES } from '@/config/routes';
 import { portfolioData } from '@/data/portfolio/portfolio.data';
+import type { IPortfolioProject } from '@/types/portfolio.interface';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import PortfolioModal from '@/pages/PortfolioPage/PortfolioModal/PortfolioModal';
 import PortfolioItem from './PortfolioItem/PortfolioItem';
 import styles from './PortfolioSection.module.scss';
 import { animations } from '@/components/common/animation/variants';
 import { animationTransition } from '@/components/common/animation/transition';
 export interface IPortfolioItems {
-	title: string;
-	image: string;
+	project: IPortfolioProject;
 	className: string;
 }
 
@@ -25,11 +27,13 @@ const layoutClasses = [
 const portfolioItems: IPortfolioItems[] = portfolioData
 	.slice(0, 4)
 	.map((project, index) => ({
-		title: project.title,
-		image: project.preview,
+		project,
 		className: layoutClasses[index],
 	}));
 export const PortfolioSection = () => {
+	const [selectedProject, setSelectedProject] =
+		useState<IPortfolioProject | null>(null);
+
 	return (
 		<section className={styles.portfolio}>
 			<div className={styles.info}>
@@ -58,7 +62,11 @@ export const PortfolioSection = () => {
 
 			<div className={styles.gallery}>
 				{portfolioItems.map(item => (
-					<PortfolioItem key={item.title} item={item} />
+					<PortfolioItem
+						key={item.project.id}
+						item={item}
+						onOpen={setSelectedProject}
+					/>
 				))}
 			</div>
 			<motion.div
@@ -74,6 +82,11 @@ export const PortfolioSection = () => {
 					to={ROUTES.PORTFOLIO}
 				/>
 			</motion.div>
+
+			<PortfolioModal
+				project={selectedProject}
+				onClose={() => setSelectedProject(null)}
+			/>
 		</section>
 	);
 };
