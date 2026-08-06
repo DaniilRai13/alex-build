@@ -5,7 +5,9 @@ export const privacySections: LegalSection[] = [
 	{
 		heading: 'Správce osobních údajů',
 		paragraphs: [
-			`Správcem vašich osobních údajů je ${company.name}, se sídlem ${company.address}, IČO ${company.id} (dále jen „správce“).`,
+			`Správcem vašich osobních údajů je ${company.name}, se sídlem ${company.address}${
+				company.id.includes('[') ? '' : `, IČO ${company.id}`
+			} (dále jen „správce“).`,
 			`V případě jakýchkoli dotazů týkajících se zpracování osobních údajů nás můžete kontaktovat na e-mailu ${company.email}.`,
 		],
 	},
