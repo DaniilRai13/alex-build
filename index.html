@@ -10,57 +10,9 @@
 
     <meta name="theme-color" content="#111111" />
 
-    <!-- <title>, description a OG/Twitter řeší per-route komponenta Seo
-         (vite-react-ssg <Head>), aby se neduplikovaly. -->
-
-    <!-- Structured data: local business (JSON-LD). Per-page entities (services,
-         projects) reference this @id so Google ties them to one organisation. -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "GeneralContractor",
-        "@id": "https://kartstav.cz/#organization",
-        "name": "KartStav Development s.r.o.",
-        "alternateName": "KartStav",
-        "identifier": "29883229",
-        "url": "https://kartstav.cz",
-        "logo": "https://kartstav.cz/favicon-512.png",
-        "image": "https://kartstav.cz/og-image.jpg",
-        "priceRange": "$$",
-        "telephone": "+420774896027",
-        "email": "info@kartstav.cz",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Čenětická 2413/1a, Chodov",
-          "postalCode": "149 00",
-          "addressLocality": "Praha",
-          "addressCountry": "CZ"
-        },
-        "areaServed": [
-          { "@type": "AdministrativeArea", "name": "Ústecký kraj" },
-          { "@type": "AdministrativeArea", "name": "Středočeský kraj" },
-          { "@type": "AdministrativeArea", "name": "Karlovarský kraj" },
-          { "@type": "AdministrativeArea", "name": "Liberecký kraj" },
-          { "@type": "AdministrativeArea", "name": "Plzeňský kraj" },
-          { "@type": "City", "name": "Praha" },
-          { "@type": "City", "name": "Brno" }
-        ],
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday"
-            ],
-            "opens": "09:00",
-            "closes": "18:00"
-          }
-        ]
-      }
-    </script>
+    <!-- <title>, description, OG/Twitter a JSON-LD řeší React:
+         per-route komponenta Seo a organizace v Layout (vite-react-ssg <Head>),
+         aby se údaje nepsaly dvakrát. -->
   </head>
   <body>
     <div id="root"></div>

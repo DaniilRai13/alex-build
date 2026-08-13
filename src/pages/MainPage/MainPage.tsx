@@ -1,5 +1,5 @@
 import Seo from '@/components/common/Seo/Seo';
-import { company } from '@/config/company';
+import { company, ORGANIZATION_ID } from '@/config/company';
 import { ROUTES } from '@/config/routes';
 import { type FC } from 'react';
 import AboutSection from './AboutSection/AboutSection';
@@ -17,7 +17,7 @@ const websiteJsonLd = {
 	alternateName: company.brand,
 	url: company.url,
 	inLanguage: 'cs-CZ',
-	publisher: { '@id': `${company.url}/#organization` },
+	publisher: { '@id': ORGANIZATION_ID },
 };
 
 const MainPage: FC = () => {

@@ -223,3 +223,18 @@ export const portfolioData: IPortfolioProject[] = [
 /** Look up a project by its URL segment (/project/{slug}). */
 export const getProjectBySlug = (slug?: string) =>
 	portfolioData.find(project => project.slug === slug);
+
+const FEATURED_SLUG = 'rekonstrukce-paneloveho-bytu';
+
+/**
+ * The most presentable finished shot we have. Pages outside the portfolio use
+ * it as their hero image, so it lives here rather than as a slug string spelled
+ * out in a component — renaming the project then breaks the build, not the page.
+ */
+export const featuredProject = (() => {
+	const project = getProjectBySlug(FEATURED_SLUG);
+
+	if (!project) throw new Error(`Featured project not found: ${FEATURED_SLUG}`);
+
+	return project;
+})();

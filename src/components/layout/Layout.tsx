@@ -1,8 +1,10 @@
+import { organizationJsonLd } from '@/config/jsonLd';
+import { ROUTES } from '@/config/routes';
 import { useEffect, type FC } from 'react';
 import { Outlet, useLocation } from 'react-router';
+import { Head } from 'vite-react-ssg';
 import CtaBanner from '../common/CtaBanner/CtaBanner';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
-import { ROUTES } from '@/config/routes';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import styles from './Layout.module.scss';
@@ -19,6 +21,13 @@ const Layout: FC = () => {
 	}, [pathname]);
 	return (
 		<div className={styles.layout}>
+			{/* One organisation entity per page, built from config/company.ts. */}
+			<Head>
+				<script type='application/ld+json'>
+					{JSON.stringify(organizationJsonLd)}
+				</script>
+			</Head>
+
 			<Header />
 			<main className={styles.main}>
 				<div className='container'>

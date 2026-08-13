@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
 import Image from '@/components/ui/Image/Image';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
-import { company } from '@/config/company';
+import { company, ORGANIZATION_ID } from '@/config/company';
 import { breadcrumbJsonLd } from '@/config/jsonLd';
 import { projectPath, ROUTES } from '@/config/routes';
 import { getProjectBySlug, portfolioData } from '@/data/portfolio/portfolio.data';
@@ -58,7 +58,7 @@ const ProjectPage: FC = () => {
 			'@type': 'Place',
 			name: project.location,
 		},
-		creator: { '@id': `${company.url}/#organization` },
+		creator: { '@id': ORGANIZATION_ID },
 	};
 
 	// Neighbouring projects keep every detail page linked from at least two
