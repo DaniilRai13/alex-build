@@ -30,6 +30,9 @@ const itemListJsonLd = {
 // The most presentable finished shot we have; it doubles as the hero image.
 const heroProject = getProjectBySlug('rekonstrukce-paneloveho-bytu');
 
+/** The service the overview opens on — the rest are one click away. */
+const featured = services[0];
+
 const ServicesPage = () => {
 	return (
 		<section className={styles.services}>
@@ -53,24 +56,19 @@ const ServicesPage = () => {
 				/>
 			)}
 
-			<div className={styles.top}>
-				<div className={styles.sticky}>
-					{/* The <h1> lives in the hero above, so the sidebar label is a
-					    plain paragraph rather than a second heading. */}
-					<ServiceSidebar headingAs='p' />
-				</div>
+			{/* One service at a time, as in the design. The list on the left is
+			    made of links, so picking one opens its own page — every service
+			    still has its full copy indexed, just at /services/{slug}. */}
+			<div className={styles.board}>
+				<ServiceSidebar activeSlug={featured.slug} />
 
-				<div className={styles.list}>
-					{services.map(service => (
-						<ServicePreview
-							key={service.id}
-							service={service}
-							headingHref={servicePath(service.slug)}
-							ctaTitle={service.buttonText}
-							ctaTo={servicePath(service.slug)}
-						/>
-					))}
-				</div>
+				<ServicePreview
+					service={featured}
+					ctaTitle={featured.buttonText}
+					ctaTo={servicePath(featured.slug)}
+					secondaryTitle='Zobrazit realizace'
+					secondaryTo={ROUTES.PORTFOLIO}
+				/>
 			</div>
 		</section>
 	);

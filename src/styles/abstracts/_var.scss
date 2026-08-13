@@ -14,7 +14,9 @@ $red-dark: #832620;
 
 // Цвета фона
 $bg-main: #eae7dc;
-$bg-card: #ffffff;
+// Warm off-white, a shade lighter than the page. Pure white cut a hole in the
+// beige palette; the shadow is what lifts a card, not the contrast.
+$bg-card: #f3f0e8;
 $bg-secondary: #f1f5f9;
 $bg-dark: #1e293b;
 

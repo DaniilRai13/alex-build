@@ -69,6 +69,7 @@ const ServicesHero: FC<Props> = ({
 
 		<div className={styles.figure}>
 			<Image
+				className={styles.photo}
 				src={image.src}
 				srcSet={image.srcSet}
 				sizes='(max-width: 1024px) 100vw, 40vw'

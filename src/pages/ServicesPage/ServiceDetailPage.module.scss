@@ -1,23 +1,26 @@
 @import '@styles/abstracts/var';
 
 .detail {
-	.top {
+	// Same card as the overview: service list on the left, the open service on
+	// the right, so moving between the two pages does not shift the layout.
+	.board {
 		display: grid;
-		grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-		gap: 25px;
-		align-items: start;
+		grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+		// Stretch so the sidebar column runs the full height of the card —
+		// with `start` its background stopped under the last list item.
+		align-items: stretch;
+
+		margin-bottom: 25px;
+		border-radius: $radius-lg;
+		background: $bg-card;
+		box-shadow: $shadow-md;
+		overflow: hidden;
 	}
 
-	.sticky {
-		position: sticky;
-		top: calc($header-height + 20px);
-	}
-
-	.content {
+	.below {
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
-		min-width: 0;
 	}
 
 	.text {
@@ -99,20 +102,15 @@
 
 @media (max-width: $screen-tb-xl) {
 	.detail {
-		.top {
+		.board {
 			grid-template-columns: 1fr;
-		}
-
-		.sticky {
-			position: static;
 		}
 	}
 }
 
 @media (max-width: $screen-tb) {
 	.detail {
-		.top,
-		.content {
+		.below {
 			gap: 15px;
 		}
 

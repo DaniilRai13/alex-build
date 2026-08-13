@@ -1,91 +1,96 @@
 @import '@styles/abstracts/var';
 
+// Light panel on the card background: dark text on white reads better in a
+// dense two-column list than the previous white-on-photo treatment.
 .preview {
 	position: relative;
 	isolation: isolate;
-	background: rgba(#e8e2d5, 1);
-	border-radius: $radius-lg;
-	box-shadow: $shadow-md;
-	overflow: hidden;
-	padding: 40px;
-	gap: 40px;
-	min-height: 540px;
-	align-items: center;
-	.overlay {
-		position: absolute;
-		inset: 0;
+	padding: 34px 38px;
+	min-width: 0;
 
-		background: linear-gradient(90deg, rgba(40, 40, 40, 0.35) 0%);
-
-		z-index: 1;
+	// Safety net if two panels ever end up stacked in one card.
+	& + & {
+		border-top: 1px solid rgba($text-primary, 0.08);
 	}
+
 	.bg {
 		position: absolute;
-		right: 0;
-		bottom: 20px;
-		height: 70%;
+		right: -10px;
+		bottom: 0;
+		z-index: -1;
+
+		width: 46%;
+		max-width: 340px;
+		height: auto;
+
+		// Kept as a watermark: multiply drops the white paper, the low opacity
+		// keeps it from competing with the list.
+		opacity: 0.16;
 		mix-blend-mode: multiply;
+		pointer-events: none;
 	}
+
 	.info {
 		position: relative;
-		z-index: 2;
+		z-index: 1;
+
 		.heading {
-			font-size: clamp(2rem, 3vw, 3rem);
+			margin-bottom: 12px;
+			font-size: clamp(1.4rem, 2.2vw, 1.8rem);
 			font-weight: 600;
-			line-height: 1.15;
-			letter-spacing: -0.02em;
-			margin-bottom: 25px;
-			color: #fff;
+			line-height: 1.2;
+			color: $text-primary;
 
 			.headingLink {
 				color: inherit;
+				transition: color $transition-fast;
 
 				@media (hover: hover) {
 					&:hover {
-						text-decoration: underline;
-						text-underline-offset: 6px;
+						color: $red;
 					}
 				}
 			}
 		}
 
 		.description {
-			color: rgba(255, 255, 255, 0.85);
-			font-size: 1.05rem;
-			line-height: 1.8;
-			font-weight: 400;
-			margin-bottom: 22px;
-			max-width: 450px;
+			max-width: 620px;
+			margin-bottom: 24px;
+			color: $text-secondary;
+			font-size: 1rem;
+			line-height: 1.65;
 		}
 
+		// Two columns like the design; a single column below the tablet break.
 		.list {
-			display: flex;
-			flex-direction: column;
-			gap: 18px;
-			margin-bottom: 30px;
-			width: fit-content;
-			padding: 20px;
-			border-radius: $radius-lg;
-			background: rgba(255, 255, 255, 0.12);
-			backdrop-filter: blur(12px);
-			.item {
-				font-size: 1.1rem;
-				list-style: none;
-				font-weight: 600;
-				display: flex;
-				align-items: center;
-				gap: 18px;
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 12px 32px;
 
-				color: #fff;
+			padding: 0;
+			margin: 0 0 30px;
+			list-style: none;
+
+			.item {
+				display: flex;
+				align-items: flex-start;
+				gap: 10px;
+
+				color: $text-primary;
+				font-size: 0.95rem;
+				line-height: 1.4;
 
 				&::before {
 					content: '✓';
+					flex-shrink: 0;
 					color: $red;
-					font-size: 1.3rem;
-					font-weight: bold;
+					font-size: 1rem;
+					font-weight: 700;
+					line-height: 1.35;
 				}
 			}
 		}
+
 		.actions {
 			display: flex;
 			align-items: center;
@@ -95,8 +100,8 @@
 
 		.button {
 			background: $red;
-			padding: 0.7rem 2rem;
-			color: #fff;
+			padding: 0.8rem 2rem;
+			color: $text-white;
 		}
 
 		// Quieter than the filled button: a second equally loud call to action
@@ -106,90 +111,63 @@
 			align-items: center;
 			gap: 8px;
 
-			color: #fff;
+			color: $red;
 			font-weight: 600;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.45);
-			padding-bottom: 2px;
 			transition: 0.25s;
 
 			@media (hover: hover) {
 				&:hover {
-					border-bottom-color: #fff;
+					color: $red-dark;
 					transform: translateX(3px);
 				}
 			}
 		}
 	}
-
-	// .image {
-	// 	position: absolute;
-	// 	bottom: 5px;
-	// 	right: 0px;
-	// 	height: 65%;
-	// 	img {
-	// 		mix-blend-mode: multiply;
-	// 		height: 100%;
-	// 		display: block;
-	// 		object-fit: contain;
-	// 		// opacity: 0.85;
-	// 	}
-	// }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: $screen-tb-xl) {
 	.preview {
-		padding: 45px;
-		min-height: 500px;
-		.bg{
-			height: 70%;
+		padding: 30px 28px;
+
+		.bg {
+			width: 40%;
 		}
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.preview {
+		padding: 26px 20px;
+
+		.bg {
+			width: 60%;
+			opacity: 0.12;
+		}
+
 		.info {
-			max-width: 460px;
-			.heading {
-				font-size: 2.4rem;
+			.description {
+				font-size: 0.92rem;
+				margin-bottom: 20px;
 			}
-			.description{
-				font-size: 1rem;
+
+			.list {
+				grid-template-columns: 1fr;
+				gap: 10px;
+				margin-bottom: 24px;
+
+				.item {
+					font-size: 0.9rem;
+				}
 			}
-		}
-	}
-}
-@media (max-width: 950px) {
-	.preview {
-		.info {
-			.heading {
-				font-size: 2.1rem;
-				margin-bottom: 15px;
+
+			.button {
+				width: 100%;
+				justify-content: center;
 			}
-			.description{
-				font-size: .875rem;
+
+			.actions {
+				width: 100%;
 			}
-		}
-	}
-}
-
-@media (max-width: 768px) {
-	.preview {
-		min-height: auto;
-		padding: 35px 30px 28px;
-		align-items: flex-start;
-	}
-
-	.bg {
-		width: 100%;
-		height: 260px;
-
-		top: auto;
-		bottom: 0;
-
-		object-fit: contain;
-		object-position: center bottom;
-	}
-
-	.info {
-		max-width: 100%;
-		.list {
-			width: 100%;
 		}
 	}
 }

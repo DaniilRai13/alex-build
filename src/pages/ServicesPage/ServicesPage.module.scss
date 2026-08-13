@@ -1,47 +1,29 @@
 @import '@styles/abstracts/var';
 
 .services {
-	.top {
+	// Sidebar and panels share one rounded card, the way the design frames them.
+	.board {
 		display: grid;
-		grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-		gap: 25px;
-		align-items: start;
+		grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+		// Stretch so the sidebar column runs the full height of the card —
+		// with `start` its background stopped under the last list item.
+		align-items: stretch;
+
+		border-radius: $radius-lg;
+		background: $bg-card;
+		box-shadow: $shadow-md;
+		overflow: hidden;
 	}
 
-	// Overview: every service stacked, so all of the copy ships in the HTML.
 	.list {
-		display: flex;
-		flex-direction: column;
-		gap: 25px;
 		min-width: 0;
-	}
-
-	// Keeps the sidebar in view while scrolling the long list.
-	.sticky {
-		position: sticky;
-		top: calc($header-height + 20px);
 	}
 }
 
 @media (max-width: $screen-tb-xl) {
 	.services {
-		.top {
+		.board {
 			grid-template-columns: 1fr;
-		}
-
-		.sticky {
-			position: static;
-		}
-	}
-}
-@media (max-width: $screen-tb) {
-	.services {
-		.top {
-			gap: 15px;
-		}
-
-		.list {
-			gap: 15px;
 		}
 	}
 }

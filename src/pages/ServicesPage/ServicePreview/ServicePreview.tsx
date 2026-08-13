@@ -34,12 +34,13 @@ const ServicePreview = ({
 }: Props) => {
 	return (
 		<div className={styles.preview}>
-			<div className={styles.overlay}></div>
+			{/* Watermark, not content: the sketch sits behind the text at low
+			    opacity, so alt is empty and it never blocks a click. */}
 			{service.img && (
 				<Image
 					src={service.img.src}
 					srcSet={service.img.srcSet}
-					alt={service.title}
+					alt=''
 					className={styles.bg}
 					priority={priority}
 				/>

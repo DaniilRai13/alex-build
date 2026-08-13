@@ -4,7 +4,10 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
 	gap: 45px;
-	align-items: center;
+	// Stretch, not center: the photo takes its height from the text column, so
+	// the two sides finish level like in the design instead of the portrait
+	// source dictating a tall frame.
+	align-items: stretch;
 
 	margin-bottom: 55px;
 }
@@ -97,12 +100,15 @@
 	border-radius: $radius-lg;
 	box-shadow: $shadow-md;
 
-	img {
+	// Wins over the .image rule the Image component adds to the same <img>,
+	// which has equal specificity and would otherwise decide on source order.
+	.photo {
 		width: 100%;
-		// The best finished shot is a portrait phone photo, so the frame is tall
-		// rather than wide — cropping it to a banner would throw the room away.
-		aspect-ratio: 4 / 5;
+		height: 100%;
+		// The source is a portrait phone photo. Filling the column height and
+		// cropping from the top keeps the sofa and the kitchen in frame.
 		object-fit: cover;
+		object-position: center 35%;
 	}
 }
 
@@ -113,8 +119,10 @@
 		margin-bottom: 40px;
 	}
 
-	.figure img {
+	// Stacked layout: nothing to match heights with, so give the frame a shape.
+	.figure .photo {
 		aspect-ratio: 3 / 2;
+		height: auto;
 	}
 }
 
@@ -129,8 +137,9 @@
 		font-size: 0.95rem;
 	}
 
-	.figure img {
+	.figure .photo {
 		aspect-ratio: 4 / 3;
+		height: auto;
 	}
 }
 
