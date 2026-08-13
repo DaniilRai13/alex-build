@@ -17,9 +17,11 @@ const Button: FC<ButtonProps> = ({
 	href,
 	target = '_self',
 }) => {
+	// The label is a <span>, not an <h3>: headings form the page outline search
+	// engines read, and a button caption does not belong in it.
 	const content = (
 		<>
-			{title && <h3 className={styles.title}>{title}</h3>}
+			{title && <span className={styles.title}>{title}</span>}
 			{icon && <Icon icon={icon} size={iconSize} />}
 		</>
 	);

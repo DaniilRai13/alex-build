@@ -14,8 +14,13 @@
 	color: $text-primary;
 	background-color: $red;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-	.title{
+	// The label used to be an <h3>. Size and weight are restored from the
+	// default heading style (in `em`, so it keeps scaling with buttons that
+	// override font-size) — swapping the tag must not change how it looks.
+	.title {
 		margin-bottom: 0;
+		font-size: 1.17em;
+		font-weight: bold;
 	}
 	&:disabled {
 		opacity: 0.5;
