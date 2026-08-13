@@ -1,7 +1,5 @@
 @import '@styles/abstracts/var';
 
-// Same treatment as the other cards on the site: the page background lifted by
-// a shadow, never a white panel — the palette here is warm beige, not white.
 .cta {
 	display: flex;
 	align-items: center;
@@ -9,7 +7,7 @@
 	gap: 40px;
 
 	margin-top: 70px;
-	padding: 2.2rem 3rem;
+	padding: 1.5rem 3rem;
 
 	border-radius: $radius-lg;
 	background: $bg-main;
@@ -72,16 +70,9 @@
 	}
 }
 
-// Nested under .cta on purpose: the Image component also puts its own .image
-// class on the same element, and that rule's max-width: 100% has identical
-// specificity — without the extra class it would win on source order and the
-// sketch would blow up to the full card width on phones.
-//
-// The sketch is drawn on white paper; multiply drops that white into the beige
-// card instead of stamping a pale rectangle on it (same trick as ServicePreview).
 .cta .art {
 	flex: 0 0 auto;
-	width: clamp(220px, 26vw, 340px);
+	width: clamp(350px, 26vw, 400px);
 	height: auto;
 	mix-blend-mode: multiply;
 }
@@ -102,6 +93,9 @@
 		margin-top: 55px;
 		padding: 1.6rem;
 	}
+	.content {
+		width: 100%;
+	}
 
 	.text {
 		font-size: 0.95rem;
@@ -116,7 +110,6 @@
 	}
 
 	.cta .art {
-		align-self: center;
-		width: 220px;
+		display: none;
 	}
 }

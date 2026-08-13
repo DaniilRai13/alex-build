@@ -29,6 +29,9 @@ $text-white: #ffffff;
 // Цвета границ
 $border-light: #e2e8f0;
 $border-medium: #cbd5e1;
+// Hairline on the warm background. The two above are cool greys and read
+// blue next to the beige, so dividers use this instead.
+$border-warm: rgba($text-primary, 0.08);
 
 // Тени (простые)
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
