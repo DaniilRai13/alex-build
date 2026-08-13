@@ -1,25 +1,10 @@
 import Heading from '@/components/ui/Heading/Heading';
 import Image from '@/components/ui/Image/Image';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
-import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
+import { advantages } from '@/data/advantages.data';
 import type { IResponsiveImage } from '@/types/image.interface';
 import type { FC } from 'react';
 import styles from './ServicesHero.module.scss';
-
-interface Advantage {
-	icon: IconNames;
-	title: string;
-	text: string;
-}
-
-// Numbers match statistics.data.ts on the home page — a visitor comparing the
-// two pages must not find two different warranty lengths.
-const advantages: Advantage[] = [
-	{ icon: 'Award', title: 'Zkušenosti', text: '40+ dokončených projektů' },
-	{ icon: 'BadgeCheck', title: 'Kvalita', text: 'Ověřené materiály' },
-	{ icon: 'CalendarCheck', title: 'Termíny', text: 'Dodržujeme domluvu' },
-	{ icon: 'ShieldCheck', title: 'Záruka', text: '2 roky na veškeré práce' },
-];
 
 interface Props {
 	eyebrow: string;

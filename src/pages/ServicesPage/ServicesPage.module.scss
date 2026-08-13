@@ -1,29 +1,8 @@
 @import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
 
 .services {
-	// Sidebar and panels share one rounded card, the way the design frames them.
 	.board {
-		display: grid;
-		grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
-		// Stretch so the sidebar column runs the full height of the card —
-		// with `start` its background stopped under the last list item.
-		align-items: stretch;
-
-		border-radius: $radius-lg;
-		background: $bg-card;
-		box-shadow: $shadow-md;
-		overflow: hidden;
-	}
-
-	.list {
-		min-width: 0;
-	}
-}
-
-@media (max-width: $screen-tb-xl) {
-	.services {
-		.board {
-			grid-template-columns: 1fr;
-		}
+		@include service-board;
 	}
 }

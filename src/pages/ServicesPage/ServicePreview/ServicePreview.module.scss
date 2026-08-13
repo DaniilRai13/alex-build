@@ -1,17 +1,10 @@
 @import '@styles/abstracts/var';
 
-// Light panel on the card background: dark text on white reads better in a
-// dense two-column list than the previous white-on-photo treatment.
 .preview {
 	position: relative;
 	isolation: isolate;
 	padding: 34px 38px;
 	min-width: 0;
-
-	// Safety net if two panels ever end up stacked in one card.
-	& + & {
-		border-top: 1px solid rgba($text-primary, 0.08);
-	}
 
 	.bg {
 		position: absolute;
@@ -23,8 +16,6 @@
 		max-width: 340px;
 		height: auto;
 
-		// Kept as a watermark: multiply drops the white paper, the low opacity
-		// keeps it from competing with the list.
 		opacity: 0.16;
 		mix-blend-mode: multiply;
 		pointer-events: none;
@@ -61,7 +52,6 @@
 			line-height: 1.65;
 		}
 
-		// Two columns like the design; a single column below the tablet break.
 		.list {
 			display: grid;
 			grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -125,24 +115,31 @@
 	}
 }
 
+// Tablet and below: one column of work items, the panel is no longer wide
+// enough for two without the lines breaking mid-phrase.
 @media (max-width: $screen-tb-xl) {
 	.preview {
 		padding: 30px 28px;
 
 		.bg {
-			width: 40%;
+			width: 55%;
+			opacity: 0.12;
+		}
+
+		.info {
+			.list {
+				grid-template-columns: 1fr;
+				gap: 10px;
+				margin-bottom: 24px;
+			}
 		}
 	}
 }
 
+// Phones: the two calls to action stop fitting side by side.
 @media (max-width: $screen-tb) {
 	.preview {
 		padding: 26px 20px;
-
-		.bg {
-			width: 60%;
-			opacity: 0.12;
-		}
 
 		.info {
 			.description {
@@ -150,14 +147,15 @@
 				margin-bottom: 20px;
 			}
 
-			.list {
-				grid-template-columns: 1fr;
-				gap: 10px;
-				margin-bottom: 24px;
+			.list .item {
+				font-size: 0.9rem;
+			}
 
-				.item {
-					font-size: 0.9rem;
-				}
+			.actions {
+				width: 100%;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 14px;
 			}
 
 			.button {
@@ -165,8 +163,8 @@
 				justify-content: center;
 			}
 
-			.actions {
-				width: 100%;
+			.secondary {
+				justify-content: center;
 			}
 		}
 	}

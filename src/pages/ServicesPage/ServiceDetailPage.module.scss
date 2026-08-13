@@ -1,42 +1,33 @@
 @import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
 
 .detail {
-	// Same card as the overview: service list on the left, the open service on
-	// the right, so moving between the two pages does not shift the layout.
 	.board {
-		display: grid;
-		grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
-		// Stretch so the sidebar column runs the full height of the card —
-		// with `start` its background stopped under the last list item.
-		align-items: stretch;
+		@include service-board;
 
 		margin-bottom: 25px;
-		border-radius: $radius-lg;
-		background: $bg-card;
-		box-shadow: $shadow-md;
-		overflow: hidden;
 	}
 
-	.below {
-		display: flex;
-		flex-direction: column;
-		gap: 25px;
-	}
-
+	// Dark panel so the long-form text reads as a distinct chapter after the
+	// card above it.
 	.text {
-		padding: 35px 40px;
-		border-radius: $radius-lg;
-		background: $bg-card;
-		box-shadow: $shadow-md;
+		@include card(rgba(#000, 0.8));
 
+		padding: 35px 40px;
+
+		// No !important needed: nesting makes this .detail .text .textHeading,
+		// which already outranks the single-class rule in Heading.module.scss.
 		.textHeading {
+			@include accent-bar;
+
 			margin-bottom: 20px;
 			font-size: clamp(1.5rem, 2.4vw, 2rem);
-			color: $text-primary;
+			text-transform: uppercase;
+			color: #fff;
 		}
 
 		.paragraph {
-			color: $text-secondary;
+			color: rgba(#fff, 0.8);
 			font-size: 1.05rem;
 			line-height: 1.7;
 
@@ -45,75 +36,10 @@
 			}
 		}
 	}
-
-	.related {
-		.relatedHeading {
-			margin-bottom: 18px;
-			font-size: clamp(1.3rem, 2vw, 1.6rem);
-			color: $text-primary;
-		}
-
-		.relatedList {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-			gap: 15px;
-
-			padding: 0;
-			margin: 0;
-			list-style: none;
-		}
-
-		.relatedLink {
-			display: flex;
-			flex-direction: column;
-			gap: 8px;
-			height: 100%;
-
-			padding: 20px;
-			border-radius: $radius-lg;
-			background: $bg-card;
-			box-shadow: $shadow-sm;
-			transition: $transition-normal;
-
-			strong {
-				color: $text-primary;
-				font-size: 1.05rem;
-			}
-
-			span {
-				color: $text-secondary;
-				font-size: 0.9rem;
-				line-height: 1.5;
-			}
-
-			@media (hover: hover) {
-				&:hover {
-					transform: translateY(-3px);
-					box-shadow: $shadow-md;
-
-					strong {
-						color: $red;
-					}
-				}
-			}
-		}
-	}
-}
-
-@media (max-width: $screen-tb-xl) {
-	.detail {
-		.board {
-			grid-template-columns: 1fr;
-		}
-	}
 }
 
 @media (max-width: $screen-tb) {
 	.detail {
-		.below {
-			gap: 15px;
-		}
-
 		.text {
 			padding: 25px 20px;
 

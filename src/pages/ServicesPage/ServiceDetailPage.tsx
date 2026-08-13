@@ -1,12 +1,12 @@
 import Breadcrumbs from '@/components/common/Breadcrumbs/Breadcrumbs';
 import Seo from '@/components/common/Seo/Seo';
 import Heading from '@/components/ui/Heading/Heading';
-import { company } from '@/config/company';
+import { company, ORGANIZATION_ID } from '@/config/company';
 import { breadcrumbJsonLd } from '@/config/jsonLd';
 import { ROUTES, servicePath } from '@/config/routes';
-import { getServiceBySlug, services } from '@/data/services.data';
+import { getServiceBySlug } from '@/data/services.data';
 import type { FC } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ServicePreview from './ServicePreview/ServicePreview';
 import ServiceSidebar from './ServiceSidebar/ServiceSidebar';
@@ -15,9 +15,6 @@ import styles from './ServiceDetailPage.module.scss';
 const ServiceDetailPage: FC = () => {
 	const { slug } = useParams();
 	const service = getServiceBySlug(slug);
-
-	// An unknown slug renders the 404 page instead of an empty shell, so a
-	// mistyped URL never turns into an indexable soft 404.
 	if (!service) return <NotFoundPage />;
 
 	const url = servicePath(service.slug);
@@ -34,7 +31,7 @@ const ServiceDetailPage: FC = () => {
 		description: service.seoDescription,
 		url: `${company.url}${url}`,
 		serviceType: service.title,
-		provider: { '@id': `${company.url}/#organization` },
+		provider: { '@id': ORGANIZATION_ID },
 		hasOfferCatalog: {
 			'@type': 'OfferCatalog',
 			name: service.title,
@@ -44,8 +41,6 @@ const ServiceDetailPage: FC = () => {
 			})),
 		},
 	};
-
-	const otherServices = services.filter(item => item.slug !== service.slug);
 
 	return (
 		<section className={styles.detail}>
@@ -70,38 +65,16 @@ const ServiceDetailPage: FC = () => {
 				/>
 			</div>
 
-			<div className={styles.below}>
-				<div className={styles.text}>
-					<Heading as='h2' className={styles.textHeading}>
-						{service.detailHeading}
-					</Heading>
+			<div className={styles.text}>
+				<Heading as='h2' className={styles.textHeading}>
+					{service.detailHeading}
+				</Heading>
 
-					{service.longDescription.map(paragraph => (
-						<p className={styles.paragraph} key={paragraph.slice(0, 40)}>
-							{paragraph}
-						</p>
-					))}
-				</div>
-
-				<div className={styles.related}>
-					<Heading as='h2' className={styles.relatedHeading}>
-						Další služby
-					</Heading>
-
-					<ul className={styles.relatedList}>
-						{otherServices.map(item => (
-							<li key={item.slug}>
-								<Link
-									className={styles.relatedLink}
-									to={servicePath(item.slug)}
-								>
-									<strong>{item.title}</strong>
-									<span>{item.description}</span>
-								</Link>
-							</li>
-						))}
-					</ul>
-				</div>
+				{service.longDescription.map(paragraph => (
+					<p className={styles.paragraph} key={paragraph.slice(0, 40)}>
+						{paragraph}
+					</p>
+				))}
 			</div>
 		</section>
 	);

@@ -21,6 +21,9 @@
 		margin-bottom: 0;
 		font-size: 1.17em;
 		font-weight: bold;
+		text-transform: uppercase;
+		// Caps sit tighter than lowercase; a little tracking keeps them legible.
+		letter-spacing: 0.02em;
 	}
 	&:disabled {
 		opacity: 0.5;
@@ -35,5 +38,17 @@
 	&:active:not(:disabled) {
 		transform: translateY(-1px);
 		box-shadow: 0 4px 12px rgba($red, 0.3);
+	}
+}
+
+// Phones: a smaller label, and a few pixels off the button height. The height
+// comes off the line box rather than the padding on purpose — nearly every
+// place that uses Button overrides its padding with a more specific selector,
+// so a global padding rule here would simply lose. Font-size and line-height
+// of the label are set nowhere else, so these always apply.
+@media (max-width: 500px) {
+	.button .title {
+		font-size: 0.875rem;
+		line-height: 1.3;
 	}
 }

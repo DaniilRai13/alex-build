@@ -9,16 +9,12 @@ import styles from './ServicePreview.module.scss';
 
 interface Props {
 	service: IService;
-	/** <h1> on the service detail page, <h2> in the overview list. */
 	headingAs?: 'h1' | 'h2';
-	/** Renders the heading as a link to the detail page (used by the overview). */
 	headingHref?: string;
 	ctaTitle?: string;
 	ctaTo?: string;
-	/** Optional second, quieter link — used on detail pages, not in the list. */
 	secondaryTitle?: string;
 	secondaryTo?: string;
-	/** Above-the-fold image loads eagerly; the rest stay lazy. */
 	priority?: boolean;
 }
 
@@ -34,8 +30,6 @@ const ServicePreview = ({
 }: Props) => {
 	return (
 		<div className={styles.preview}>
-			{/* Watermark, not content: the sketch sits behind the text at low
-			    opacity, so alt is empty and it never blocks a click. */}
 			{service.img && (
 				<Image
 					src={service.img.src}

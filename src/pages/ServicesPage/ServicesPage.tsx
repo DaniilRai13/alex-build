@@ -3,9 +3,10 @@ import Seo from '@/components/common/Seo/Seo';
 import { company } from '@/config/company';
 import { breadcrumbJsonLd } from '@/config/jsonLd';
 import { ROUTES, servicePath } from '@/config/routes';
-import { getProjectBySlug } from '@/data/portfolio/portfolio.data';
+import { featuredProject } from '@/data/portfolio/portfolio.data';
 import { REGIONS_SENTENCE } from '@/data/regions.data';
 import { services } from '@/data/services.data';
+import { useState } from 'react';
 import ServicePreview from './ServicePreview/ServicePreview';
 import ServiceSidebar from './ServiceSidebar/ServiceSidebar';
 import ServicesHero from './ServicesHero/ServicesHero';
@@ -27,13 +28,13 @@ const itemListJsonLd = {
 	})),
 };
 
-// The most presentable finished shot we have; it doubles as the hero image.
-const heroProject = getProjectBySlug('rekonstrukce-paneloveho-bytu');
-
-/** The service the overview opens on — the rest are one click away. */
-const featured = services[0];
-
 const ServicesPage = () => {
+	// Switching between four services is filtering, not navigation: doing it
+	// through the router meant a page load and a jump back to the top every
+	// time. The full pages still exist at /services/{slug} — the panel's own
+	// button leads there, and the footer links all four from every page.
+	const [active, setActive] = useState(services[0]);
+
 	return (
 		<section className={styles.services}>
 			<Seo
@@ -45,27 +46,22 @@ const ServicesPage = () => {
 
 			<Breadcrumbs items={crumbs} />
 
-			{heroProject && (
-				<ServicesHero
-					eyebrow='Naše služby'
-					heading='Kompletní rekonstrukce bytů a domů'
-					text='Postaráme se o celý průběh rekonstrukce od návrhu až po finální dokončení. Kvalitní řemeslná práce, ověřené materiály a dodržené termíny jsou pro nás samozřejmostí.'
-					regions={REGIONS_SENTENCE}
-					image={heroProject.preview}
-					imageAlt={`${heroProject.title} – ${heroProject.location}`}
-				/>
-			)}
+			<ServicesHero
+				eyebrow='Naše služby'
+				heading='Kompletní rekonstrukce bytů a domů'
+				text='Postaráme se o celý průběh rekonstrukce od návrhu až po finální dokončení. Kvalitní řemeslná práce, ověřené materiály a dodržené termíny jsou pro nás samozřejmostí.'
+				regions={REGIONS_SENTENCE}
+				image={featuredProject.preview}
+				imageAlt={`${featuredProject.title} – ${featuredProject.location}`}
+			/>
 
-			{/* One service at a time, as in the design. The list on the left is
-			    made of links, so picking one opens its own page — every service
-			    still has its full copy indexed, just at /services/{slug}. */}
 			<div className={styles.board}>
-				<ServiceSidebar activeSlug={featured.slug} />
+				<ServiceSidebar activeSlug={active.slug} onSelect={setActive} />
 
 				<ServicePreview
-					service={featured}
-					ctaTitle={featured.buttonText}
-					ctaTo={servicePath(featured.slug)}
+					service={active}
+					ctaTitle={active.buttonText}
+					ctaTo={servicePath(active.slug)}
 					secondaryTitle='Zobrazit realizace'
 					secondaryTo={ROUTES.PORTFOLIO}
 				/>
