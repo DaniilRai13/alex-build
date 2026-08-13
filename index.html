@@ -13,14 +13,20 @@
     <!-- <title>, description a OG/Twitter řeší per-route komponenta Seo
          (vite-react-ssg <Head>), aby se neduplikovaly. -->
 
-    <!-- Strukturovaná data: místní firma (JSON-LD). TODO: doplnit IČO. -->
+    <!-- Structured data: local business (JSON-LD). Per-page entities (services,
+         projects) reference this @id so Google ties them to one organisation. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "GeneralContractor",
+        "@id": "https://kartstav.cz/#organization",
         "name": "KartStav Development s.r.o.",
+        "alternateName": "KartStav",
+        "identifier": "29883229",
         "url": "https://kartstav.cz",
+        "logo": "https://kartstav.cz/favicon-512.png",
         "image": "https://kartstav.cz/og-image.jpg",
+        "priceRange": "$$",
         "telephone": "+420774896027",
         "email": "info@kartstav.cz",
         "address": {

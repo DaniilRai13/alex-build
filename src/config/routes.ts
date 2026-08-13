@@ -3,12 +3,18 @@ import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
 export const ROUTES = {
 	HOME: '/',
 	SERVICES: '/services',
+	SERVICE: '/services/:slug',
 	PORTFOLIO: '/portfolio',
 	CONTACTS: '/contacts',
-	PROJECT: '/project/:id',
+	PROJECT: '/project/:slug',
 	PRIVACY: '/privacy',
 	TERMS: '/terms',
+	NOT_FOUND: '/404',
 };
+
+/** Concrete detail URLs for a service / project (dynamic segment resolved). */
+export const servicePath = (slug: string) => `/services/${slug}`;
+export const projectPath = (slug: string) => `/project/${slug}`;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
 

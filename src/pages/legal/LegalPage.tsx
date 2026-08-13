@@ -26,7 +26,9 @@ const LegalPage: FC<LegalPageProps> = ({
 			<Seo title={title} description={seoDescription} path={path} />
 
 			<div className={styles.header}>
-				<Heading className={styles.title}>{title}</Heading>
+				<Heading as='h1' className={styles.title}>
+					{title}
+				</Heading>
 				<p className={styles.updated}>Poslední aktualizace: {lastUpdated}</p>
 			</div>
 

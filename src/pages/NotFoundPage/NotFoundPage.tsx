@@ -16,7 +16,8 @@ const NotFoundPage: FC = () => {
 			<Seo
 				title='Stránka nenalezena'
 				description='Litujeme, ale požadovaná stránka neexistuje nebo byla přesunuta. Vraťte se na hlavní stránku.'
-				path='/404'
+				path={ROUTES.NOT_FOUND}
+				noindex
 			/>
 
 			<motion.div
@@ -47,7 +48,9 @@ const NotFoundPage: FC = () => {
 					variants={animations.fadeUp}
 					transition={animationTransition.defaultTransition}
 				>
-					<Heading className={styles.title}>Stránka nenalezena</Heading>
+					<Heading as='h1' className={styles.title}>
+						Stránka nenalezena
+					</Heading>
 				</motion.div>
 
 				<motion.div
