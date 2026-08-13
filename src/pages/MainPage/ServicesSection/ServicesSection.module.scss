@@ -18,9 +18,15 @@
 		.card {
 			background: rgb(255 255 255 / 57%);
 			border-radius: 28px;
-			padding: 30px 20px;
 			cursor: pointer;
 			transition: 0.25s;
+
+			// Padding lives on the link so the entire card surface is clickable.
+			.cardLink {
+				display: block;
+				height: 100%;
+				padding: 30px 20px;
+			}
 
 			&:hover {
 				transform: translateY(-5px);
@@ -90,11 +96,13 @@
 			grid-template-columns: 1fr;
 			gap: 16px;
 			.card {
-				display: flex;
-				align-items: flex-start;
-				gap: 20px;
-				padding: 24px;
 				position: relative;
+				.cardLink {
+					display: flex;
+					align-items: flex-start;
+					gap: 20px;
+					padding: 24px;
+				}
 				.icon {
 					margin-bottom: 0;
 				}

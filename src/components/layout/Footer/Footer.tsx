@@ -1,4 +1,5 @@
 import { company } from '@/config/company';
+import { servicePath } from '@/config/routes';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { contacts } from '@/data/contacts.data';
 import { services } from '@/data/services.data';
@@ -45,11 +46,15 @@ const Footer: FC = () => {
 							isOpen={openSection === 'services'}
 							onToggle={() => toggleSection('services')}
 						>
+							{/* Links, not plain text: the footer is what puts every
+							    service page one hop from any page on the site. */}
 							<ul className={styles.services}>
 								{services.map(service => (
 									<li className={styles.serviceTitle} key={service.icon}>
-										<Icon icon={service.icon} />
-										{service.title}
+										<Link to={servicePath(service.slug)}>
+											<Icon icon={service.icon} />
+											{service.title}
+										</Link>
 									</li>
 								))}
 							</ul>

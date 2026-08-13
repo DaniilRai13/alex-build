@@ -5,7 +5,21 @@
 		display: grid;
 		grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
 		gap: 25px;
-		align-items: stretch;
+		align-items: start;
+	}
+
+	// Overview: every service stacked, so all of the copy ships in the HTML.
+	.list {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+		min-width: 0;
+	}
+
+	// Keeps the sidebar in view while scrolling the long list.
+	.sticky {
+		position: sticky;
+		top: calc($header-height + 20px);
 	}
 }
 
@@ -14,11 +28,19 @@
 		.top {
 			grid-template-columns: 1fr;
 		}
+
+		.sticky {
+			position: static;
+		}
 	}
 }
 @media (max-width: $screen-tb) {
 	.services {
 		.top {
+			gap: 15px;
+		}
+
+		.list {
 			gap: 15px;
 		}
 	}

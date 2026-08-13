@@ -80,6 +80,19 @@
 .services {
 	.serviceTitle {
 		font-size: 0.95rem;
+
+		// The row is a link now: it carries the icon + label layout and keeps
+		// the original text colour (the shared `a` rule above targets contacts).
+		a {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			color: inherit;
+
+			&:hover {
+				color: inherit;
+			}
+		}
 	}
 }
 

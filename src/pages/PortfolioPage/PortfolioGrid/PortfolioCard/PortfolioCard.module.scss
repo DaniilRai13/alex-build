@@ -10,6 +10,14 @@
 	cursor: pointer;
 	background: #ddd;
 	aspect-ratio: 3 / 2;
+
+	// The whole card is one link; it has to fill the article to stay clickable.
+	.link {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
 	img {
 		width: 100%;
 		height: 100%;

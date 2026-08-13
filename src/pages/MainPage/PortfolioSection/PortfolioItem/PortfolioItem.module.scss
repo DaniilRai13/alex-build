@@ -7,6 +7,13 @@
 	min-height: 0;
 	cursor: pointer;
 
+	// The whole tile is one link, stretched over the card.
+	.link {
+		position: absolute;
+		inset: 0;
+		display: block;
+	}
+
 	img {
 		position: absolute;
 		inset: 0;
@@ -26,6 +33,8 @@
 		content: '';
 		position: absolute;
 		inset: 0;
+		// Paints over the link, so clicks have to pass straight through it.
+		pointer-events: none;
 
 		background: linear-gradient(
 			to top,

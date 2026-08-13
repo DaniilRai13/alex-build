@@ -185,3 +185,7 @@ export const portfolioData: IPortfolioProject[] = [
 		images: galleryOf('project9', preview9),
 	},
 ];
+
+/** Look up a project by its URL segment (/project/{slug}). */
+export const getProjectBySlug = (slug?: string) =>
+	portfolioData.find(project => project.slug === slug);

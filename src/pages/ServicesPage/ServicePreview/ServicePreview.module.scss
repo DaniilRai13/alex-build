@@ -36,6 +36,17 @@
 			letter-spacing: -0.02em;
 			margin-bottom: 25px;
 			color: #fff;
+
+			.headingLink {
+				color: inherit;
+
+				@media (hover: hover) {
+					&:hover {
+						text-decoration: underline;
+						text-underline-offset: 6px;
+					}
+				}
+			}
 		}
 
 		.description {

@@ -1,22 +1,50 @@
-// import Button from '@/components/ui/Button/Button';
-
-import styles from './ServicePreview.module.scss';
-import type { IService } from '@/types/services.interface';
-import Heading from '@/components/ui/Heading/Heading';
 import Button from '@/components/ui/Button/Button';
+import Heading from '@/components/ui/Heading/Heading';
 import { ROUTES } from '@/config/routes';
+import type { IService } from '@/types/services.interface';
+import { Link } from 'react-router-dom';
+import styles from './ServicePreview.module.scss';
 
-// import blueprint from '@/assets/blueprint.png';
 interface Props {
 	service: IService;
+	/** <h1> on the service detail page, <h2> in the overview list. */
+	headingAs?: 'h1' | 'h2';
+	/** Renders the heading as a link to the detail page (used by the overview). */
+	headingHref?: string;
+	ctaTitle?: string;
+	ctaTo?: string;
+	/** Above-the-fold image loads eagerly; the rest stay lazy. */
+	priority?: boolean;
 }
-const ServicePreview = ({ service }: Props) => {
+
+const ServicePreview = ({
+	service,
+	headingAs = 'h2',
+	headingHref,
+	ctaTitle = 'Kontaktujte nás',
+	ctaTo = ROUTES.CONTACTS,
+	priority = false,
+}: Props) => {
 	return (
 		<div className={styles.preview}>
 			<div className={styles.overlay}></div>
-			<img src={service.img} alt='' className={styles.bg}/>
+			<img
+				src={service.img}
+				alt={service.title}
+				className={styles.bg}
+				loading={priority ? 'eager' : 'lazy'}
+				decoding='async'
+			/>
 			<div className={styles.info}>
-				<Heading className={styles.heading}>{service.title}</Heading>
+				<Heading as={headingAs} className={styles.heading}>
+					{headingHref ? (
+						<Link className={styles.headingLink} to={headingHref}>
+							{service.title}
+						</Link>
+					) : (
+						service.title
+					)}
+				</Heading>
 
 				<p className={styles.description}>{service.description}</p>
 
@@ -28,16 +56,8 @@ const ServicePreview = ({ service }: Props) => {
 					))}
 				</ul>
 
-				<Button
-					title='Kontaktujte nás'
-					className={styles.button}
-					to={ROUTES.CONTACTS}
-				/>
+				<Button title={ctaTitle} className={styles.button} to={ctaTo} />
 			</div>
-
-			{/* <div className={styles.image}>
-				<img src={service.img} alt='' />
-			</div> */}
 		</div>
 	);
 };

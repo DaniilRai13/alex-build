@@ -1,0 +1,127 @@
+@import '@styles/abstracts/var';
+
+.detail {
+	.top {
+		display: grid;
+		grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+		gap: 25px;
+		align-items: start;
+	}
+
+	.sticky {
+		position: sticky;
+		top: calc($header-height + 20px);
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+		min-width: 0;
+	}
+
+	.text {
+		padding: 35px 40px;
+		border-radius: $radius-lg;
+		background: $bg-card;
+		box-shadow: $shadow-md;
+
+		.textHeading {
+			margin-bottom: 20px;
+			font-size: clamp(1.5rem, 2.4vw, 2rem);
+			color: $text-primary;
+		}
+
+		.paragraph {
+			color: $text-secondary;
+			font-size: 1.05rem;
+			line-height: 1.7;
+
+			& + .paragraph {
+				margin-top: 16px;
+			}
+		}
+	}
+
+	.related {
+		.relatedHeading {
+			margin-bottom: 18px;
+			font-size: clamp(1.3rem, 2vw, 1.6rem);
+			color: $text-primary;
+		}
+
+		.relatedList {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 15px;
+
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+
+		.relatedLink {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			height: 100%;
+
+			padding: 20px;
+			border-radius: $radius-lg;
+			background: $bg-card;
+			box-shadow: $shadow-sm;
+			transition: $transition-normal;
+
+			strong {
+				color: $text-primary;
+				font-size: 1.05rem;
+			}
+
+			span {
+				color: $text-secondary;
+				font-size: 0.9rem;
+				line-height: 1.5;
+			}
+
+			@media (hover: hover) {
+				&:hover {
+					transform: translateY(-3px);
+					box-shadow: $shadow-md;
+
+					strong {
+						color: $red;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-tb-xl) {
+	.detail {
+		.top {
+			grid-template-columns: 1fr;
+		}
+
+		.sticky {
+			position: static;
+		}
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.detail {
+		.top,
+		.content {
+			gap: 15px;
+		}
+
+		.text {
+			padding: 25px 20px;
+
+			.paragraph {
+				font-size: 0.95rem;
+			}
+		}
+	}
+}
