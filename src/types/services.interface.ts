@@ -1,4 +1,5 @@
 import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
+import type { IResponsiveImage } from './image.interface';
 
 export interface IService {
 	id: number;
@@ -16,5 +17,5 @@ export interface IService {
 	icon: IconNames;
 	features: string[];
 	buttonText: string;
-	img?: string;
+	img?: IResponsiveImage;
 }

@@ -1,3 +1,5 @@
+import type { IResponsiveImage } from './image.interface';
+
 export type PortfolioCategory = 'all' | 'interior' | 'renovation' | 'facade';
 
 export interface IPortfolioProject {
@@ -16,7 +18,7 @@ export interface IPortfolioProject {
 
 	year: number;
 
-	preview: string;
+	preview: IResponsiveImage;
 
-	images: string[];
+	images: IResponsiveImage[];
 }

@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
+import Image from '@/components/ui/Image/Image';
 import { ROUTES } from '@/config/routes';
 import type { IService } from '@/types/services.interface';
 import { Link } from 'react-router-dom';
@@ -28,13 +29,15 @@ const ServicePreview = ({
 	return (
 		<div className={styles.preview}>
 			<div className={styles.overlay}></div>
-			<img
-				src={service.img}
-				alt={service.title}
-				className={styles.bg}
-				loading={priority ? 'eager' : 'lazy'}
-				decoding='async'
-			/>
+			{service.img && (
+				<Image
+					src={service.img.src}
+					srcSet={service.img.srcSet}
+					alt={service.title}
+					className={styles.bg}
+					priority={priority}
+				/>
+			)}
 			<div className={styles.info}>
 				<Heading as={headingAs} className={styles.heading}>
 					{headingHref ? (

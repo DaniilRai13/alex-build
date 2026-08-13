@@ -52,7 +52,7 @@ const ProjectPage: FC = () => {
 		name: project.title,
 		description: project.description,
 		url: `${company.url}${url}`,
-		image: project.images.map(image => `${company.url}${image}`),
+		image: project.images.map(image => `${company.url}${image.src}`),
 		dateCreated: String(project.year),
 		locationCreated: {
 			'@type': 'Place',
@@ -73,7 +73,7 @@ const ProjectPage: FC = () => {
 				title={project.title}
 				description={metaDescription(project.description)}
 				path={url}
-				image={project.preview}
+				image={project.preview.src}
 				jsonLd={[breadcrumbJsonLd(crumbs), projectJsonLd]}
 			/>
 
@@ -113,7 +113,9 @@ const ProjectPage: FC = () => {
 					aria-label='Otevřít fotogalerii projektu'
 				>
 					<Image
-						src={cover}
+						src={cover.src}
+						srcSet={cover.srcSet}
+						sizes='(max-width: 1024px) 100vw, 55vw'
 						alt={`${project.title} – ${project.location}`}
 						priority
 					/>
@@ -144,7 +146,7 @@ const ProjectPage: FC = () => {
 					    index them — the gallery used to live only inside a modal. */}
 					<ul className={styles.gallery}>
 						{gallery.map((image, index) => (
-							<li key={image}>
+							<li key={image.src}>
 								<button
 									type='button'
 									className={styles.galleryItem}
@@ -152,7 +154,9 @@ const ProjectPage: FC = () => {
 									aria-label={`Zvětšit fotografii ${index + 2}`}
 								>
 									<Image
-										src={image}
+										src={image.src}
+										srcSet={image.srcSet}
+										sizes='(max-width: 768px) 45vw, (max-width: 1200px) 33vw, 25vw'
 										alt={`${project.title} – fotografie ${index + 2} z ${project.images.length}`}
 									/>
 								</button>
@@ -171,7 +175,12 @@ const ProjectPage: FC = () => {
 					{related.map(item => (
 						<li key={item.slug}>
 							<Link className={styles.relatedLink} to={projectPath(item.slug)}>
-								<Image src={item.preview} alt={item.title} />
+								<Image
+									src={item.preview.src}
+									srcSet={item.preview.srcSet}
+									sizes='(max-width: 768px) 45vw, 25vw'
+									alt={item.title}
+								/>
 								<span className={styles.relatedTitle}>{item.title}</span>
 								<span className={styles.relatedMeta}>
 									{item.location} • {item.area} m²
@@ -193,7 +202,7 @@ const ProjectPage: FC = () => {
 					open
 					close={() => setLightboxIndex(null)}
 					index={lightboxIndex}
-					slides={project.images.map(image => ({ src: image }))}
+					slides={project.images.map(image => ({ src: image.src }))}
 					plugins={[Zoom, Fullscreen]}
 				/>
 			)}

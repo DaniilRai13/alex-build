@@ -18,7 +18,9 @@ const PortfolioCard = ({ project, priority = false }: Props) => {
 			    discover the project pages and pass authority to them. */}
 			<Link className={styles.link} to={projectPath(project.slug)}>
 				<Image
-					src={project.preview}
+					src={project.preview.src}
+					srcSet={project.preview.srcSet}
+					sizes='(max-width: 530px) 100vw, (max-width: 834px) 50vw, 33vw'
 					alt={`${project.title} – ${project.location}`}
 					priority={priority}
 				/>

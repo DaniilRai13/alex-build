@@ -1,8 +1,44 @@
+import type { IResponsiveImage } from '@/types/image.interface';
 import type { IService } from '@/types/services.interface';
-import designImg from '@/assets/services/design.png';
-import majorImg from '@/assets/services/majorRenovation.png';
-import cosmeticImg from '@/assets/services/cosmetic.png';
-import turnkey from '@/assets/services/turnkey.png';
+
+// Original PNGs (the <img> fallback) and their WebP twins from
+// scripts/generate-image-variants.mjs. These illustrations are only ~450px
+// wide, so there is nothing to downscale — but PNG to WebP still cuts each
+// one from ~200 KB to ~55 KB, and the overview page shows all four at once.
+const originals = import.meta.glob('../assets/services/*.png', {
+	eager: true,
+	import: 'default',
+}) as Record<string, string>;
+
+const webp = import.meta.glob('../assets/generated/services/*.webp', {
+	eager: true,
+	import: 'default',
+}) as Record<string, string>;
+
+const byName = (record: Record<string, string>) =>
+	new Map(
+		Object.entries(record).map(([path, url]) => [
+			path.split('/').pop()!.replace(/\.\w+$/, ''),
+			url,
+		]),
+	);
+
+const originalByName = byName(originals);
+const webpByName = byName(webp);
+
+const illustration = (name: string): IResponsiveImage => {
+	const src = originalByName.get(name);
+
+	// A renamed file should break the build rather than ship a blank panel.
+	if (!src) throw new Error(`Service illustration not found: ${name}.png`);
+
+	return { src, srcSet: webpByName.get(name) };
+};
+
+const designImg = illustration('design');
+const majorImg = illustration('majorRenovation');
+const cosmeticImg = illustration('cosmetic');
+const turnkey = illustration('turnkey');
 
 export const services: IService[] = [
 	{

@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Responsive WebP variants — derived from src/assets, rebuilt by
+# scripts/generate-image-variants.mjs on every build.
+src/assets/generated
+
 # Build archives
 *.rar
 *.zip

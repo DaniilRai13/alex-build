@@ -1,3 +1,4 @@
+import Image from '@/components/ui/Image/Image';
 import { projectPath } from '@/config/routes';
 import { type FC } from 'react';
 import { Link } from 'react-router-dom';
@@ -16,11 +17,11 @@ const PortfolioItem: FC<Props> = ({ item }) => {
 			{/* Links, not click handlers — the project pages have to be crawlable
 			    from the home page, not just from the sitemap. */}
 			<Link className={styles.link} to={projectPath(project.slug)}>
-				<img
-					src={project.preview}
+				<Image
+					src={project.preview.src}
+					srcSet={project.preview.srcSet}
+					sizes='(max-width: 768px) 85vw, 33vw'
 					alt={`${project.title} – ${project.location}`}
-					loading='lazy'
-					decoding='async'
 				/>
 				<div className={styles.overlay}>
 					<span>{project.title}</span>

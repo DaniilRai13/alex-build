@@ -1,33 +1,67 @@
+import type { IResponsiveImage } from '@/types/image.interface';
 import type { IPortfolioProject } from '@/types/portfolio.interface';
 
-// Náhledové (titulní) fotky projektů – importované explicitně, aby se daly
-// použít jako preview a jako první snímek v galerii.
-import preview1 from '@/assets/portfolio/project1/main.jpg';
-import preview2 from '@/assets/portfolio/project2/main.jpg';
-import preview3 from '@/assets/portfolio/project3/main.jpg';
-import preview4 from '@/assets/portfolio/project4/main.jpg';
-import preview5 from '@/assets/portfolio/project5/main.jpg';
-// project6 je rekonstrukce bytu – jako náhled volíme interiér, ne fasádu domu.
-import preview6 from '@/assets/portfolio/project6/17.jpg';
-import preview7 from '@/assets/portfolio/project7/main.jpg';
-import preview8 from '@/assets/portfolio/project8/main.jpg';
-import preview9 from '@/assets/portfolio/project9/main.jpg';
+// Original photos: the <img> fallback and what the lightbox shows.
+const allImages = import.meta.glob('../../assets/portfolio/**/*.{jpg,png}', {
+	eager: true,
+	import: 'default',
+}) as Record<string, string>;
 
-// Všechny fotky ze složek projektů. Nové soubory se přidají automaticky.
-const allImages = import.meta.glob(
-	'../../assets/portfolio/**/*.{jpg,png}',
+// Responsive WebP variants produced by scripts/generate-image-variants.mjs.
+// A portfolio card is ~380 CSS px wide while the originals are 1500-2560px,
+// so without these every card downloads several hundred KB it cannot use.
+const allVariants = import.meta.glob(
+	'../../assets/generated/portfolio/**/*.webp',
 	{ eager: true, import: 'default' },
 ) as Record<string, string>;
 
-// Vrátí snímky dané složky seřazené přirozeně (1, 2, 10…) s náhledem na začátku.
-const galleryOf = (folder: string, preview: string): string[] => {
-	const urls = Object.entries(allImages)
-		.filter(([path]) => path.includes(`/portfolio/${folder}/`))
-		.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-		.map(([, url]) => url);
+// "…/generated/portfolio/project1/main-480.webp" -> key "project1/main", width 480
+const VARIANT_RE = /\/generated\/portfolio\/(.+)-(\d+)\.webp$/;
 
-	return [preview, ...urls.filter(url => url !== preview)];
+const srcSets = new Map<string, string>();
+
+for (const [path, url] of Object.entries(allVariants)) {
+	const match = path.match(VARIANT_RE);
+	if (!match) continue;
+
+	const [, key, width] = match;
+	const candidate = `${url} ${width}w`;
+
+	srcSets.set(key, srcSets.has(key) ? `${srcSets.get(key)}, ${candidate}` : candidate);
+}
+
+/** Widths arrive in glob order; srcset is order-independent, so sorting is cosmetic. */
+const imageOf = (folder: string, file: string): IResponsiveImage => {
+	const path = `../../assets/portfolio/${folder}/${file}`;
+	const src = allImages[path];
+
+	// A typo in a filename should break the build, not ship a missing photo.
+	if (!src) throw new Error(`Portfolio image not found: ${path}`);
+
+	return { src, srcSet: srcSets.get(`${folder}/${file.replace(/\.\w+$/, '')}`) };
 };
+
+/** Photos of one project, naturally sorted (1, 2, 10…), preview first. */
+const galleryOf = (folder: string, preview: IResponsiveImage): IResponsiveImage[] => {
+	const rest = Object.keys(allImages)
+		.filter(path => path.includes(`/portfolio/${folder}/`))
+		.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+		.map(path => imageOf(folder, path.split('/').pop() as string))
+		.filter(image => image.src !== preview.src);
+
+	return [preview, ...rest];
+};
+
+const preview1 = imageOf('project1', 'main.jpg');
+const preview2 = imageOf('project2', 'main.jpg');
+const preview3 = imageOf('project3', 'main.jpg');
+const preview4 = imageOf('project4', 'main.jpg');
+const preview5 = imageOf('project5', 'main.jpg');
+// project6 is a flat renovation — the preview shows the interior, not the facade.
+const preview6 = imageOf('project6', '17.jpg');
+const preview7 = imageOf('project7', 'main.jpg');
+const preview8 = imageOf('project8', 'main.jpg');
+const preview9 = imageOf('project9', 'main.jpg');
 
 export const portfolioData: IPortfolioProject[] = [
 	{
