@@ -4,10 +4,9 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
 	gap: 45px;
-	// Stretch, not center: the photo takes its height from the text column, so
-	// the two sides finish level like in the design instead of the portrait
-	// source dictating a tall frame.
-	align-items: stretch;
+	// The frame carries its own aspect ratio, so centring it against the text
+	// keeps the two sides balanced without stretching the photo.
+	align-items: center;
 
 	margin-bottom: 55px;
 }
@@ -100,15 +99,20 @@
 	border-radius: $radius-lg;
 	box-shadow: $shadow-md;
 
+	// The frame owns its shape at every width instead of inheriting the height
+	// of the text column — that left dead space under the photo whenever the
+	// copy was taller, and let the image run away once the layout stacked.
+	aspect-ratio: 4 / 3;
+
 	// Wins over the .image rule the Image component adds to the same <img>,
 	// which has equal specificity and would otherwise decide on source order.
 	.photo {
 		width: 100%;
 		height: 100%;
-		// The source is a portrait phone photo. Filling the column height and
-		// cropping from the top keeps the sofa and the kitchen in frame.
+		// The source is a portrait phone photo, so it is cropped. Sitting above
+		// centre keeps the kitchen and the sofa in frame rather than the floor.
 		object-fit: cover;
-		object-position: center 35%;
+		object-position: center 38%;
 	}
 }
 
@@ -119,10 +123,11 @@
 		margin-bottom: 40px;
 	}
 
-	// Stacked layout: nothing to match heights with, so give the frame a shape.
-	.figure .photo {
-		aspect-ratio: 3 / 2;
-		height: auto;
+	// Stacked: the frame is now full width, so it has to be flatter and capped
+	// or a single photo would take most of the screen.
+	.figure {
+		aspect-ratio: 16 / 9;
+		max-height: 380px;
 	}
 }
 
@@ -137,9 +142,15 @@
 		font-size: 0.95rem;
 	}
 
-	.figure .photo {
-		aspect-ratio: 4 / 3;
-		height: auto;
+	.figure {
+		aspect-ratio: 3 / 2;
+		max-height: 260px;
+	}
+}
+
+@media (max-width: $screen-sm) {
+	.figure {
+		max-height: 200px;
 	}
 }
 
