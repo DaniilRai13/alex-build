@@ -1,8 +1,12 @@
 import {
 	ArrowLeft,
+	ArrowRight,
 	ArrowUpRight,
+	Award,
+	BadgeCheck,
 	BrickWall,
 	Building2,
+	CalendarCheck,
 	ChevronDown,
 	ChevronLeft,
 	ChevronRight,
@@ -20,6 +24,7 @@ import {
 	PencilRuler,
 	Phone,
 	RotateCcw,
+	ShieldCheck,
 	X,
 	type LucideIcon,
 	type LucideProps,
@@ -29,9 +34,13 @@ import type { FC } from 'react';
 // Registr jen skutečně použitých ikon – aby se do bundlu nedostal celý lucide.
 const iconMap = {
 	ArrowLeft,
+	ArrowRight,
 	ArrowUpRight,
+	Award,
+	BadgeCheck,
 	BrickWall,
 	Building2,
+	CalendarCheck,
 	ChevronDown,
 	ChevronLeft,
 	ChevronRight,
@@ -49,6 +58,7 @@ const iconMap = {
 	PencilRuler,
 	Phone,
 	RotateCcw,
+	ShieldCheck,
 	X,
 } satisfies Record<string, LucideIcon>;
 

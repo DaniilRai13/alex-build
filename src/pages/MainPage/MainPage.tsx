@@ -3,7 +3,6 @@ import { company } from '@/config/company';
 import { ROUTES } from '@/config/routes';
 import { type FC } from 'react';
 import AboutSection from './AboutSection/AboutSection';
-import CTASection from './CTASection/CTASection';
 import HeroSection from './HeroSection/HeroSection';
 import { PortfolioSection } from './PortfolioSection/PortfolioSection';
 import ServicesSection from './ServicesSection/ServicesSection';
@@ -34,7 +33,6 @@ const MainPage: FC = () => {
 			<AboutSection />
 			<ServicesSection />
 			<PortfolioSection />
-			<CTASection />
 		</div>
 	);
 };

@@ -1,6 +1,7 @@
 import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
 import Image from '@/components/ui/Image/Image';
+import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { ROUTES } from '@/config/routes';
 import type { IService } from '@/types/services.interface';
 import { Link } from 'react-router-dom';
@@ -14,6 +15,9 @@ interface Props {
 	headingHref?: string;
 	ctaTitle?: string;
 	ctaTo?: string;
+	/** Optional second, quieter link — used on detail pages, not in the list. */
+	secondaryTitle?: string;
+	secondaryTo?: string;
 	/** Above-the-fold image loads eagerly; the rest stay lazy. */
 	priority?: boolean;
 }
@@ -24,6 +28,8 @@ const ServicePreview = ({
 	headingHref,
 	ctaTitle = 'Kontaktujte nás',
 	ctaTo = ROUTES.CONTACTS,
+	secondaryTitle,
+	secondaryTo,
 	priority = false,
 }: Props) => {
 	return (
@@ -59,7 +65,16 @@ const ServicePreview = ({
 					))}
 				</ul>
 
-				<Button title={ctaTitle} className={styles.button} to={ctaTo} />
+				<div className={styles.actions}>
+					<Button title={ctaTitle} className={styles.button} to={ctaTo} />
+
+					{secondaryTitle && secondaryTo && (
+						<Link className={styles.secondary} to={secondaryTo}>
+							{secondaryTitle}
+							<Icon icon='ArrowRight' size={16} />
+						</Link>
+					)}
+				</div>
 			</div>
 		</div>
 	);

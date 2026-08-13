@@ -70,7 +70,13 @@ const ServiceDetailPage: FC = () => {
 				</div>
 
 				<div className={styles.content}>
-					<ServicePreview service={service} headingAs='h1' priority />
+					<ServicePreview
+						service={service}
+						headingAs='h1'
+						secondaryTitle='Zobrazit realizace'
+						secondaryTo={ROUTES.PORTFOLIO}
+						priority
+					/>
 
 					<div className={styles.text}>
 						<Heading as='h2' className={styles.textHeading}>

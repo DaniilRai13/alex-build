@@ -40,6 +40,9 @@ const majorImg = illustration('majorRenovation');
 const cosmeticImg = illustration('cosmetic');
 const turnkey = illustration('turnkey');
 
+/** The house sketch, reused as the artwork of the site-wide CTA banner. */
+export const houseSketch = turnkey;
+
 export const services: IService[] = [
 	{
 		id: 1,

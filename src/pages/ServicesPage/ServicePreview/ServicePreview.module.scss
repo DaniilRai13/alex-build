@@ -86,10 +86,38 @@
 				}
 			}
 		}
+		.actions {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 14px 26px;
+		}
+
 		.button {
 			background: $red;
 			padding: 0.7rem 2rem;
 			color: #fff;
+		}
+
+		// Quieter than the filled button: a second equally loud call to action
+		// would split attention instead of adding a route.
+		.secondary {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+
+			color: #fff;
+			font-weight: 600;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+			padding-bottom: 2px;
+			transition: 0.25s;
+
+			@media (hover: hover) {
+				&:hover {
+					border-bottom-color: #fff;
+					transform: translateX(3px);
+				}
+			}
 		}
 	}
 

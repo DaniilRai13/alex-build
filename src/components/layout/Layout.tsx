@@ -1,12 +1,18 @@
 import { useEffect, type FC } from 'react';
 import { Outlet, useLocation } from 'react-router';
+import CtaBanner from '../common/CtaBanner/CtaBanner';
 import ErrorBoundary from '../common/ErrorBoundary/ErrorBoundary';
+import { ROUTES } from '@/config/routes';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import styles from './Layout.module.scss';
 
 const Layout: FC = () => {
 	const { pathname, key } = useLocation();
+
+	// The contact page is the destination the banner points at — repeating the
+	// call to action above its own form would only get in the way.
+	const showCta = pathname !== ROUTES.CONTACTS;
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -21,6 +27,8 @@ const Layout: FC = () => {
 					<ErrorBoundary key={key}>
 						<Outlet />
 					</ErrorBoundary>
+
+					{showCta && <CtaBanner />}
 				</div>
 			</main>
 			<Footer />
