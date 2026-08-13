@@ -1,11 +1,19 @@
-# Forpsi / Apache – servírování předrenderovaných stránek a SPA fallback.
+# Forpsi / Apache – servírování předrenderovaných stránek.
 
 Options -MultiViews
+# No directory listings: /services/ and /project/ are real folders full of
+# prerendered pages and must never be browsable.
+Options -Indexes
 RewriteEngine On
 
 # Sjednocení domény: www -> bez www (kanonická verze v celém kódu je bez www).
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+# One canonical URL shape: /services/ redirects to /services, so the same page
+# is never reachable under two addresses.
+RewriteCond %{REQUEST_URI} !^/$
+RewriteRule ^(.+)/$ /$1 [R=301,L]
 
 # Existující soubory a složky (assety, .php, obrázky) servírovat přímo.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
@@ -16,8 +24,11 @@ RewriteRule ^ - [L]
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.html -f
 RewriteRule ^(.*)$ /$1.html [L]
 
-# Vše ostatní na SPA (klientské routování, 404 řeší React).
-RewriteRule ^ /index.html [L]
+# Every route is prerendered, so anything left over really does not exist:
+# let Apache answer with a genuine 404 status and serve the prerendered
+# 404 page. Falling back to /index.html used to return HTTP 200 with the
+# home page markup, which search engines index as a soft 404.
+ErrorDocument 404 /404.html
 
 # --- Komprese ---
 <IfModule mod_deflate.c>
