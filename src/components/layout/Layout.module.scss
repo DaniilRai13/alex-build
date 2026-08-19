@@ -5,9 +5,7 @@
 	flex-direction: column;
 	.main {
 		flex: 1;
-		// The header is sticky and 70px tall; 1rem left the breadcrumbs almost
-		// touching it, so page content started right under the navigation.
-		padding-top: 2.5rem;
+		padding-top: 1rem;
 		padding-bottom: 4rem;
 		@media (max-width: $screen-tb-lg2) {
 			padding-bottom: 3rem;

@@ -23,7 +23,7 @@
 
 	.title {
 		margin-bottom: 22px;
-		font-size: clamp(2rem, 4vw, 3rem);
+		font-size: clamp(2rem, 4vw, 2.4rem);
 		font-weight: 700;
 		line-height: 1.15;
 		color: $text-primary;
@@ -64,6 +64,11 @@
 .cover {
 	display: block;
 	width: 100%;
+	// Fixed 3:2 — the shape the layout already used below 1024px, now applied
+	// everywhere. Without it the row was as tall as whichever original photo
+	// happened to be there, so one near-square shot pushed the gallery and
+	// everything under it off the first screen.
+	aspect-ratio: 3 / 2;
 	padding: 0;
 	border: none;
 	border-radius: $radius-lg;
@@ -75,7 +80,6 @@
 	img {
 		width: 100%;
 		height: 100%;
-		min-height: 320px;
 		object-fit: cover;
 		transition: transform 0.4s ease;
 	}
@@ -97,11 +101,13 @@
 
 	.descriptionHeading {
 		margin-bottom: 18px;
+		text-transform: uppercase;
 		font-size: clamp(1.4rem, 2.2vw, 1.8rem);
 		color: $text-primary;
 	}
 
 	p {
+		margin-bottom: 28px;
 		color: $text-secondary;
 		font-size: 1.02rem;
 		line-height: 1.7;
@@ -109,7 +115,10 @@
 
 	.cta {
 		align-self: flex-start;
-		margin-top: 28px;
+		// Sits on the bottom edge rather than trailing the text: the card is
+		// stretched to the photo's height, and a short description used to leave
+		// the button floating in the middle of an empty panel.
+		margin-top: auto;
 		padding: 0.7rem 1.6rem;
 		color: #fff;
 	}
@@ -223,14 +232,15 @@
 	}
 }
 
-@media (max-width: $screen-tb-xl) {
+@media (max-width: $screen-tb) {
 	.body {
 		grid-template-columns: 1fr;
 	}
 
-	.cover img {
-		min-height: 0;
-		aspect-ratio: 3 / 2;
+	// One column, so the card sizes to its own text and there is no bottom edge
+	// to pin the button to.
+	.description .cta {
+		margin-top: 0;
 	}
 }
 

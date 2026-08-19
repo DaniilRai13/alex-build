@@ -8,13 +8,22 @@
 
 	.bg {
 		position: absolute;
-		right: -10px;
+		right: -20px;
 		bottom: 0;
 		z-index: -1;
 
-		width: 46%;
-		max-width: 340px;
+		// Was 46% / 340px, which on a wide panel read as a stray mark in the
+		// corner rather than part of the card.
+		width: 90%;
+		max-width: 560px;
 		height: auto;
+
+		// The board clips its overflow, so a drawing taller than the panel would
+		// simply lose its top. Bounding it by the panel's own height and letting
+		// object-fit letterbox keeps the whole building visible at any width.
+		max-height: 100%;
+		object-fit: contain;
+		object-position: right bottom;
 
 		opacity: 0.16;
 		mix-blend-mode: multiply;
@@ -121,9 +130,12 @@
 	.preview {
 		padding: 30px 28px;
 
+		// Narrower panel, so the drawing takes a larger share of it to stay the
+		// same visual size — and fades further, because here it sits directly
+		// behind the single-column list rather than beside it.
 		.bg {
-			width: 55%;
-			opacity: 0.12;
+			width: 100%;
+			opacity: 0.16;
 		}
 
 		.info {
@@ -140,6 +152,19 @@
 @media (max-width: $screen-tb) {
 	.preview {
 		padding: 26px 20px;
+
+		// A share of an already narrow card is only a couple of centimetres of
+		// faint line-work — at that size the drawing reads as a smudge rather
+		// than a building. It spans the full width here instead, bleeding past
+		// both edges so it feels like part of the card.
+		.bg {
+			right: -24px;
+			left: -24px;
+
+			width: auto;
+			max-width: none;
+			opacity: 0.1;
+		}
 
 		.info {
 			.description {

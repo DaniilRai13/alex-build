@@ -128,11 +128,7 @@ const ProjectPage: FC = () => {
 
 					<p>{project.description}</p>
 
-					<Button
-						title='Chci podobnou rekonstrukci'
-						className={styles.cta}
-						to={ROUTES.CONTACTS}
-					/>
+					<Button title='Chci nabídku' className={styles.cta} to={ROUTES.CONTACTS} />
 				</div>
 			</div>
 

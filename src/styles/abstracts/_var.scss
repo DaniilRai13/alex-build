@@ -37,6 +37,11 @@ $border-warm: rgba($text-primary, 0.08);
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 $shadow-md: 0 10px 40px rgba(0, 0, 0, 0.15);
 
+// Controls — buttons, filters, the actions in the header. Tight on purpose:
+// the same value the admin app uses, and at button size a large radius reads
+// as a capsule rather than a corner. Surfaces keep $radius-lg.
+$radius-md: 0.4rem;
+
 $radius-lg: 1.2rem;
 $radius-xl: 10rem;
 
