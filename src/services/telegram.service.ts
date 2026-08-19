@@ -10,7 +10,9 @@ export const telegramService = {
 		const res = await fetch(ENDPOINT, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(data),
+			// The page the form was sent from. Ignored by the delivery itself —
+			// it is what lets the statistics say which page earns enquiries.
+			body: JSON.stringify({ ...data, path: window.location.pathname }),
 		});
 
 		if (!res.ok) {

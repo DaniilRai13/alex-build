@@ -13,7 +13,7 @@
 	text-transform: uppercase;
 	border: 1px solid rgba($text-secondary, 0.7);
 
-	border-radius: 10px;
+	border-radius: $radius-md;
 	font-size: 1rem;
 	background-color: transparent;
 	cursor: pointer;

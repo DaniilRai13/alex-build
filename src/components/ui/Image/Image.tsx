@@ -7,6 +7,10 @@ interface ImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 'loading'> {
 	alt: string;
 	aspectRatio?: string | number;
 	priority?: boolean;
+	/** WebP candidates; when present the image is wrapped in a <picture>. */
+	srcSet?: string;
+	/** Layout width hint for picking a candidate, e.g. "(max-width: 768px) 100vw, 33vw". */
+	sizes?: string;
 }
 
 const Image: FC<ImageProps> = ({
@@ -14,11 +18,13 @@ const Image: FC<ImageProps> = ({
 	alt,
 	aspectRatio,
 	priority = false,
+	srcSet,
+	sizes,
 	className,
 	style,
 	...rest
 }) => {
-	return (
+	const image = (
 		<img
 			{...rest}
 			src={src}
@@ -31,6 +37,19 @@ const Image: FC<ImageProps> = ({
 				aspectRatio ? { aspectRatio: String(aspectRatio), ...style } : style
 			}
 		/>
+	);
+
+	if (!srcSet) return image;
+
+	// <picture> rather than a bare srcset: srcset picks a size, not a format, so
+	// a browser without WebP support would still choose a .webp it cannot decode.
+	// The wrapper uses display: contents, so surrounding CSS keeps targeting the
+	// <img> exactly as before.
+	return (
+		<picture className={styles.picture}>
+			<source type='image/webp' srcSet={srcSet} sizes={sizes} />
+			{image}
+		</picture>
 	);
 };
 

@@ -1,0 +1,47 @@
+@import 'var';
+
+/// Raised surface used for every panel on the site. The palette is warm beige,
+/// so a card is lifted by its shadow rather than by contrasting with the page.
+@mixin card($background: $bg-card) {
+	border-radius: $radius-lg;
+	background: $background;
+	box-shadow: $shadow-md;
+}
+
+/// The services card: list of services beside the open service, stacked above
+/// it once the panel gets too narrow. Shared by the overview and the detail
+/// pages so moving between them never shifts the layout.
+@mixin service-board {
+	@include card;
+
+	display: grid;
+	grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+	// Stretch, not start: with `start` the list column ended under its last
+	// item and its background stopped halfway down the card.
+	align-items: stretch;
+	overflow: hidden;
+
+	@media (max-width: $screen-tb) {
+		grid-template-columns: 1fr;
+	}
+}
+
+/// Short accent rule to the left of a heading — the site's recurring marker
+/// for a section title.
+@mixin accent-bar($offset: 20px) {
+	position: relative;
+	padding-left: $offset;
+
+	&::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+
+		width: 4px;
+		height: 100%;
+
+		border-radius: 10px;
+		background: $red;
+	}
+}

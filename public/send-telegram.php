@@ -85,7 +85,14 @@ if (function_exists('curl_init')) {
 	}
 }
 
-if ($response === false || $httpCode >= 300 || $httpCode === 0) {
+$delivered = !($response === false || $httpCode >= 300 || $httpCode === 0);
+
+// Counted either way: a lead that was written but not delivered is the one
+// case worth knowing about, and dropping it would hide the failure.
+require_once __DIR__ . '/analytics-lib.php';
+record_lead('telegram', $delivered, isset($data['path']) ? (string) $data['path'] : null);
+
+if (!$delivered) {
 	http_response_code(502);
 	echo json_encode(['ok' => false, 'error' => 'Telegram odmítl zprávu.']);
 	exit;

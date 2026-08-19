@@ -1,0 +1,51 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+.detail {
+	.board {
+		@include service-board;
+
+		margin-bottom: 25px;
+	}
+
+	// Dark panel so the long-form text reads as a distinct chapter after the
+	// card above it.
+	.text {
+		@include card(rgba(#000, 0.8));
+
+		padding: 35px 40px;
+
+		// No !important needed: nesting makes this .detail .text .textHeading,
+		// which already outranks the single-class rule in Heading.module.scss.
+		.textHeading {
+			@include accent-bar;
+
+			margin-bottom: 20px;
+			font-size: clamp(1.5rem, 2.4vw, 2rem);
+			text-transform: uppercase;
+			color: #fff;
+		}
+
+		.paragraph {
+			color: rgba(#fff, 0.8);
+			font-size: 1.05rem;
+			line-height: 1.7;
+
+			& + .paragraph {
+				margin-top: 16px;
+			}
+		}
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.detail {
+		.text {
+			padding: 25px 20px;
+
+			.paragraph {
+				font-size: 0.95rem;
+			}
+		}
+	}
+}

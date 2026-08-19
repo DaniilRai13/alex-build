@@ -12,7 +12,12 @@ import { animationTransition } from '@/components/common/animation/transition';
 const HeroSection: FC = () => {
 	return (
 		<div className={styles.banner}>
-			<img className={styles.image} src={img} alt='Modern House' />
+			<img
+				className={styles.image}
+				src={img}
+				alt='Moderní přízemní rodinný dům s cihlovou fasádou a prosklenými vchodovými dveřmi'
+				fetchPriority='high'
+			/>
 			<div className={styles.overlay} />
 			<motion.div
 				className={styles.content}

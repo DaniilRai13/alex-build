@@ -1,0 +1,115 @@
+@import '@styles/abstracts/var';
+
+.cta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 40px;
+
+	margin-top: 70px;
+	padding: 1.5rem 3rem;
+
+	border-radius: $radius-lg;
+	background: $bg-main;
+	box-shadow: $shadow-md;
+	overflow: hidden;
+}
+
+.content {
+	min-width: 0;
+}
+
+.heading {
+	margin-bottom: 10px;
+	font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+	font-weight: 600;
+	line-height: 1.15;
+	color: $text-primary;
+}
+
+.text {
+	max-width: 520px;
+	color: $text-secondary;
+	font-size: 1rem;
+	line-height: 1.6;
+}
+
+.actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 14px 28px;
+
+	margin-top: 24px;
+}
+
+.button {
+	padding: 0.85rem 2.2rem;
+	font-weight: 600;
+	color: $text-white;
+	white-space: nowrap;
+}
+
+.phone {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+
+	color: $text-primary;
+	font-weight: 600;
+	white-space: nowrap;
+
+	svg {
+		color: $red;
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			color: $red;
+		}
+	}
+}
+
+.cta .art {
+	flex: 0 0 auto;
+	width: clamp(350px, 26vw, 400px);
+	height: auto;
+	mix-blend-mode: multiply;
+}
+
+@media (max-width: $screen-tb-lg2) {
+	.cta {
+		gap: 24px;
+		padding: 2rem;
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.cta {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 24px;
+
+		margin-top: 55px;
+		padding: 1.6rem;
+	}
+	.content {
+		width: 100%;
+	}
+
+	.text {
+		font-size: 0.95rem;
+	}
+
+	.actions {
+		width: 100%;
+	}
+
+	.button {
+		width: 100%;
+	}
+
+	.cta .art {
+		display: none;
+	}
+}

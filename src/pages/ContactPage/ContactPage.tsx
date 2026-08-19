@@ -17,7 +17,7 @@ const ContactPage: FC = () => {
 				<div className={styles.grid}>
 					<div className={styles.left}>
 						<div className={styles.contactText}>
-							<Heading className={styles.contactHeading}>
+							<Heading as='h1' className={styles.contactHeading}>
 								Kontaktujte nás
 							</Heading>
 							<Subtitle className={styles.contactSubtitle}>

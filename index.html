@@ -10,43 +10,9 @@
 
     <meta name="theme-color" content="#111111" />
 
-    <!-- <title>, description a OG/Twitter řeší per-route komponenta Seo
-         (vite-react-ssg <Head>), aby se neduplikovaly. -->
-
-    <!-- Strukturovaná data: místní firma (JSON-LD). TODO: doplnit IČO. -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "GeneralContractor",
-        "name": "KartStav Development s.r.o.",
-        "url": "https://kartstav.cz",
-        "image": "https://kartstav.cz/og-image.jpg",
-        "telephone": "+420774896027",
-        "email": "info@kartstav.cz",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Čenětická 2413/1a, Chodov",
-          "postalCode": "149 00",
-          "addressLocality": "Praha",
-          "addressCountry": "CZ"
-        },
-        "areaServed": "Praha",
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday"
-            ],
-            "opens": "09:00",
-            "closes": "18:00"
-          }
-        ]
-      }
-    </script>
+    <!-- <title>, description, OG/Twitter a JSON-LD řeší React:
+         per-route komponenta Seo a organizace v Layout (vite-react-ssg <Head>),
+         aby se údaje nepsaly dvakrát. -->
   </head>
   <body>
     <div id="root"></div>

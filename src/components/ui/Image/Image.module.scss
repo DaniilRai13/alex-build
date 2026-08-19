@@ -2,3 +2,9 @@
 	display: block;
 	max-width: 100%;
 }
+
+// The <picture> is a formatting-only wrapper: display: contents keeps the <img>
+// in its parent's layout, so existing selectors and grid/flex rules still apply.
+.picture {
+	display: contents;
+}

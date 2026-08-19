@@ -1,25 +1,8 @@
 @import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
 
 .services {
-	.top {
-		display: grid;
-		grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-		gap: 25px;
-		align-items: stretch;
-	}
-}
-
-@media (max-width: $screen-tb-xl) {
-	.services {
-		.top {
-			grid-template-columns: 1fr;
-		}
-	}
-}
-@media (max-width: $screen-tb) {
-	.services {
-		.top {
-			gap: 15px;
-		}
+	.board {
+		@include service-board;
 	}
 }

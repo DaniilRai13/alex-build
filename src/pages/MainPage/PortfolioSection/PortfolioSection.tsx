@@ -1,3 +1,5 @@
+import { animationTransition } from '@/components/common/animation/transition';
+import { animations } from '@/components/common/animation/variants';
 import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
 import Subtitle from '@/components/ui/Subtitle/Subtitle';
@@ -5,12 +7,9 @@ import { ROUTES } from '@/config/routes';
 import { portfolioData } from '@/data/portfolio/portfolio.data';
 import type { IPortfolioProject } from '@/types/portfolio.interface';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-import PortfolioModal from '@/pages/PortfolioPage/PortfolioModal/PortfolioModal';
 import PortfolioItem from './PortfolioItem/PortfolioItem';
 import styles from './PortfolioSection.module.scss';
-import { animations } from '@/components/common/animation/variants';
-import { animationTransition } from '@/components/common/animation/transition';
+
 export interface IPortfolioItems {
 	project: IPortfolioProject;
 	className: string;
@@ -30,10 +29,8 @@ const portfolioItems: IPortfolioItems[] = portfolioData
 		project,
 		className: layoutClasses[index],
 	}));
-export const PortfolioSection = () => {
-	const [selectedProject, setSelectedProject] =
-		useState<IPortfolioProject | null>(null);
 
+export const PortfolioSection = () => {
 	return (
 		<section className={styles.portfolio}>
 			<div className={styles.info}>
@@ -43,9 +40,7 @@ export const PortfolioSection = () => {
 					variants={animations.fadeLeft}
 					transition={animationTransition.defaultTransition}
 				>
-					<Heading className={styles.infoTitle}>
-						Naše portfolio
-					</Heading>
+					<Heading className={styles.infoTitle}>Naše portfolio</Heading>
 				</motion.div>
 				<motion.div
 					initial='hidden'
@@ -62,11 +57,7 @@ export const PortfolioSection = () => {
 
 			<div className={styles.gallery}>
 				{portfolioItems.map(item => (
-					<PortfolioItem
-						key={item.project.id}
-						item={item}
-						onOpen={setSelectedProject}
-					/>
+					<PortfolioItem key={item.project.id} item={item} />
 				))}
 			</div>
 			<motion.div
@@ -82,11 +73,6 @@ export const PortfolioSection = () => {
 					to={ROUTES.PORTFOLIO}
 				/>
 			</motion.div>
-
-			<PortfolioModal
-				project={selectedProject}
-				onClose={() => setSelectedProject(null)}
-			/>
 		</section>
 	);
 };

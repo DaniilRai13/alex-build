@@ -1,0 +1,55 @@
+@import '@styles/abstracts/var';
+
+.breadcrumbs {
+	margin-bottom: 25px;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+
+	padding: 0;
+	margin: 0;
+	list-style: none;
+
+	font-size: 0.875rem;
+	color: $text-secondary;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	&:not(:first-child)::before {
+		content: '/';
+		color: $text-light;
+	}
+}
+
+.link {
+	color: $text-secondary;
+	text-decoration: none;
+	transition: color $transition-fast;
+
+	&:hover {
+		color: $red;
+	}
+}
+
+.current {
+	color: $text-primary;
+	font-weight: 600;
+}
+
+@media (max-width: $screen-sm) {
+	.breadcrumbs {
+		margin-bottom: 18px;
+	}
+
+	.list {
+		font-size: 0.8rem;
+	}
+}

@@ -1,19 +1,33 @@
-import Heading from '@/components/ui/Heading/Heading';
-import { useMemo, useState, type FC } from 'react';
-import styles from './PortfolioPage.module.scss';
-import type {
-	IPortfolioProject,
-	PortfolioCategory,
-} from '@/types/portfolio.interface';
-import { portfolioData } from '@/data/portfolio/portfolio.data';
-import PortfolioFilters from './PortfolioFilters/PortfolioFilters';
-import { portfolioCategories } from '@/data/portfolio/portfolioCategories.data';
-import PortfolioGrid from './PortfolioGrid/PortfolioGrid';
-import PortfolioModal from './PortfolioModal/PortfolioModal';
+import Breadcrumbs from '@/components/common/Breadcrumbs/Breadcrumbs';
 import Seo from '@/components/common/Seo/Seo';
+import Heading from '@/components/ui/Heading/Heading';
+import { company } from '@/config/company';
+import { breadcrumbJsonLd } from '@/config/jsonLd';
+import { projectPath, ROUTES } from '@/config/routes';
+import { portfolioData } from '@/data/portfolio/portfolio.data';
+import { portfolioCategories } from '@/data/portfolio/portfolioCategories.data';
+import type { PortfolioCategory } from '@/types/portfolio.interface';
+import { useMemo, useState, type FC } from 'react';
+import PortfolioFilters from './PortfolioFilters/PortfolioFilters';
+import PortfolioGrid from './PortfolioGrid/PortfolioGrid';
+import styles from './PortfolioPage.module.scss';
+
+const crumbs = [{ name: 'Domů', href: ROUTES.HOME }, { name: 'Portfolio' }];
+
+const itemListJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ItemList',
+	name: 'Realizace KartStav',
+	numberOfItems: portfolioData.length,
+	itemListElement: portfolioData.map((project, index) => ({
+		'@type': 'ListItem',
+		position: index + 1,
+		name: project.title,
+		url: `${company.url}${projectPath(project.slug)}`,
+	})),
+};
+
 const PortfolioPage: FC = () => {
-	const [selectedProject, setSelectedProject] =
-		useState<IPortfolioProject | null>(null);
 	const [category, setCategory] = useState<PortfolioCategory>('all');
 
 	const projects = useMemo(() => {
@@ -26,13 +40,19 @@ const PortfolioPage: FC = () => {
 		<section className={styles.portfolio}>
 			<Seo
 				title='Portfolio projektů'
-				description='Prohlédněte si naše dokončené projekty rekonstrukcí bytů, domů a komerčních prostor. Reálné realizace s důrazem na kvalitu a detail.'
-				path='/portfolio'
+				description='Prohlédněte si naše dokončené projekty rekonstrukcí bytů, domů a fasád. Reálné realizace s fotografiemi před a po, plochou i rokem dokončení.'
+				path={ROUTES.PORTFOLIO}
+				jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd]}
 			/>
+
+			<Breadcrumbs items={crumbs} />
+
 			<div className={styles.header}>
 				<span className={styles.subtitle}>Naše realizace</span>
 
-				<Heading className={styles.title}>Portfolio projektů</Heading>
+				<Heading as='h1' className={styles.title}>
+					Portfolio projektů
+				</Heading>
 
 				<p className={styles.description}>
 					Prohlédněte si naše dokončené projekty. Každá realizace je výsledkem
@@ -47,12 +67,7 @@ const PortfolioPage: FC = () => {
 				onChange={setCategory}
 			/>
 
-			<PortfolioGrid projects={projects} onOpen={setSelectedProject} />
-			<PortfolioModal
-				project={selectedProject}
-				onClose={() => setSelectedProject(null)}
-			/>
-			{/* Pagination */}
+			<PortfolioGrid projects={projects} />
 		</section>
 	);
 };

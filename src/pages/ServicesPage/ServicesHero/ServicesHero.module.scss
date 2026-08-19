@@ -1,0 +1,154 @@
+@import '@styles/abstracts/var';
+
+.hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+	gap: 45px;
+	align-items: center;
+
+	margin-bottom: 55px;
+}
+
+.content {
+	min-width: 0;
+}
+
+.eyebrow {
+	display: inline-block;
+	margin-bottom: 14px;
+
+	color: $red;
+	font-size: 1.3rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.heading {
+	margin-bottom: 22px;
+
+	font-size: clamp(2.1rem, 4vw, 3.1rem);
+	font-weight: 700;
+	line-height: 1.12;
+	letter-spacing: -0.01em;
+	color: $text-primary;
+}
+
+.text {
+	color: $text-secondary;
+	font-size: 1.05rem;
+	line-height: 1.7;
+}
+
+.regions {
+	margin-top: 12px;
+	color: $text-secondary;
+	font-size: 0.95rem;
+	line-height: 1.6;
+}
+
+.advantages {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 20px;
+
+	padding: 0;
+	margin: 34px 0 0;
+	list-style: none;
+}
+
+.advantage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	text-align: center;
+}
+
+.advantageIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 42px;
+	height: 42px;
+	margin-bottom: 4px;
+
+	border-radius: 50%;
+	background: rgba($red, 0.1);
+	color: $red;
+}
+
+.advantageTitle {
+	color: $text-primary;
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+
+.advantageText {
+	color: $text-secondary;
+	font-size: 0.85rem;
+	line-height: 1.4;
+}
+
+.figure {
+	overflow: hidden;
+	border-radius: $radius-lg;
+	box-shadow: $shadow-md;
+	aspect-ratio: 4 / 3;
+
+	.photo {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 38%;
+	}
+}
+
+@media (max-width: $screen-tb-xl) {
+	.hero {
+		grid-template-columns: 1fr;
+		gap: 30px;
+		margin-bottom: 40px;
+	}
+
+	.advantages {
+		gap: 22px;
+		margin-top: 28px;
+	}
+
+	// Full width once it sits under the copy: capping it at 760px left a small
+	// picture floating in the middle of a wider column.
+	.figure {
+		display: none;
+	}
+}
+
+@media (max-width: 650px) {
+	.advantages {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 26px 18px;
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.text {
+		font-size: 0.95rem;
+	}
+
+	.figure {
+		max-height: 280px;
+	}
+}
+
+@media (max-width: $screen-xs) {
+	.advantageIcon {
+		width: 36px;
+		height: 36px;
+	}
+
+	.figure {
+		max-height: 200px;
+	}
+}

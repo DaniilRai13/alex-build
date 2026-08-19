@@ -14,7 +14,9 @@ $red-dark: #832620;
 
 // Цвета фона
 $bg-main: #eae7dc;
-$bg-card: #ffffff;
+// Warm off-white, a shade lighter than the page. Pure white cut a hole in the
+// beige palette; the shadow is what lifts a card, not the contrast.
+$bg-card: #f3f0e8;
 $bg-secondary: #f1f5f9;
 $bg-dark: #1e293b;
 
@@ -27,10 +29,18 @@ $text-white: #ffffff;
 // Цвета границ
 $border-light: #e2e8f0;
 $border-medium: #cbd5e1;
+// Hairline on the warm background. The two above are cool greys and read
+// blue next to the beige, so dividers use this instead.
+$border-warm: rgba($text-primary, 0.08);
 
 // Тени (простые)
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 $shadow-md: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+// Controls — buttons, filters, the actions in the header. Tight on purpose:
+// the same value the admin app uses, and at button size a large radius reads
+// as a capsule rather than a corner. Surfaces keep $radius-lg.
+$radius-md: 0.4rem;
 
 $radius-lg: 1.2rem;
 $radius-xl: 10rem;

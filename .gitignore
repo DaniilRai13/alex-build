@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Responsive WebP variants — derived from src/assets, rebuilt by
+# scripts/generate-image-variants.mjs on every build.
+src/assets/generated
+
 # Build archives
 *.rar
 *.zip
@@ -29,3 +33,14 @@ dist-ssr
 
 # Telegram secrets (server-side) – nikdy necommitovat
 public/telegram-config.php
+
+# Supabase service key for the visit counter (server-side, see public/track.php).
+# Generated on the hosting from GitHub secrets — never in git, never in the
+# browser bundle.
+public/analytics-config.php
+
+# Portfolio downloaded from Supabase before each build by
+# scripts/fetch-portfolio.mjs. Derived data: the admin app is the source of
+# truth, and re-downloading is cheaper than carrying ~20 MB of photos here.
+src/assets/portfolio-remote
+src/data/portfolio/portfolio.remote.json

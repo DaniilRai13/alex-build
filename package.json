@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite-react-ssg build",
+    "dev": "npm run portfolio:fetch && npm run images:variants && vite",
+    "prebuild": "npm run portfolio:fetch && npm run images:variants",
+    "build": "tsc -b && vite-react-ssg build && node scripts/generate-sitemap.mjs",
+    "portfolio:fetch": "node scripts/fetch-portfolio.mjs",
+    "images:variants": "node scripts/generate-image-variants.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "optimize:images": "node scripts/optimize-portfolio-images.mjs",
