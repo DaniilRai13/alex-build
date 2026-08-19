@@ -69,6 +69,11 @@ $ok = @mail(
 	'-f' . $FROM
 );
 
+// Counted either way: a lead that was written but not delivered is the one
+// case worth knowing about, and dropping it would hide the failure.
+require_once __DIR__ . '/analytics-lib.php';
+record_lead('mail', (bool) $ok, isset($data['path']) ? (string) $data['path'] : null);
+
 if (!$ok) {
 	http_response_code(502);
 	echo json_encode(['ok' => false, 'error' => 'Nepodařilo se odeslat e-mail.']);
