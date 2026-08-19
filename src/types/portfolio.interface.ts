@@ -3,7 +3,8 @@ import type { IResponsiveImage } from './image.interface';
 export type PortfolioCategory = 'all' | 'interior' | 'renovation' | 'facade';
 
 export interface IPortfolioProject {
-	id: number;
+	/** UUID from the database. Used as a React key, never shown. */
+	id: string;
 	slug: string;
 
 	title: string;

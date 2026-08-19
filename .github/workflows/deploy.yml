@@ -30,7 +30,28 @@ jobs:
         run: |
           printf "<?php\nreturn ['token' => '%s', 'chat_id' => '%s'];\n" "$TG_TOKEN" "$TG_CHAT" > public/telegram-config.php
 
+      # Visit counter (public/track.php). The SERVICE key, deliberately: it is
+      # written into a PHP file that stays on the server and is never part of
+      # the browser bundle. Without these the counter simply does nothing —
+      # track.php answers 204 and the site is unaffected.
+      - name: Create analytics config
+        env:
+          SB_URL: ${{ secrets.SUPABASE_URL }}
+          SB_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SB_SALT: ${{ secrets.ANALYTICS_SALT }}
+        run: |
+          printf "<?php\nreturn ['url' => '%s', 'key' => '%s', 'salt' => '%s'];\n" "$SB_URL" "$SB_SERVICE_KEY" "$SB_SALT" > public/analytics-config.php
+
+      # The portfolio lives in Supabase and is downloaded by
+      # scripts/fetch-portfolio.mjs during prebuild. Without these the build has
+      # no projects to render and stops rather than publishing an empty site.
+      #
+      # Deliberately unprefixed: Vite inlines only VITE_* into the browser
+      # bundle, so these stay in the build step where they belong.
       - name: Build
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: npm run build
 
       - name: Deploy to Forpsi via FTP

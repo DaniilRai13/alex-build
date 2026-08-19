@@ -34,17 +34,35 @@ const OUTPUT = path.join(ASSETS, 'generated');
 // Services: `widths: null` means one variant at the source size. Those
 // illustrations are already only ~400-480px wide, so there is nothing to
 // resize — the win there is purely PNG to WebP, which cuts them 4x.
+// `portfolio-remote` is the copy downloaded from Supabase by
+// scripts/fetch-portfolio.mjs and is what the site renders.
+//
+// The pre-migration `portfolio` folder is still in git as the way back, but it
+// is deliberately not listed here: nothing imports it any more, so resizing it
+// would burn half a minute of every build for files no page would ever ask for.
 const GROUPS = [
-	{ name: 'portfolio', widths: [480, 960, 1600] },
+	{ name: 'portfolio-remote', widths: [480, 960, 1600] },
 	{ name: 'services', widths: null },
 ];
 
 const QUALITY = { 480: 75, 960: 78, 1600: 78, native: 80 };
 
-const IMAGE_RE = /\.(jpe?g|png)$/i;
+// WebP belongs here now: the admin re-encodes uploads to WebP in the browser
+// before they are stored, so a photo added there arrives as .webp and would
+// otherwise be walked straight past and never get a variant.
+const IMAGE_RE = /\.(jpe?g|png|webp)$/i;
 
 async function* walk(dir) {
-	for (const entry of await readdir(dir, { withFileTypes: true })) {
+	let entries;
+	try {
+		entries = await readdir(dir, { withFileTypes: true });
+	} catch {
+		// A group whose folder does not exist yet — portfolio-remote before the
+		// first fetch. Nothing to resize is not an error.
+		return;
+	}
+
+	for (const entry of entries) {
 		const full = path.join(dir, entry.name);
 
 		if (entry.isDirectory()) yield* walk(full);
