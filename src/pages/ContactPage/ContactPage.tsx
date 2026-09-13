@@ -1,4 +1,5 @@
 import ContactForm from '@/components/ui/ContactForm/ContactForm';
+import ContactDetails from './ContactDetails/ContactDetails';
 import Heading from '@/components/ui/Heading/Heading';
 import { type FC } from 'react';
 import ContactInfo from './WorkProcess/WorkProcess';
@@ -29,6 +30,7 @@ const ContactPage: FC = () => {
 					</div>
 					<div className={styles.right}>
 						<ContactInfo />
+						<ContactDetails />
 					</div>
 				</div>
 			</div>
