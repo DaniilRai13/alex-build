@@ -6,7 +6,7 @@ const PrivacyPage: FC = () => {
 	return (
 		<LegalPage
 			title='Zásady ochrany osobních údajů'
-			seoDescription='Zásady ochrany osobních údajů – jaké údaje zpracováváme, k jakému účelu a jaká máte práva.'
+			seoDescription='Zásady ochrany osobních údajů na webu kartstav.cz – jaké údaje z kontaktního formuláře zpracováváme, k jakému účelu a jaká máte práva.'
 			path='/privacy'
 			lastUpdated='20. 7. 2026'
 			intro='Ochrana vašich osobních údajů je pro nás důležitá. V těchto zásadách vysvětlujeme, jaké údaje shromažďujeme prostřednictvím tohoto webu, k jakému účelu je zpracováváme a jaká máte práva.'

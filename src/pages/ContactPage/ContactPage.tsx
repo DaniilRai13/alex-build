@@ -9,7 +9,7 @@ const ContactPage: FC = () => {
 	return (
 		<div className={styles.contacts}>
 			<Seo
-				title='Kontakt'
+				title='Kontakt – rekonstrukce bytů Teplice'
 				description='Kontaktujte nás a nezávazně proberte svůj projekt rekonstrukce. Zanechte poptávku – ozveme se a připravíme řešení na míru.'
 				path='/contacts'
 			/>
