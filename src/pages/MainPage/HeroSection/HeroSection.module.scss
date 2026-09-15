@@ -31,6 +31,22 @@
 			left: 50px;
 		}
 
+		// Where the geography lives, so the heading stays the line it was.
+		.badge {
+			display: inline-block;
+			margin-bottom: 14px;
+			padding: 5px 14px;
+
+			border-radius: $radius-xl;
+			background: $red;
+
+			color: #fff;
+			font-size: 0.75rem;
+			font-weight: 600;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+		}
+
 		.title {
 			font-size: clamp(2rem, 1rem + 3.4vw, 3.6rem);
 			line-height: 1.05;
@@ -38,6 +54,9 @@
 			letter-spacing: 0;
 			color: #fff;
 			margin-bottom: 24px;
+			// Replaces the hard <br /> the heading used to carry — the browser
+			// splits it into even lines at whatever size the clamp lands on.
+			text-wrap: balance;
 		}
 
 		.description {

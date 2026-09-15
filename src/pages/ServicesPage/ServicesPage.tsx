@@ -38,7 +38,7 @@ const ServicesPage = () => {
 	return (
 		<section className={styles.services}>
 			<Seo
-				title='Naše služby'
+				title='Služby – rekonstrukce bytů a domů Teplice'
 				description='Kompletní i kosmetické rekonstrukce, stavební a řemeslné práce, návrhy interiéru s vizualizacemi. Podívejte se, co pro vás zajistíme.'
 				path={ROUTES.SERVICES}
 				jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd]}

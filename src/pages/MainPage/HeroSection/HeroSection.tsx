@@ -26,14 +26,25 @@ const HeroSection: FC = () => {
 				transition={{ ...animationTransition.defaultTransition, delay: 0.2 }}
 				variants={animations.fadeLeft}
 			>
+				{/*
+					The badge carries the geography so the heading can stay the line
+					it has always been. Naming the town in both would put "Teplice"
+					twice in two adjacent elements.
+				*/}
+				<span className={styles.badge}>Teplice · Ústecký kraj</span>
+
+				{/*
+					No forced line break: the heading is set in a fluid clamp, so a
+					<br /> that lands well on a laptop splits it mid-thought on a
+					phone. text-wrap: balance lets the browser pick the point.
+				*/}
 				<Heading as='h1' className={styles.title}>
-					Vaše první volba pro
-					<br />
-					kompletní stavby a rekonstrukce.
+					Vaše první volba pro kompletní stavby a rekonstrukce.
 				</Heading>
 				<Subtitle className={styles.description}>
 					Měníme vaše představy v realitu s důrazem na poctivé řemeslo a
-					špičkový výsledek.
+					špičkový výsledek. Působíme v Ústeckém kraji i v dalších městech
+					České republiky.
 				</Subtitle>
 			</motion.div>
 			<div className={styles.buttonContainer}>

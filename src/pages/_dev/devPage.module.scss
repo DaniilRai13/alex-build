@@ -1,0 +1,151 @@
+@import '@styles/abstracts/var';
+
+// Shared chrome for the scratch pages under _dev — headings, numbering and the
+// verdict grid under each mockup. The concepts they frame differ; the frame
+// should not.
+
+.page {
+	padding-block: 32px 72px;
+}
+
+.intro {
+	max-width: 70ch;
+	margin-bottom: 44px;
+
+	h1 {
+		font-size: clamp(1.6rem, 1rem + 2vw, 2.4rem);
+		line-height: 1.1;
+		margin-bottom: 14px;
+	}
+
+	p {
+		color: $text-secondary;
+		margin-bottom: 10px;
+	}
+}
+
+.kicker {
+	display: inline-block;
+	margin-bottom: 10px;
+	padding: 4px 10px;
+
+	border-radius: $radius-md;
+	background: rgba($red, 0.12);
+
+	color: $red;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.warn {
+	padding: 12px 16px;
+	border-left: 3px solid $red;
+	background: rgba($red, 0.06);
+	border-radius: 0 $radius-md $radius-md 0;
+}
+
+.variant {
+	margin-bottom: 56px;
+}
+
+.head {
+	display: grid;
+	grid-template-columns: 46px 1fr;
+	align-items: baseline;
+	gap: 0 12px;
+
+	margin-bottom: 16px;
+
+	h2 {
+		font-size: 1.35rem;
+		font-weight: 600;
+	}
+
+	p {
+		grid-column: 2;
+		max-width: 64ch;
+		margin-top: 4px;
+
+		color: $text-secondary;
+		font-size: 0.9rem;
+	}
+}
+
+.num {
+	color: $red;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.notes {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1px;
+
+	margin-top: 16px;
+
+	border: 1px solid $border-warm;
+	border-radius: $radius-md;
+	background: $border-warm;
+
+	overflow: hidden;
+
+	> div {
+		background: $bg-card;
+		padding: 12px 16px;
+	}
+
+	dt {
+		margin-bottom: 3px;
+
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	dd {
+		margin: 0;
+		color: $text-secondary;
+		font-size: 0.85rem;
+	}
+}
+
+/// Three columns when a page also reports what each option does for search.
+.notes3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.plus dt {
+	color: $green-dark;
+}
+
+.minus dt {
+	color: $red;
+}
+
+.seo dt {
+	color: $primary-900;
+}
+
+@media (max-width: $screen-tb-xl) {
+	.notes3 {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.notes {
+		grid-template-columns: 1fr;
+	}
+
+	.head {
+		grid-template-columns: 34px 1fr;
+
+		h2 {
+			font-size: 1.15rem;
+		}
+	}
+}

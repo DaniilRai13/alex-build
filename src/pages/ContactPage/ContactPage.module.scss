@@ -5,7 +5,16 @@
 			display: grid;
 			grid-template-columns: 1.3fr 1fr;
 			gap: 60px;
-			align-items: center;
+			// Top, not centre: the right column carries two panels and is now the
+			// taller of the two, which left the heading and the form floating in
+			// the middle of the row.
+			align-items: start;
+			// Two stacked panels: how we work, then the contact details.
+			.right {
+				display: flex;
+				flex-direction: column;
+				gap: 24px;
+			}
 			.left {
 				.contactText {
 					position: relative;

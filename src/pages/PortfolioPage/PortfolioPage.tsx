@@ -39,7 +39,7 @@ const PortfolioPage: FC = () => {
 	return (
 		<section className={styles.portfolio}>
 			<Seo
-				title='Portfolio projektů'
+				title='Portfolio rekonstrukcí bytů – Teplice'
 				description='Prohlédněte si naše dokončené projekty rekonstrukcí bytů, domů a fasád. Reálné realizace s fotografiemi před a po, plochou i rokem dokončení.'
 				path={ROUTES.PORTFOLIO}
 				jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd]}

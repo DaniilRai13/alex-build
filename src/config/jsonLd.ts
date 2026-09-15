@@ -27,6 +27,13 @@ export const organizationJsonLd: JsonLd = {
 		addressLocality: company.postalAddress.city,
 		addressCountry: company.postalAddress.country,
 	},
+	// A map link for the registered address. `geo` belongs next to this, but it
+	// wants exact coordinates and guessing them would put the pin on the wrong
+	// building — take them from the Google Business Profile once that is
+	// verified, which is also where `sameAs` and `aggregateRating` come from.
+	hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+		`${company.postalAddress.street}, ${company.postalAddress.postalCode} ${company.postalAddress.city}`,
+	)}`,
 	areaServed: regions.map(region => ({
 		'@type': region.type,
 		name: region.name,

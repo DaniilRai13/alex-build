@@ -6,7 +6,16 @@
 // portfolio projects show up in the sitemap the moment they are added to the
 // data files — nobody has to remember to update an XML file.
 
-import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
+// No <lastmod>. It used to come from the generated file's mtime, which is the
+// build time — so every deploy announced all 19 URLs as freshly changed, and a
+// lastmod that is always today is a lastmod nobody should believe. Omitting it
+// is valid and lets crawlers fall back to what they observe.
+//
+// To bring it back honestly, the date has to come from the content: either an
+// `updated` field maintained alongside each project and service, or `git log`
+// per source file — which would also need fetch-depth: 0 in the deploy
+// workflow, since the default shallow checkout has no history to read.
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -84,13 +93,7 @@ const run = async () => {
 		if (EXCLUDED.has(url)) continue;
 		if (!(await isIndexable(file))) continue;
 
-		const { mtime } = await stat(file);
-
-		entries.push({
-			url,
-			lastmod: mtime.toISOString().slice(0, 10),
-			...ruleFor(url),
-		});
+		entries.push({ url, ...ruleFor(url) });
 	}
 
 	entries.sort((a, b) => a.url.localeCompare(b.url));
@@ -102,7 +105,6 @@ const run = async () => {
 			[
 				'  <url>',
 				`    <loc>${SITE_URL}${entry.url === '/' ? '/' : entry.url}</loc>`,
-				`    <lastmod>${entry.lastmod}</lastmod>`,
 				`    <changefreq>${entry.changefreq}</changefreq>`,
 				`    <priority>${entry.priority}</priority>`,
 				'  </url>',

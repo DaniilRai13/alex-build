@@ -74,6 +74,7 @@ const ProjectPage: FC = () => {
 				description={metaDescription(project.description)}
 				path={url}
 				image={project.preview.src}
+				ogType='article'
 				jsonLd={[breadcrumbJsonLd(crumbs), projectJsonLd]}
 			/>
 

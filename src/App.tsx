@@ -64,6 +64,21 @@ export const routes: RouteRecord[] = [
 				path: ROUTES.TERMS,
 				lazy: page(() => import('./pages/legal/TermsPage')),
 			},
+			// Scratch page for comparing hero layouts side by side. Guarded by
+			// import.meta.env.DEV, which is false during `vite-react-ssg build`,
+			// so the route is absent from the production list: nothing to
+			// prerender, nothing in dist/, nothing for the sitemap to find.
+			...(import.meta.env.DEV
+				? [
+						{
+							path: '/about-variants',
+							lazy: page(
+								() =>
+									import('./pages/_dev/AboutVariants/AboutVariantsPage'),
+							),
+						},
+					]
+				: []),
 			{
 				// Prerendered to /404.html, which Apache serves via ErrorDocument
 				// with a real 404 status code.

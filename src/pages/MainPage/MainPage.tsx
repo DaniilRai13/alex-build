@@ -24,8 +24,8 @@ const MainPage: FC = () => {
 	return (
 		<div>
 			<Seo
-				title='Váš partner pro rekonstrukce bytů a domů'
-				description='Kompletní i kosmetické rekonstrukce bytů a domů, stavební a řemeslné práce, fasády a návrhy interiérů. Pevná cena bez skrytých poplatků.'
+				title='Váš partner pro rekonstrukce bytů – Teplice'
+				description='Kompletní i kosmetické rekonstrukce bytů a domů v Teplicích, stavební a řemeslné práce, fasády a návrhy interiérů. Pevná cena bez skrytých poplatků.'
 				path={ROUTES.HOME}
 				jsonLd={websiteJsonLd}
 			/>

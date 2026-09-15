@@ -19,6 +19,11 @@ interface SeoProps {
 	image?: string;
 	/** Keeps the page out of the index (404 etc.) — sends noindex instead of a canonical. */
 	noindex?: boolean;
+	/**
+	 * og:type. A project write-up or a blog post is an `article`; everything
+	 * else on a company site is the default `website`.
+	 */
+	ogType?: 'website' | 'article';
 	/** Page-specific structured data (schema.org). */
 	jsonLd?: JsonLd | JsonLd[];
 }
@@ -29,6 +34,7 @@ const Seo: FC<SeoProps> = ({
 	path,
 	image,
 	noindex = false,
+	ogType = 'website',
 	jsonLd,
 }) => {
 	const url = `${SITE_URL}${path}`;
@@ -46,7 +52,7 @@ const Seo: FC<SeoProps> = ({
 			)}
 
 			{/* Open Graph — соцсети и мессенджеры */}
-			<meta property='og:type' content='website' />
+			<meta property='og:type' content={ogType} />
 			<meta property='og:locale' content='cs_CZ' />
 			<meta property='og:site_name' content={SITE_NAME} />
 			<meta property='og:title' content={fullTitle} />

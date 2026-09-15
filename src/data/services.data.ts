@@ -78,7 +78,7 @@ export const services: IService[] = [
 			'Rychlé a efektivní obnovení interiéru bez rozsáhlých stavebních zásahů. Ideální pro přípravu bytu k pronájmu i zvýšení jeho hodnoty.',
 		seoTitle: 'Kosmetické úpravy a rychlá obnova interiéru',
 		seoDescription:
-			'Rychlá obnova interiéru bez velkých stavebních zásahů – úpravy stěn, nové podlahové krytiny, osvětlení a úpravy koupelny. Ideální před pronájmem nebo prodejem bytu.',
+			'Rychlá obnova interiéru bez velkých stavebních zásahů – úpravy stěn, nové podlahy, osvětlení a koupelna. Ideální před pronájmem či prodejem bytu.',
 		detailHeading: 'Kdy se kosmetické úpravy vyplatí',
 		longDescription: [
 			'Kosmetické úpravy obnoví vzhled bytu bez zásahů do nosných konstrukcí a rozvodů. Vyměníme podlahové krytiny, opravíme a vymalujeme stěny, doplníme osvětlení a upravíme koupelnu – interiér pak působí jako nový za zlomek času i nákladů kompletní rekonstrukce.',
@@ -121,7 +121,7 @@ export const services: IService[] = [
 		title: 'Návrhy & vizualizace',
 		description:
 			'Promyšlený návrh prostoru s vizualizacemi a kompletní projektovou dokumentací.',
-		seoTitle: 'Návrh interiéru, vizualizace a projektová dokumentace',
+		seoTitle: 'Návrh interiéru a 3D vizualizace',
 		seoDescription:
 			'Návrh interiéru s vizualizacemi a projektovou dokumentací – dispoziční řešení, výběr materiálů a podklady, podle kterých se dá stavět.',
 		detailHeading: 'Jak probíhá návrh a vizualizace',
