@@ -1,0 +1,26 @@
+@import '@styles/abstracts/var';
+
+// A phone-width frame so the mobile layouts can be read on a desktop screen.
+.stage {
+	display: flex;
+	justify-content: center;
+
+	padding: 28px 0;
+	border-radius: $radius-lg;
+
+	// Slightly darker than the page, so the frame reads as a device on a
+	// surface rather than as part of the document.
+	background: rgba($text-primary, 0.05);
+}
+
+.phone {
+	width: 390px;
+	max-width: 100%;
+
+	padding: 16px;
+
+	border: 1px solid $border-warm;
+	border-radius: 20px;
+	background: $bg-main;
+	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}

@@ -82,6 +82,12 @@ export const routes: RouteRecord[] = [
 								() => import('./pages/_dev/TextVariants/TextVariantsPage'),
 							),
 						},
+						{
+							path: '/about-mobile',
+							lazy: page(
+								() => import('./pages/_dev/AboutMobile/AboutMobilePage'),
+							),
+						},
 					]
 				: []),
 			{
