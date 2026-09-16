@@ -8,23 +8,22 @@
 
 	margin-top: 40px;
 	padding: 36px 40px;
-}
 
-// The short red rule beside a heading is the site's recurring section marker —
-// the same one the contact page and the hero copy use. The FAQ heading was the
-// one place it was missing, which is why it read as plain black text.
-.title {
-	@include accent-bar;
+	// Nested on purpose. Heading.module.scss styles .heading with a single
+	// class, so a top-level .title here only wins by source order — which is
+	// how this heading ended up smaller and lighter than its neighbours. Two
+	// classes settle it, the same way every other section heading on the site
+	// does it.
+	.title {
+		margin-bottom: 28px;
 
-	display: flex;
-	align-items: center;
-
-	min-height: 36px;
-	margin-bottom: 28px;
-
-	font-size: 1.7rem;
-	font-weight: 600;
-	text-transform: uppercase;
+		// No font-size and no font-weight: the section headings on the home page
+		// take both from the Heading component — clamp(2.3rem, 4vw, 3.2rem) at
+		// weight 700 — and this block sits directly below three of them.
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: $red;
+	}
 }
 
 .list {
@@ -114,12 +113,12 @@
 	.faq {
 		margin-top: 28px;
 		padding: 24px;
-	}
 
-	.title {
-		min-height: 30px;
-		margin-bottom: 20px;
-		font-size: 1.3rem;
+		// Only the gap. The size still comes from Heading, whose clamp already
+		// bottoms out at 2.3rem here — the same as every heading beside it.
+		.title {
+			margin-bottom: 20px;
+		}
 	}
 
 	.question {
