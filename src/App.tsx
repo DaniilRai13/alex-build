@@ -76,6 +76,12 @@ export const routes: RouteRecord[] = [
 								() => import('./pages/_dev/FaqVariants/FaqVariantsPage'),
 							),
 						},
+						{
+							path: '/text-variants',
+							lazy: page(
+								() => import('./pages/_dev/TextVariants/TextVariantsPage'),
+							),
+						},
 					]
 				: []),
 			{
