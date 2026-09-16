@@ -22,7 +22,14 @@ $bg-dark: #1e293b;
 
 // Цвета текста
 $text-primary: #1e293b;
-$text-secondary: #64748b;
+
+// Secondary copy — paragraphs, captions, card descriptions.
+//
+// Was #64748b, a cool slate that measured 3.84:1 against $bg-main: under the
+// 4.5:1 minimum for body text, and blue-tinted on a warm beige ground — the
+// same mismatch $border-warm exists to avoid. This is the warm equivalent at
+// 6.08:1.
+$text-secondary: #5c5349;
 $text-light: #94a3b8;
 $text-white: #ffffff;
 

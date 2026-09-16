@@ -9,7 +9,11 @@ html {
 }
 
 body {
+	// 'Inter Variable' is the family name the self-hosted variable font
+	// registers; plain 'Inter' stays behind it for anyone who has the static
+	// version installed locally.
 	font-family:
+		'Inter Variable',
 		'Inter',
 		-apple-system,
 		BlinkMacSystemFont,

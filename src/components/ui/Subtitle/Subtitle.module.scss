@@ -1,7 +1,13 @@
 @import '@styles/abstracts/var';
+
 .subtitle {
-	font-size: clamp(1rem, 4vw, 1.2rem);
-	line-height: 1.2;
-	letter-spacing: 1px;
+	font-size: clamp(1rem, 4vw, 1.05rem);
+
+	// Was 1.2 with 1px of tracking — both are heading settings, and on running
+	// text they made the paragraphs look cramped and oddly spaced. Body copy
+	// wants room between the lines and none between the letters.
+	line-height: 1.65;
+	letter-spacing: 0;
+
 	color: $text-secondary;
 }
