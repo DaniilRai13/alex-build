@@ -54,6 +54,26 @@ export const organizationJsonLd: JsonLd = {
 	],
 };
 
+/**
+ * FAQPage structured data — pass the result to <Seo jsonLd>.
+ *
+ * Only mark up questions that are actually visible on the page: Google treats
+ * schema describing content a visitor cannot see as a violation, and an FAQ is
+ * the easiest place to slip into that by accident.
+ */
+export const faqJsonLd = (items: { q: string; a: string }[]): JsonLd => ({
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: items.map(item => ({
+		'@type': 'Question',
+		name: item.q,
+		acceptedAnswer: {
+			'@type': 'Answer',
+			text: item.a,
+		},
+	})),
+});
+
 export interface Crumb {
 	name: string;
 	/** Omitted on the last (current) crumb. */

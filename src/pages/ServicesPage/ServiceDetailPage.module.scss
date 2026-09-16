@@ -14,6 +14,9 @@
 		@include card(rgba(#000, 0.8));
 
 		padding: 35px 40px;
+		// Gap to the FAQ panel that follows. Set here rather than in the Faq
+		// module: the component is shared, spacing belongs to whoever places it.
+		margin-bottom: 25px;
 
 		// No !important needed: nesting makes this .detail .text .textHeading,
 		// which already outranks the single-class rule in Heading.module.scss.

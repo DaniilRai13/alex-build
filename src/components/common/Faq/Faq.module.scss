@@ -1,0 +1,130 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+.faq {
+	@include card;
+
+	padding: 36px 40px;
+}
+
+.title {
+	margin-bottom: 24px;
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+}
+
+.item {
+	border-bottom: 1px solid $border-warm;
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.question {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+
+	padding: 16px 0;
+
+	font-size: 1.02rem;
+	font-weight: 600;
+	color: $text-primary;
+
+	cursor: pointer;
+	list-style: none;
+
+	// Safari draws its own triangle through ::-webkit-details-marker, which
+	// `list-style: none` alone does not remove.
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&:hover {
+		color: $red;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $red;
+		outline-offset: 4px;
+		border-radius: $radius-md;
+	}
+}
+
+// A plus that turns into a minus. Two bars, the vertical one rotates away.
+.marker {
+	position: relative;
+	flex-shrink: 0;
+
+	width: 18px;
+	height: 18px;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+
+		width: 100%;
+		height: 2px;
+
+		background: $red;
+		border-radius: 2px;
+		transition: transform $transition-fast;
+	}
+
+	&::after {
+		transform: rotate(90deg);
+	}
+}
+
+.item[open] .marker::after {
+	transform: rotate(0deg);
+}
+
+.answer {
+	margin: 0;
+	padding: 0 0 18px;
+
+	max-width: 68ch;
+
+	color: $text-secondary;
+	line-height: 1.65;
+}
+
+@media (max-width: $screen-tb) {
+	.faq {
+		padding: 24px;
+	}
+
+	.title {
+		font-size: 1.25rem;
+		margin-bottom: 18px;
+	}
+
+	.question {
+		font-size: 0.95rem;
+		padding: 14px 0;
+	}
+
+	.answer {
+		font-size: 0.92rem;
+		padding-bottom: 14px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.marker::before,
+	.marker::after {
+		transition: none;
+	}
+}
