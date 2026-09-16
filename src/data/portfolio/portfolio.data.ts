@@ -105,11 +105,27 @@ export const HOME_STRIP_SIZE = 4;
 export const homeStripProjects = portfolioData.slice(0, HOME_STRIP_SIZE);
 
 /**
- * Photo for the About block on the home page. Deliberately the first project
- * the strip does NOT show: the block sits directly above it, and featuring the
- * same shot twice on one screen reads as a mistake rather than a choice.
+ * Photo for the About block on the home page.
  *
- * Derived rather than hard-coded, so reordering the portfolio in the admin
- * cannot quietly reintroduce the duplicate.
+ * Two constraints. It must not be one of the projects the strip below already
+ * shows — the same shot twice on one screen reads as a mistake rather than a
+ * choice. And it should be finished work: the block is the company introducing
+ * itself, so a site mid-scaffolding sells nothing, however honest it is.
+ *
+ * Named rather than derived, because "the first one the strip skips" happened
+ * to land on the facade job. But the name is still checked against the strip,
+ * so reordering the portfolio in the admin cannot quietly reintroduce the
+ * duplicate — it falls back to the old rule instead.
  */
-export const aboutProject = portfolioData[HOME_STRIP_SIZE] ?? featuredProject;
+const ABOUT_SLUG = 'rekonstrukce-bytu-zelena-kuchyne';
+
+export const aboutProject = (() => {
+	const chosen = getProjectBySlug(ABOUT_SLUG);
+	const clashesWithStrip = homeStripProjects.some(
+		project => project.slug === ABOUT_SLUG,
+	);
+
+	if (chosen && !clashesWithStrip) return chosen;
+
+	return portfolioData[HOME_STRIP_SIZE] ?? featuredProject;
+})();

@@ -5,20 +5,20 @@
 // laptop and showed none of the work the text talks about.
 .about {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
 	// Top, not centre. As the screen narrows the copy wraps and grows while the
 	// photo shrinks, and centred it ended up floating in the middle of the row
 	// with dead space above and below it.
 	align-items: start;
-	gap: 48px;
+	gap: 30px;
 
 	padding-top: 80px;
 
 	// 900 rather than $screen-tb-lg2: below this the two columns are too narrow
 	// to read side by side. The hero already breaks at the same width.
-	@media (max-width: 900px) {
+	@media (max-width: $screen-tb) {
 		grid-template-columns: 1fr;
-		gap: 28px;
+		gap: 25px;
 		padding-top: 50px;
 	}
 }
@@ -29,11 +29,11 @@
 	// Stacked, the photo follows the copy instead of pushing it down the page,
 	// and stops well short of full width — edge to edge it was both too wide
 	// and too tall for what is a supporting image.
-	@media (max-width: 900px) {
+	@media (max-width: $screen-tb) {
 		order: 2;
 
 		width: 100%;
-		max-width: 460px;
+		max-width: 560px;
 		margin-inline: auto;
 	}
 }
@@ -43,12 +43,13 @@
 	border-radius: $radius-lg;
 	box-shadow: $shadow-md;
 
-	// Landscape, so a portrait shot from the portfolio cannot stretch the row
-	// to twice the height of the copy beside it.
-	aspect-ratio: 4 / 3;
+	// 10/9 rather than 4/3: about 83px taller in the ~550px column this sits in.
+	// It also wastes less of the source — every portfolio preview but one is a
+	// portrait shot, and a wide frame threw most of each away.
+	aspect-ratio: 10 / 9;
 	object-fit: cover;
 
-	@media (max-width: 900px) {
+	@media (max-width: $screen-tb) {
 		aspect-ratio: 16 / 10;
 	}
 }
@@ -56,7 +57,7 @@
 .copy {
 	min-width: 0;
 
-	@media (max-width: 900px) {
+	@media (max-width: $screen-tb) {
 		order: 1;
 	}
 }
