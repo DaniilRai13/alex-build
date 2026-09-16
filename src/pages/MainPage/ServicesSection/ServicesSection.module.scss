@@ -3,7 +3,9 @@
 .services {
 	display: grid;
 	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-	align-items: center;
+	// Top, not centre: the copy should start level with the first row of cards.
+	// Centred, it floated down the middle of a two-row grid.
+	align-items: start;
 	gap: 48px;
 
 	padding-top: 80px;

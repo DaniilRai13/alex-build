@@ -78,8 +78,35 @@
 	}
 }
 
-.button {
+// Outline rather than filled. The solid red button belongs to the primary
+// action — "Všechny služby" beside the services, the CTA in the banner; this
+// one leads to the portfolio, so it asks rather than insists.
+//
+// Two classes plus the same pseudo-classes Button.module.scss uses, otherwise
+// its own :hover:not(:disabled) rule ties on specificity and wins by source
+// order — taking the fill and the lift back with it.
+.copy .button {
 	padding: 14px 30px;
+
+	background: transparent;
+	border: 2px solid rgba($red, 0.4);
+	color: $red;
+	box-shadow: none;
+
+	&:hover:not(:disabled),
+	&:focus-visible {
+		background: transparent;
+		border-color: $red;
+		color: $red-dark;
+
+		transform: translateY(-2px);
+		box-shadow: none;
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+		box-shadow: none;
+	}
 }
 
 @media (max-width: $screen-md) {
