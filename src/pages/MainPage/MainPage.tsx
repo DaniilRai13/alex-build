@@ -1,6 +1,9 @@
+import Faq from '@/components/common/Faq/Faq';
 import Seo from '@/components/common/Seo/Seo';
 import { company, ORGANIZATION_ID } from '@/config/company';
+import { faqJsonLd } from '@/config/jsonLd';
 import { ROUTES } from '@/config/routes';
+import { faqHome } from '@/data/faq.data';
 import { type FC } from 'react';
 import AboutSection from './AboutSection/AboutSection';
 import HeroSection from './HeroSection/HeroSection';
@@ -27,12 +30,15 @@ const MainPage: FC = () => {
 				title='Váš partner pro rekonstrukce bytů – Teplice'
 				description='Kompletní i kosmetické rekonstrukce bytů a domů v Teplicích, stavební a řemeslné práce, fasády a návrhy interiérů. Pevná cena bez skrytých poplatků.'
 				path={ROUTES.HOME}
-				jsonLd={websiteJsonLd}
+				jsonLd={[websiteJsonLd, faqJsonLd(faqHome)]}
 			/>
 			<HeroSection />
 			<AboutSection />
 			<ServicesSection />
 			<PortfolioSection />
+			{/* Last before the site-wide CTA banner: objections answered right
+			    where the visitor is about to decide whether to write. */}
+			<Faq items={faqHome} />
 		</div>
 	);
 };

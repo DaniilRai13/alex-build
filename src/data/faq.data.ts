@@ -20,6 +20,44 @@ export interface IFaqItem {
 	a: string;
 }
 
+/**
+ * The home page set. Deliberately not a copy of the service pages: someone who
+ * lands here has not chosen a service yet, so these answer the questions that
+ * come before that choice — what you do at all, which of the two renovations I
+ * need, how the whole thing runs. Only the geography, the price and the
+ * guarantee overlap, and those are worth repeating on the strongest page.
+ */
+export const faqHome: IFaqItem[] = [
+	{
+		q: 'Jaké práce zajišťujete?',
+		a: 'Kompletní rekonstrukce bytů a domů, kosmetické úpravy interiéru, stavební a řemeslné práce včetně omítek a fasád, a návrhy interiéru s vizualizacemi a projektovou dokumentací.',
+	},
+	{
+		q: 'Kompletní rekonstrukce, nebo stačí kosmetické úpravy?',
+		a: 'Kompletní rekonstrukce dává smysl u starších bytů s dožilými rozvody a u panelových bytů s nevyhovující dispozicí — byt se rozebere až na nosné konstrukce. Kosmetické úpravy do konstrukcí ani rozvodů nezasahují a obnoví vzhled za zlomek času i nákladů. Při prohlídce vám řekneme, co ve vašem případě problém skutečně vyřeší.',
+	},
+	{
+		q: 'Jak u vás probíhá spolupráce?',
+		a: 'Ve čtyřech krocích: zanecháte poptávku nebo nám zavoláte, upřesníme si úkoly, přání a rozpočet, připravíme řešení a dohodneme podrobnosti, a pak se pustíme do práce a doprovázíme projekt až do předání.',
+	},
+	{
+		q: 'Musím si jednotlivé řemeslníky shánět sám?',
+		a: 'Ne. Celou stavbu koordinuje jeden dodavatel, takže profese na sebe navazují bez prostojů a vy nedomlouváte desítky řemeslníků zvlášť.',
+	},
+	{
+		q: 'Můžu v bytě během prací bydlet?',
+		a: 'U kosmetických úprav ano — práce naplánujeme tak, aby vás omezily co nejméně. U kompletní rekonstrukce to možné není, protože byt jde až na nosné konstrukce.',
+	},
+	{
+		q: 'Jak stanovujete cenu?',
+		a: 'Po nezávazné prohlídce. Cena je pevná, bez skrytých poplatků, a spolu s ní dostanete harmonogram — dopředu tedy víte, co a kdy se bude dít a kolik to bude stát.',
+	},
+	{
+		q: 'Kde působíte?',
+		a: 'Pracujeme v Teplicích a v celém Ústeckém kraji, po dohodě i v dalších městech České republiky. Většina našich realizací je z Teplic a okolí.',
+	},
+];
+
 /** Asked on every service page, after the service-specific ones. */
 const shared: IFaqItem[] = [
 	{

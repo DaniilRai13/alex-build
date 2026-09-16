@@ -1,9 +1,12 @@
 @import '@styles/abstracts/var';
 @import '@styles/abstracts/mixins';
 
+// The block always closes a page, so it owns the gap to whatever came before
+// rather than making every caller remember to add one.
 .faq {
 	@include card;
 
+	margin-top: 40px;
 	padding: 36px 40px;
 }
 
