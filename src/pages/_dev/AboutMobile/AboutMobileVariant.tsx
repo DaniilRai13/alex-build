@@ -26,7 +26,7 @@ const Photo: FC<{ className?: string }> = ({ className }) => (
 	<Image
 		src={aboutProject.preview.src}
 		srcSet={aboutProject.preview.srcSet}
-		sizes='390px'
+		sizes='768px'
 		alt={`${aboutProject.title} – ${aboutProject.location}`}
 		className={cn(styles.photo, className)}
 	/>

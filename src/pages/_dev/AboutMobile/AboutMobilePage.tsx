@@ -1,4 +1,5 @@
 import Seo from '@/components/common/Seo/Seo';
+import cn from 'classnames';
 import type { FC } from 'react';
 import styles from '../devPage.module.scss';
 import AboutMobileVariant, { type MobileStyle } from './AboutMobileVariant';
@@ -20,7 +21,7 @@ const variants: Variant[] = [
 		style: 'now',
 		note: 'Текст, цифры сеткой 2×2, кнопка, фото внизу во всю ширину.',
 		plus: 'Ничего не надо менять.',
-		minus: 'Фото 16:10 на всю ширину — почти 240px высоты в самом низу, где его уже никто не смотрит. Подписи у цифр переносятся на две строки: «Dokončených projektů» и «záruka na veškeré práce» в колонку 170px не помещаются.',
+		minus: 'На 768px фото разрастается до 460px — выше всего текста над ним, и стоит в самом низу, куда долистывают немногие. На 390px фото терпимо, но подписи у цифр переносятся на две строки.',
 	},
 	{
 		name: 'Фото сверху и ниже',
@@ -79,14 +80,18 @@ const AboutMobilePage: FC = () => (
 			<span className={styles.kicker}>черновик · не для публикации</span>
 			<h1>Семь раскладок блока на телефоне</h1>
 			<p>
-				Каждая показана в рамке шириной 390 пикселей — это ширина обычного
-				телефона, так что раскладки видно рядом, не меняя размер окна.
+				Каждая раскладка показана в двух рамках: <b>768px</b> — сама точка, на
+				которой блок складывается в одну колонку, и <b>390px</b> — обычный
+				телефон. Между ними блок ведёт себя по-разному, и смотреть надо оба
+				края диапазона.
 			</p>
 			<p className={styles.warn}>
-				Две проблемы, общие для всех вариантов кроме тех, что их чинят. Фото
-				внизу занимает почти 240px там, где до него уже мало кто долистывает. И
-				подписи у цифр не помещаются в колонку 170px — «Dokončených projektů» и
-				«záruka na veškeré práce» переносятся на две строки.
+				Проблемы на двух ширинах разные. На <b>768px</b> места хватает всему,
+				кроме фотографии: во всю ширину при 16:10 она вырастает до{' '}
+				<b>460px</b> — это выше, чем весь текст над ней. На <b>390px</b> фото
+				становится терпимым (224px), зато подписи у цифр перестают помещаться:
+				на колонку остаётся около 170px, и «Dokončených projektů» и «záruka na
+				veškeré práce» переносятся на две строки.
 			</p>
 		</header>
 
@@ -101,8 +106,18 @@ const AboutMobilePage: FC = () => (
 				</div>
 
 				<div className={page.stage}>
-					<div className={page.phone}>
-						<AboutMobileVariant variant={variant.style} />
+					<div className={cn(page.frame, page.wide)}>
+						<span className={page.caption}>768px — сама точка перелома</span>
+						<div className={page.screen}>
+							<AboutMobileVariant variant={variant.style} />
+						</div>
+					</div>
+
+					<div className={cn(page.frame, page.narrow)}>
+						<span className={page.caption}>390px — телефон</span>
+						<div className={page.screen}>
+							<AboutMobileVariant variant={variant.style} />
+						</div>
 					</div>
 				</div>
 

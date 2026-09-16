@@ -1,26 +1,52 @@
 @import '@styles/abstracts/var';
 
-// A phone-width frame so the mobile layouts can be read on a desktop screen.
+// Two frames per variant: the breakpoint itself and a phone. The block behaves
+// very differently at each — at 768 the column is wide enough for the 2×2 stats
+// but the full-width photo is at its tallest; at 390 the photo is manageable
+// and the stat labels are the ones in trouble.
 .stage {
 	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
 	justify-content: center;
+	gap: 24px;
 
-	padding: 28px 0;
+	padding: 28px 20px;
 	border-radius: $radius-lg;
 
-	// Slightly darker than the page, so the frame reads as a device on a
-	// surface rather than as part of the document.
+	// Slightly darker than the page, so a frame reads as a device on a surface
+	// rather than as part of the document.
 	background: rgba($text-primary, 0.05);
 }
 
-.phone {
-	width: 390px;
+.frame {
 	max-width: 100%;
+}
 
+.caption {
+	display: block;
+	margin-bottom: 8px;
+
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: $text-secondary;
+}
+
+.screen {
 	padding: 16px;
 
 	border: 1px solid $border-warm;
 	border-radius: 20px;
 	background: $bg-main;
 	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.wide {
+	width: 768px;
+}
+
+.narrow {
+	width: 390px;
 }
