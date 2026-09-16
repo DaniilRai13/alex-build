@@ -25,8 +25,23 @@
 .item {
 	border-bottom: 1px solid $border-warm;
 
+	// The rail that marks the open question. Always present so opening only
+	// changes its colour — a border appearing from nothing would shift the
+	// text sideways every time.
+	border-left: 3px solid transparent;
+	border-radius: 2px;
+
+	transition:
+		border-left-color $transition-fast,
+		padding-left $transition-fast;
+
 	&:last-child {
 		border-bottom: none;
+	}
+
+	&[open] {
+		border-left-color: $red;
+		padding-left: 18px;
 	}
 }
 
