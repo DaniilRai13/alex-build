@@ -26,15 +26,14 @@
 .media {
 	min-width: 0;
 
-	// Stacked, the photo follows the copy instead of pushing it down the page,
-	// and stops well short of full width — edge to edge it was both too wide
-	// and too tall for what is a supporting image.
+	// Stacked, the photo opens the block as a strip across the full width.
+	// Below the copy it was 460px of height at the bottom of the block, where
+	// fewest people are still scrolling; as a band up top it costs a third of
+	// that and is seen by everyone.
 	@media (max-width: $screen-tb) {
-		order: 2;
+		order: 1;
 
 		width: 100%;
-		max-width: 560px;
-		margin-inline: auto;
 	}
 }
 
@@ -49,8 +48,10 @@
 	aspect-ratio: 10 / 9;
 	object-fit: cover;
 
+	// A band, not a panel: 21:9 keeps the photo to about 330px at the
+	// breakpoint and 167px on a phone, instead of 460px and 224px.
 	@media (max-width: $screen-tb) {
-		aspect-ratio: 16 / 10;
+		aspect-ratio: 21 / 9;
 	}
 }
 
@@ -58,7 +59,7 @@
 	min-width: 0;
 
 	@media (max-width: $screen-tb) {
-		order: 1;
+		order: 2;
 	}
 }
 
