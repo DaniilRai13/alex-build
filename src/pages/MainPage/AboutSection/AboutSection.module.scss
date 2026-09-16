@@ -6,20 +6,36 @@
 .about {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-	align-items: center;
+	// Top, not centre. As the screen narrows the copy wraps and grows while the
+	// photo shrinks, and centred it ended up floating in the middle of the row
+	// with dead space above and below it.
+	align-items: start;
 	gap: 48px;
 
 	padding-top: 80px;
 
-	@media (max-width: $screen-tb-lg2) {
+	// 900 rather than $screen-tb-lg2: below this the two columns are too narrow
+	// to read side by side. The hero already breaks at the same width.
+	@media (max-width: 900px) {
 		grid-template-columns: 1fr;
-		gap: 32px;
+		gap: 28px;
 		padding-top: 50px;
 	}
 }
 
 .media {
 	min-width: 0;
+
+	// Stacked, the photo follows the copy instead of pushing it down the page,
+	// and stops well short of full width — edge to edge it was both too wide
+	// and too tall for what is a supporting image.
+	@media (max-width: 900px) {
+		order: 2;
+
+		width: 100%;
+		max-width: 460px;
+		margin-inline: auto;
+	}
 }
 
 .photo {
@@ -32,13 +48,17 @@
 	aspect-ratio: 4 / 3;
 	object-fit: cover;
 
-	@media (max-width: $screen-tb-lg2) {
-		aspect-ratio: 16 / 9;
+	@media (max-width: 900px) {
+		aspect-ratio: 16 / 10;
 	}
 }
 
 .copy {
 	min-width: 0;
+
+	@media (max-width: 900px) {
+		order: 1;
+	}
 }
 
 .eyebrow {

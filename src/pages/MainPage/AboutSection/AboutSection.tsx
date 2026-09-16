@@ -31,7 +31,7 @@ const AboutSection: FC = () => {
 				<Image
 					src={aboutProject.preview.src}
 					srcSet={aboutProject.preview.srcSet}
-					sizes='(max-width: 950px) 100vw, 45vw'
+					sizes='(max-width: 900px) min(100vw, 460px), 45vw'
 					alt={`${aboutProject.title} – ${aboutProject.location}`}
 					className={styles.photo}
 				/>
