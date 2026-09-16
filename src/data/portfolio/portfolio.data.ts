@@ -97,3 +97,19 @@ export const featuredProject = (() => {
 
 	return project;
 })();
+
+/** How many projects the home page shows in its portfolio strip. */
+export const HOME_STRIP_SIZE = 4;
+
+/** The projects that strip renders. */
+export const homeStripProjects = portfolioData.slice(0, HOME_STRIP_SIZE);
+
+/**
+ * Photo for the About block on the home page. Deliberately the first project
+ * the strip does NOT show: the block sits directly above it, and featuring the
+ * same shot twice on one screen reads as a mistake rather than a choice.
+ *
+ * Derived rather than hard-coded, so reordering the portfolio in the admin
+ * cannot quietly reintroduce the duplicate.
+ */
+export const aboutProject = portfolioData[HOME_STRIP_SIZE] ?? featuredProject;

@@ -1,144 +1,168 @@
 @import '@styles/abstracts/var';
 
 .services {
+	display: grid;
+	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+	align-items: center;
+	gap: 48px;
+
 	padding-top: 80px;
-	.servicesHeader {
-		margin-bottom: 40px;
-		.heading {
-			text-transform: uppercase;
-			color: $red;
-			margin-bottom: 10px;
-		}
+
+	@media (max-width: 992px) {
+		grid-template-columns: 1fr;
+		gap: 32px;
 	}
-	.grid {
-		margin-bottom: 30px;
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 24px;
-		.card {
-			background: rgb(255 255 255 / 57%);
-			border-radius: 28px;
-			cursor: pointer;
-			transition: 0.25s;
 
-			// Padding lives on the link so the entire card surface is clickable.
-			.cardLink {
-				display: block;
-				height: 100%;
-				padding: 30px 20px;
-			}
-
-			&:hover {
-				transform: translateY(-5px);
-				box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-
-				.arrow {
-					opacity: 1;
-					transform: translateX(4px);
-				}
-			}
-			.icons {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 12px;
-
-				svg {
-					stroke-width: 1.5;
-				}
-			}
-			.content {
-				.title {
-					font-size: 20px;
-					line-height: 1.2;
-					font-weight: 600;
-					margin-bottom: 14px;
-				}
-
-				p {
-					color: #707070;
-					line-height: 1.7;
-				}
-			}
-			.arrow {
-				opacity: 0;
-				transition: 0.25s;
-			}
-			.mobileArrow {
-				display: none;
-			}
-		}
-	}
-	.buttonWrapper {
-		display: flex;
-		.button {
-			font-size: 1.2rem;
-			padding: 0.875rem 2rem;
-			margin: 0 auto;
-			color: $text-white;
-		}
+	@media (max-width: $screen-tb) {
+		padding-top: 60px;
 	}
 }
 
-@media (max-width: 992px) {
-	.services {
-		padding: 80px 0 0;
-		.grid {
-			grid-template-columns: repeat(2, 1fr);
+.intro {
+	min-width: 0;
+}
+
+.eyebrow {
+	display: block;
+	margin-bottom: 10px;
+
+	color: $red;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+// Nested so it beats the single-class rule in Heading.module.scss. The red now
+// lives in the eyebrow above, so the heading itself keeps the dark text.
+.intro .heading {
+	margin-bottom: 1rem;
+	letter-spacing: 0;
+}
+
+.description {
+	margin-bottom: 2rem;
+	max-width: 46ch;
+}
+
+.button {
+	font-size: 1.1rem;
+	padding: 0.875rem 2rem;
+	color: $text-white;
+
+	@media (max-width: $screen-md) {
+		padding: 0.65em 1.7rem;
+	}
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+
+	.card {
+		background: rgb(255 255 255 / 57%);
+		border-radius: 28px;
+		cursor: pointer;
+		transition: 0.25s;
+
+		// Padding lives on the link so the entire card surface is clickable.
+		.cardLink {
+			display: block;
+			height: 100%;
+			padding: 30px 20px;
+		}
+
+		&:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+			.arrow {
+				opacity: 1;
+				transform: translateX(4px);
+			}
+		}
+
+		.icons {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 12px;
+
+			svg {
+				stroke-width: 1.5;
+			}
+		}
+
+		.content {
+			.title {
+				font-size: 20px;
+				line-height: 1.2;
+				font-weight: 600;
+				margin-bottom: 14px;
+			}
+
+			p {
+				color: #707070;
+				line-height: 1.7;
+			}
+		}
+
+		.arrow {
+			opacity: 0;
+			transition: 0.25s;
+		}
+
+		.mobileArrow {
+			display: none;
 		}
 	}
 }
 
 @media (max-width: $screen-tb) {
-	.services {
-		padding: 60px 0 0;
-		.grid {
-			grid-template-columns: 1fr;
-			gap: 16px;
-			.card {
-				position: relative;
-				.cardLink {
-					display: flex;
-					align-items: flex-start;
-					gap: 20px;
-					padding: 24px;
-				}
-				.icon {
-					margin-bottom: 0;
-				}
-				.content {
-					flex: 1;
+	.grid {
+		grid-template-columns: 1fr;
+		gap: 16px;
 
-					h3 {
-						font-size: 18px;
-					}
+		.card {
+			position: relative;
 
-					p {
-						font-size: 14px;
-					}
+			.cardLink {
+				display: flex;
+				align-items: flex-start;
+				gap: 20px;
+				padding: 24px;
+			}
+
+			.icons {
+				margin-bottom: 0;
+			}
+
+			.content {
+				flex: 1;
+
+				.title {
+					font-size: 18px;
 				}
-				.desktopArrow {
-					display: none;
+
+				p {
+					font-size: 14px;
 				}
-				.mobileArrow {
-					display: block;
-					opacity: 1;
-					margin-top: 0;
-				}
-				.button {
-					font-size: 1.1rem;
-				}
+			}
+
+			.desktopArrow {
+				display: none;
+			}
+
+			.mobileArrow {
+				display: block;
+				opacity: 1;
+				margin-top: 0;
 			}
 		}
 	}
-}
 
-@media (max-width: $screen-md) {
-	.services {
-		.buttonWrapper {
-			.button {
-				padding: 0.65em 1.7rem;
-			}
-		}
+	.description {
+		margin-bottom: 1.5rem;
 	}
 }

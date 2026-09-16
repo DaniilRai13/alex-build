@@ -16,19 +16,36 @@ import styles from './ServicesSection.module.scss';
 const ServicesSection: FC = () => {
 	return (
 		<section className={styles.services}>
+			{/*
+				Copy on the left, cards on the right. The heading, the lead and the
+				button used to sit above and below a full-width grid; moving them
+				into their own column puts the call to action beside the services
+				rather than after the fold.
+			*/}
 			<motion.div
-				className={styles.servicesHeader}
+				className={styles.intro}
 				initial={'hidden'}
 				whileInView={'visible'}
-				transition={{ ...animationTransition.defaultTransition, delay: 0 }}
+				viewport={{ once: true }}
+				transition={animationTransition.defaultTransition}
 				variants={animations.fadeLeft}
 			>
+				<span className={styles.eyebrow}>Co nabízíme</span>
+
 				<Heading className={styles.heading}>Naše služby</Heading>
+
 				<Subtitle className={styles.description}>
 					Vybíráme řešení pro úkoly jakékoli složitosti – od konceptu až po
 					realizaci.
 				</Subtitle>
+
+				<Button
+					title='Všechny služby'
+					className={styles.button}
+					to={ROUTES.SERVICES}
+				/>
 			</motion.div>
+
 			<div className={styles.grid}>
 				{services.slice(0, 4).map(service => {
 					return (
@@ -58,20 +75,6 @@ const ServicesSection: FC = () => {
 					);
 				})}
 			</div>
-
-			<motion.div
-				className={styles.buttonWrapper}
-				initial={'hidden'}
-				whileInView={'visible'}
-				transition={{ ...animationTransition.defaultTransition, delay: 0.1 }}
-				variants={animations.fadeUp}
-			>
-				<Button
-					title='Všechny služby'
-					className={styles.button}
-					to={ROUTES.SERVICES}
-				/>
-			</motion.div>
 		</section>
 	);
 };

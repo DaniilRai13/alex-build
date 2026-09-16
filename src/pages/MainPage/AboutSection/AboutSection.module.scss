@@ -1,51 +1,93 @@
 @import '@styles/abstracts/var';
 
-.aboutSection {
-	
-	background-color: transparent;
-	display: flex;
-	justify-content: space-between;
+// Photo left, copy right. The block used to be copy on the left and a 2×2 wall
+// of white cards on the right, which left the text column half empty on a
+// laptop and showed none of the work the text talks about.
+.about {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	align-items: center;
+	gap: 48px;
+
 	padding-top: 80px;
-	gap: 20px;
 
 	@media (max-width: $screen-tb-lg2) {
-		flex-wrap: wrap;
-		gap: 40px;
-		padding: 50px 0 0;
+		grid-template-columns: 1fr;
+		gap: 32px;
+		padding-top: 50px;
+	}
+}
+
+.media {
+	min-width: 0;
+}
+
+.photo {
+	width: 100%;
+	border-radius: $radius-lg;
+	box-shadow: $shadow-md;
+
+	// Landscape, so a portrait shot from the portfolio cannot stretch the row
+	// to twice the height of the copy beside it.
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+
+	@media (max-width: $screen-tb-lg2) {
+		aspect-ratio: 16 / 9;
+	}
+}
+
+.copy {
+	min-width: 0;
+}
+
+.eyebrow {
+	display: block;
+	margin-bottom: 10px;
+
+	color: $red;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+// Nested so it outranks the single-class rule in Heading.module.scss: this
+// heading is the statement of the block, not a section label, so it keeps the
+// dark text while the eyebrow above carries the red.
+.copy .title {
+	margin-bottom: 1rem;
+	letter-spacing: 0;
+}
+
+.text {
+	margin-bottom: 2rem;
+	max-width: 54ch;
+}
+
+.stats {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 22px 28px;
+
+	margin-bottom: 2rem;
+
+	@media (max-width: $screen-sm) {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+}
+
+.button {
+	padding: 14px 30px;
+}
+
+@media (max-width: $screen-md) {
+	.text {
+		margin-bottom: 1.5rem;
 	}
 
-	.info {
-		.infoContainer {
-			position: sticky;
-			top: calc($header-height);
-			.infoText {
-				width: 100%;
-
-				.infoTitle {
-					text-transform: uppercase;
-					letter-spacing: 0.05em;
-					color: $red;
-					margin-bottom: 0.75rem;
-				}
-
-				.infoSubtitle {
-					margin-bottom: 1.5rem;
-				}
-			}
-		}
-	}
-
-	// Stats grid
 	.stats {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.5rem;
-		@media (max-width: $screen-tb-lg2) {
-			width: 100%;
-			gap: 1.5rem;
-		}
-		@media (max-width: $screen-xs) {
-			grid-template-columns: 1fr;
-		}
+		margin-bottom: 1.5rem;
 	}
 }
