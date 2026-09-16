@@ -1,4 +1,5 @@
 import Heading from '@/components/ui/Heading/Heading';
+import { Icon } from '@/components/ui/LucidIcon/Icon';
 import type { IFaqItem } from '@/data/faq.data';
 import type { FC } from 'react';
 import styles from './Faq.module.scss';
@@ -28,7 +29,9 @@ const Faq: FC<FaqProps> = ({ items, title = 'Časté dotazy' }) => {
 					<details className={styles.item} key={item.q}>
 						<summary className={styles.question}>
 							{item.q}
-							<span className={styles.marker} aria-hidden='true' />
+							{/* The chevron the rest of the site already uses for
+							    expandable things, rather than a bespoke plus sign. */}
+							<Icon icon='ChevronDown' size={20} className={styles.marker} />
 						</summary>
 						<p className={styles.answer}>{item.a}</p>
 					</details>

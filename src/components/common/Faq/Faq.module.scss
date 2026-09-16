@@ -10,9 +10,19 @@
 	padding: 36px 40px;
 }
 
+// The short red rule beside a heading is the site's recurring section marker —
+// the same one the contact page and the hero copy use. The FAQ heading was the
+// one place it was missing, which is why it read as plain black text.
 .title {
-	margin-bottom: 24px;
-	font-size: 1.5rem;
+	@include accent-bar;
+
+	display: flex;
+	align-items: center;
+
+	min-height: 36px;
+	margin-bottom: 28px;
+
+	font-size: 1.7rem;
 	font-weight: 600;
 	text-transform: uppercase;
 }
@@ -28,6 +38,9 @@
 	// The rail that marks the open question. Always present so opening only
 	// changes its colour — a border appearing from nothing would shift the
 	// text sideways every time.
+	//
+	// Warm dark rather than the brand red: red is what the buttons use, and
+	// spending it on "this one is open" makes a quiet state shout.
 	border-left: 3px solid transparent;
 	border-radius: 2px;
 
@@ -40,7 +53,7 @@
 	}
 
 	&[open] {
-		border-left-color: $red;
+		border-left-color: $accent-warm;
 		padding-left: 18px;
 	}
 }
@@ -51,9 +64,9 @@
 	justify-content: space-between;
 	gap: 16px;
 
-	padding: 16px 0;
+	padding: 18px 0;
 
-	font-size: 1.02rem;
+	font-size: 1.1rem;
 	font-weight: 600;
 	color: $text-primary;
 
@@ -77,41 +90,19 @@
 	}
 }
 
-// A plus that turns into a minus. Two bars, the vertical one rotates away.
 .marker {
-	position: relative;
 	flex-shrink: 0;
-
-	width: 18px;
-	height: 18px;
-
-	&::before,
-	&::after {
-		content: '';
-		position: absolute;
-		top: 50%;
-		left: 0;
-
-		width: 100%;
-		height: 2px;
-
-		background: $red;
-		border-radius: 2px;
-		transition: transform $transition-fast;
-	}
-
-	&::after {
-		transform: rotate(90deg);
-	}
+	color: $accent-warm;
+	transition: transform $transition-fast;
 }
 
-.item[open] .marker::after {
-	transform: rotate(0deg);
+.item[open] .marker {
+	transform: rotate(180deg);
 }
 
 .answer {
 	margin: 0;
-	padding: 0 0 18px;
+	padding: 0 0 20px;
 
 	max-width: 68ch;
 
@@ -121,28 +112,34 @@
 
 @media (max-width: $screen-tb) {
 	.faq {
+		margin-top: 28px;
 		padding: 24px;
 	}
 
 	.title {
-		font-size: 1.25rem;
-		margin-bottom: 18px;
+		min-height: 30px;
+		margin-bottom: 20px;
+		font-size: 1.3rem;
 	}
 
 	.question {
-		font-size: 0.95rem;
-		padding: 14px 0;
+		font-size: 1rem;
+		padding: 15px 0;
 	}
 
 	.answer {
 		font-size: 0.92rem;
-		padding-bottom: 14px;
+		padding-bottom: 16px;
+	}
+
+	.item[open] {
+		padding-left: 14px;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.marker::before,
-	.marker::after {
+	.item,
+	.marker {
 		transition: none;
 	}
 }

@@ -26,6 +26,15 @@ $text-secondary: #64748b;
 $text-light: #94a3b8;
 $text-white: #ffffff;
 
+// Warm dark for state on the beige surfaces — the rail on an open FAQ answer,
+// and anything else that marks "this one" rather than "click me".
+//
+// Not $red: that is the action colour, and spending it on a passive state makes
+// the page read as an alarm. Not $text-primary either — it is a cool slate and
+// goes blue next to the beige, the same reason $border-warm exists. This is the
+// warm counterpart, ~8:1 on both $bg-main and $bg-card.
+$accent-warm: #4a423a;
+
 // Цвета границ
 $border-light: #e2e8f0;
 $border-medium: #cbd5e1;
