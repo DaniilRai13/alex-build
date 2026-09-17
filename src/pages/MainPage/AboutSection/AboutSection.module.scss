@@ -37,10 +37,106 @@
 	}
 }
 
-.photo {
-	width: 100%;
+// The clickable frame the photo, the badge and the caption share. Rounded and
+// clipped here rather than on the photo, so the overlays follow the corners.
+.frame {
+	position: relative;
+	display: block;
+
 	border-radius: $radius-lg;
+	overflow: hidden;
 	box-shadow: $shadow-md;
+
+	text-decoration: none;
+
+	&:hover .caption {
+		background: linear-gradient(
+			to top,
+			rgba(0, 0, 0, 0.88),
+			rgba(0, 0, 0, 0.15)
+		);
+	}
+
+	&:focus-visible {
+		outline: 3px solid $red;
+		outline-offset: 3px;
+	}
+}
+
+// Category, top left. Says what kind of job it was before the eye reaches the
+// caption — not every renovation is a gut job, and "Kosmetika" says so.
+.badge {
+	position: absolute;
+	z-index: 2;
+	top: 14px;
+	left: 14px;
+
+	padding: 6px 12px;
+
+	border-radius: $radius-xl;
+	background: rgba(0, 0, 0, 0.6);
+
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
+// Project details over a fade. `to top` puts the darkest part under the text,
+// which is what keeps it readable on a bright kitchen.
+.caption {
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+
+	padding: 44px 20px 16px;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.82), transparent);
+
+	color: #fff;
+	line-height: 1.3;
+
+	transition: background $transition-fast;
+
+	b {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+
+	> span {
+		font-size: 0.82rem;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	// The band is only ~167px tall on a phone; the desktop padding would take
+	// a third of it before the text even starts.
+	@media (max-width: $screen-tb) {
+		padding: 28px 16px 12px;
+
+		b {
+			font-size: 0.92rem;
+		}
+
+		> span {
+			font-size: 0.76rem;
+		}
+	}
+}
+
+.arrow {
+	position: absolute;
+	right: 18px;
+	bottom: 18px;
+}
+
+.photo {
+	display: block;
+	width: 100%;
 
 	// 10/9 rather than 4/3: about 83px taller in the ~550px column this sits in.
 	// It also wastes less of the source — every portfolio preview but one is a
