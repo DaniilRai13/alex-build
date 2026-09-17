@@ -117,7 +117,7 @@ export const homeStripProjects = portfolioData.slice(0, HOME_STRIP_SIZE);
  * so reordering the portfolio in the admin cannot quietly reintroduce the
  * duplicate — it falls back to the old rule instead.
  */
-const ABOUT_SLUG = 'rekonstrukce-bytu-zelena-kuchyne';
+const ABOUT_SLUG = 'rekonstrukce-bytu-radova-kuchyne';
 
 export const aboutProject = (() => {
 	const chosen = getProjectBySlug(ABOUT_SLUG);
