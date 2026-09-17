@@ -206,6 +206,14 @@
 .copy .button {
 	padding: 14px 30px;
 
+	// Shorter on a phone. At full height it was the tallest thing in the
+	// column and sat right above the services button, so the two read as a
+	// stack of competing calls to action.
+	@media (max-width: $screen-tb) {
+		padding: 11px 24px;
+		font-size: 0.95rem;
+	}
+
 	background: transparent;
 	border: 2px solid rgba($red, 0.4);
 	color: $red;

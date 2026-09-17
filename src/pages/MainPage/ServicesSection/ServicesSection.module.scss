@@ -6,7 +6,8 @@
 	// Top, not centre: the copy should start level with the first row of cards.
 	// Centred, it floated down the middle of a two-row grid.
 	align-items: start;
-	gap: 48px;
+	// Tighter between the copy and the button beneath it than between columns.
+	gap: 24px 48px;
 
 	padding-top: 80px;
 
@@ -17,6 +18,37 @@
 
 	@media (max-width: $screen-tb) {
 		padding-top: 60px;
+	}
+}
+
+// Desktop placement: copy top left, button under it, cards down the right side
+// across both rows. Explicit rather than `display: contents` on the intro —
+// that would strip its box and silently kill the entrance animation, since
+// neither opacity nor transform applies to an element that generates no box.
+.intro {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+.grid {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+}
+
+.button {
+	grid-column: 1;
+	grid-row: 2;
+	justify-self: start;
+	align-self: start;
+}
+
+// Stacked, everything falls into document order — copy, cards, then the button.
+@media (max-width: 992px) {
+	.intro,
+	.grid,
+	.button {
+		grid-column: auto;
+		grid-row: auto;
 	}
 }
 
@@ -43,8 +75,39 @@
 }
 
 .description {
+	margin-bottom: 1rem;
+	max-width: 46ch;
+}
+
+.lead {
 	margin-bottom: 2rem;
 	max-width: 46ch;
+
+	color: $text-secondary;
+	line-height: 1.65;
+}
+
+// The list of jobs under each card's description.
+.features {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+
+	margin: 14px 0 0;
+	padding: 0;
+
+	list-style: none;
+
+	li {
+		padding: 4px 10px;
+
+		border: 1px solid $border-warm;
+		border-radius: $radius-xl;
+
+		color: $text-secondary;
+		font-size: 0.76rem;
+		line-height: 1.3;
+	}
 }
 
 .button {

@@ -39,11 +39,17 @@ const ServicesSection: FC = () => {
 					realizaci.
 				</Subtitle>
 
-				<Button
-					title='Všechny služby'
-					className={styles.button}
-					to={ROUTES.SERVICES}
-				/>
+				{/*
+					Restates what the service pages already promise rather than adding a
+					new one: one contractor for the whole job, and a schedule and budget
+					before anything is torn out.
+				*/}
+				<p className={styles.lead}>
+					Celou stavbu vede jeden dodavatel, takže jednotlivé profese na sebe
+					navazují bez prostojů a vy nedomlouváte desítky řemeslníků zvlášť.
+					Před zahájením prací připravíme harmonogram i rozpočet — dopředu
+					tedy víte, co a kdy se bude dít.
+				</p>
 			</motion.div>
 
 			<div className={styles.grid}>
@@ -65,6 +71,18 @@ const ServicesSection: FC = () => {
 										{service.title}
 									</Heading>
 									<p>{service.description}</p>
+
+									{/*
+										The features arrays already exist for the service pages and
+										were shown nowhere on the home page — seventeen phrases a
+										customer might search for, "Omítky", "Fasády", "Elektro a
+										instalatérství", sitting unused.
+									*/}
+									<ul className={styles.features}>
+										{service.features.map(feature => (
+											<li key={feature}>{feature}</li>
+										))}
+									</ul>
 								</div>
 								<ChevronRight
 									className={cn(styles.arrow, styles.mobileArrow)}
@@ -75,6 +93,18 @@ const ServicesSection: FC = () => {
 					);
 				})}
 			</div>
+
+			{/*
+				A sibling of the grid, not a child of the intro. On the desktop it is
+				placed back under the copy by the stylesheet; stacked, it can then
+				follow the cards instead of offering "all services" before a single
+				one has been shown.
+			*/}
+			<Button
+				title='Všechny služby'
+				className={styles.button}
+				to={ROUTES.SERVICES}
+			/>
 		</section>
 	);
 };
