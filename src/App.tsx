@@ -100,6 +100,12 @@ export const routes: RouteRecord[] = [
 								() => import('./pages/_dev/AboutCaption/AboutCaptionPage'),
 							),
 						},
+						{
+							path: '/services-intro',
+							lazy: page(
+								() => import('./pages/_dev/ServicesIntro/ServicesIntroPage'),
+							),
+						},
 					]
 				: []),
 			{

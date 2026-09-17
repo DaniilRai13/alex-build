@@ -1,0 +1,179 @@
+@import '@styles/abstracts/var';
+
+// The left column of the services block, seven ways. Rendered at the width it
+// actually gets — 0.8fr of a 1280 container, so roughly 400px.
+.intro {
+	width: 100%;
+	max-width: 400px;
+}
+
+.eyebrow {
+	display: block;
+	margin-bottom: 10px;
+
+	color: $red;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.intro .heading {
+	margin-bottom: 1rem;
+	letter-spacing: 0;
+}
+
+.description {
+	margin-bottom: 1rem;
+}
+
+.body {
+	margin: 0 0 2rem;
+	color: $text-secondary;
+	line-height: 1.65;
+}
+
+.button {
+	font-size: 1.1rem;
+	padding: 0.875rem 2rem;
+	color: $text-white;
+}
+
+// --- 02 the second paragraph as three checked promises ----------------------
+.checks {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	margin: 0 0 2rem;
+	padding: 0;
+
+	list-style: none;
+
+	li {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+
+		color: $text-primary;
+		font-size: 0.95rem;
+		line-height: 1.4;
+	}
+
+	svg {
+		flex-shrink: 0;
+		margin-top: 2px;
+		color: $red;
+	}
+}
+
+// --- 03 the lead set larger and darker --------------------------------------
+.bigLead {
+	.description {
+		font-size: 1.2rem;
+		line-height: 1.5;
+		color: $text-primary;
+	}
+}
+
+// --- 04 the second paragraph as a pull quote --------------------------------
+// The red rule beside it is the site's recurring section marker, used here to
+// mark a claim rather than a heading.
+.pullQuote {
+	margin: 0 0 2rem;
+	padding: 2px 0 2px 18px;
+	border-left: 3px solid $red;
+
+	color: $text-primary;
+	font-size: 1.02rem;
+	line-height: 1.6;
+}
+
+// --- 05 a row of figures under the copy -------------------------------------
+.facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 22px;
+
+	margin: 0 0 2rem;
+	padding: 0;
+
+	list-style: none;
+
+	li {
+		color: $text-secondary;
+		font-size: 0.85rem;
+	}
+
+	b {
+		display: block;
+		color: $text-primary;
+		font-size: 1.15rem;
+		line-height: 1.2;
+	}
+}
+
+// --- 06 small labels over each paragraph ------------------------------------
+.label {
+	margin: 0 0 6px;
+
+	color: $red;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.labels {
+	.description {
+		margin-bottom: 1.5rem;
+	}
+}
+
+// --- 07 the four services as links ------------------------------------------
+.links {
+	display: flex;
+	flex-direction: column;
+
+	margin: 0 0 2rem;
+	padding: 0;
+
+	list-style: none;
+
+	li {
+		border-bottom: 1px solid $border-warm;
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+
+	a {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		padding: 11px 0;
+
+		color: $text-primary;
+		font-size: 0.95rem;
+		font-weight: 500;
+		text-decoration: none;
+
+		transition: color $transition-fast;
+
+		&:hover {
+			color: $red;
+		}
+	}
+
+	svg:first-child {
+		flex-shrink: 0;
+		color: $red;
+	}
+}
+
+.arrow {
+	margin-left: auto;
+	color: $text-secondary;
+}

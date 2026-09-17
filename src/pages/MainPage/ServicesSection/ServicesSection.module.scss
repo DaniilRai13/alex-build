@@ -3,6 +3,11 @@
 .services {
 	display: grid;
 	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+	// The card grid spans both rows, so without this the two rows split its
+	// height between them and the button ended up stranded at the top of a very
+	// tall second row. max-content pins row one to the copy, and the button
+	// then sits one row-gap below it.
+	grid-template-rows: max-content 1fr;
 	// Top, not centre: the copy should start level with the first row of cards.
 	// Centred, it floated down the middle of a two-row grid.
 	align-items: start;
@@ -13,6 +18,7 @@
 
 	@media (max-width: 992px) {
 		grid-template-columns: 1fr;
+		grid-template-rows: none;
 		gap: 32px;
 	}
 
