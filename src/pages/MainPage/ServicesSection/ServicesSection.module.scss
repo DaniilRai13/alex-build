@@ -80,17 +80,25 @@
 	letter-spacing: 0;
 }
 
+// No max-width on either of these. In the two-column layout the column is
+// already narrower than any sensible measure, so the cap did nothing there; the
+// moment the block stacked it clamped the text to 46 characters and left the
+// right half of the row empty.
 .description {
-	margin-bottom: 1rem;
-	max-width: 46ch;
+	margin-bottom: 1.25rem;
 }
 
-.lead {
-	margin-bottom: 2rem;
-	max-width: 46ch;
+// The block's actual claim, marked by the short red rule the site uses beside
+// its section headings. Body weight, not a quote — it is still the company
+// speaking, just the sentence worth stopping on.
+.claim {
+	margin: 0 0 2rem;
+	padding: 2px 0 2px 18px;
+	border-left: 3px solid $red;
 
-	color: $text-secondary;
-	line-height: 1.65;
+	color: $text-primary;
+	font-size: 1.02rem;
+	line-height: 1.6;
 }
 
 // The list of jobs under each card's description.

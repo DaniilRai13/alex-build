@@ -40,11 +40,15 @@ const ServicesSection: FC = () => {
 				</Subtitle>
 
 				{/*
+					Set off by the red rule rather than run as a second grey paragraph:
+					this is the block's actual claim, and two paragraphs of body text in
+					a row gave the eye nothing to land on.
+
 					Restates what the service pages already promise rather than adding a
 					new one: one contractor for the whole job, and a schedule and budget
 					before anything is torn out.
 				*/}
-				<p className={styles.lead}>
+				<p className={styles.claim}>
 					Celou stavbu vede jeden dodavatel, takže jednotlivé profese na sebe
 					navazují bez prostojů a vy nedomlouváte desítky řemeslníků zvlášť.
 					Před zahájením prací připravíme harmonogram i rozpočet — dopředu
