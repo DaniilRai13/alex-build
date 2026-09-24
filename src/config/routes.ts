@@ -6,7 +6,12 @@ export const ROUTES = {
 	SERVICE: '/services/:slug',
 	PORTFOLIO: '/portfolio',
 	CONTACTS: '/contacts',
-	PROJECT: '/project/:slug',
+	// Projects live under the listing that shows them. They used to sit on
+	// their own branch at /project/:slug while the listing was at /portfolio,
+	// which left the parent path /project with nothing to serve — and, because
+	// the build still wrote a project/ folder, with a redirect loop to untangle
+	// in .htaccess. The old URLs are 301'd there and must stay redirected.
+	PROJECT: '/portfolio/:slug',
 	PRIVACY: '/privacy',
 	TERMS: '/terms',
 	NOT_FOUND: '/404',
@@ -14,7 +19,7 @@ export const ROUTES = {
 
 /** Concrete detail URLs for a service / project (dynamic segment resolved). */
 export const servicePath = (slug: string) => `/services/${slug}`;
-export const projectPath = (slug: string) => `/project/${slug}`;
+export const projectPath = (slug: string) => `/portfolio/${slug}`;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
 

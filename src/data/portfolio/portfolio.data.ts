@@ -75,7 +75,7 @@ export const portfolioData: IPortfolioProject[] = remote.map(project => ({
 	],
 }));
 
-/** Look up a project by its URL segment (/project/{slug}). */
+/** Look up a project by its URL segment (/portfolio/{slug}). */
 export const getProjectBySlug = (slug?: string) =>
 	portfolioData.find(project => project.slug === slug);
 
