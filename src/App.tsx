@@ -106,6 +106,18 @@ export const routes: RouteRecord[] = [
 								() => import('./pages/_dev/ServicesIntro/ServicesIntroPage'),
 							),
 						},
+						{
+							path: '/service-board',
+							lazy: page(
+								() => import('./pages/_dev/ServiceBoard/ServiceBoardPage'),
+							),
+						},
+						{
+							path: '/service-text',
+							lazy: page(
+								() => import('./pages/_dev/ServiceText/ServiceTextPage'),
+							),
+						},
 					]
 				: []),
 			{

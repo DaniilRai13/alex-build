@@ -1,0 +1,236 @@
+@import '@styles/abstracts/var';
+
+// Base: the board as it is today. Every variant below is a diff against this,
+// so what each one actually changes stays readable.
+.board {
+	display: grid;
+	grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+	align-items: stretch;
+	overflow: hidden;
+
+	border-radius: $radius-lg;
+	background: $bg-card;
+	box-shadow: $shadow-md;
+
+	@media (max-width: $screen-tb) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.sidebar {
+	min-width: 0;
+	padding: 22px 0 22px 18px;
+
+	border-right: 1px solid $border-warm;
+	// The problem in one line: this is the page colour, so a third of the card
+	// is not a card at all.
+	background: $bg-main;
+}
+
+.nav {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	padding: 13px 16px;
+	border-radius: 12px 0 0 12px;
+
+	color: $text-primary;
+	font-size: 0.95rem;
+	font-weight: 600;
+	line-height: 1.3;
+
+	svg {
+		flex-shrink: 0;
+		color: $text-secondary;
+	}
+}
+
+.active {
+	background: rgba($red, 0.12);
+	color: $red;
+
+	svg {
+		color: $red;
+	}
+}
+
+.label {
+	min-width: 0;
+}
+
+.panel {
+	min-width: 0;
+	padding: 26px 30px 28px;
+}
+
+.title {
+	margin-bottom: 10px;
+
+	font-size: 1.45rem;
+	font-weight: 700;
+	line-height: 1.2;
+	color: $text-primary;
+}
+
+.desc {
+	margin-bottom: 18px;
+	max-width: 62ch;
+
+	color: $text-secondary;
+	line-height: 1.6;
+}
+
+.features {
+	margin: 0 0 22px;
+	padding: 0;
+	list-style: none;
+
+	li {
+		position: relative;
+		padding-left: 22px;
+		margin-bottom: 7px;
+
+		color: $text-primary;
+		font-size: 0.95rem;
+
+		&::before {
+			content: '✓';
+			position: absolute;
+			left: 0;
+			color: $red;
+			font-weight: 700;
+		}
+	}
+}
+
+.actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px 22px;
+}
+
+.primary {
+	padding: 13px 28px;
+	border-radius: $radius-md;
+
+	background: $red;
+	color: $text-white;
+	font-size: 1.05rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.secondary {
+	color: $red;
+	font-weight: 600;
+	font-size: 0.95rem;
+}
+
+// ---------------------------------------------------------------------------
+// 01 — как сейчас: базовые стили выше, ничего не переопределяем.
+// ---------------------------------------------------------------------------
+
+// 02 — хайрлайн по контуру.
+.hairline {
+	border: 1px solid rgba($text-primary, 0.14);
+}
+
+// 03 — тёмный рельс слева. Колонка перестаёт быть фоном и становится опорой.
+.darkRail {
+	.sidebar {
+		background: #2b2621;
+		border-right: none;
+	}
+
+	.item {
+		color: rgba(#ffffff, 0.72);
+
+		svg {
+			color: rgba(#ffffff, 0.45);
+		}
+	}
+
+	.active {
+		background: $red;
+		color: $text-white;
+
+		svg {
+			color: $text-white;
+		}
+	}
+}
+
+// 04 — красная кромка сверху, тем же языком, что accent-bar у заголовков.
+.redEdge {
+	border-top: 4px solid $red;
+}
+
+// 05 — плотная многослойная тень: ближний слой рисует кромку, дальний держит
+// парение. Ни одного нового цвета.
+.depth {
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.06),
+		0 14px 30px -10px rgba(0, 0, 0, 0.25);
+}
+
+// 06 — потемнить не карточку, а полосу под ней.
+.bandWrap {
+	margin-inline: -24px;
+	padding: 32px 24px;
+	background: #ded8c9;
+}
+
+// 07 — тёмная шапка: карточка получает «заголовок окна».
+.darkHeader {
+	.header {
+		grid-column: 1 / -1;
+		padding: 13px 26px;
+
+		background: #2b2621;
+		color: rgba(#ffffff, 0.92);
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+}
+
+// 08 — плоский «билет»: без тени, граница и заметно более глубокая колонка.
+.ticket {
+	box-shadow: none;
+	border: 1px solid rgba($text-primary, 0.18);
+
+	.sidebar {
+		background: #e0dbcb;
+		border-right: 1px solid rgba($text-primary, 0.12);
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.sidebar {
+		padding: 16px 12px;
+		border-right: none;
+		border-bottom: 1px solid $border-warm;
+	}
+
+	.item {
+		border-radius: 10px;
+	}
+
+	.panel {
+		padding: 22px 18px 24px;
+	}
+
+	.darkRail .sidebar {
+		border-bottom: none;
+	}
+}
