@@ -11,6 +11,10 @@ $green: #10b981;
 $green-dark: #059669;
 $red: #a1322e;
 $red-dark: #832620;
+// $red is made for cream and disappears against a dark surface. This is the
+// accent for anything sitting on one — 5.4:1 there, past the 4.5:1 a small
+// caps label needs.
+$red-on-dark: #e08a7c;
 
 // Цвета фона
 $bg-main: #eae7dc;

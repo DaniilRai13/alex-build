@@ -8,32 +8,53 @@
 		margin-bottom: 25px;
 	}
 
-	// Dark panel so the long-form text reads as a distinct chapter after the
-	// card above it.
+	// A full-bleed dark band rather than a second card. The rail in the board
+	// above is dark now, and two dark cards in a row read as a stack of panels;
+	// edge to edge this reads as a section of the page instead.
+	//
+	// The colour is painted past the container by the shadow and clipped back to
+	// a horizontal strip. box-shadow never affects layout, so unlike a 100vw
+	// width this cannot produce a horizontal scrollbar — and nothing has to be
+	// hoisted out of the .container that wraps every page in Layout.
 	.text {
-		@include card(rgba(#000, 0.8));
+		background: rgba(#000, 0.8);
+		box-shadow: 0 0 0 100vmax rgba(#000, 0.8);
+		clip-path: inset(0 -100vmax);
 
-		padding: 35px 40px;
+		margin-bottom: 25px;
+		// Vertical only: horizontal alignment is the container's job now.
+		padding: 48px 0;
 
 		// No !important needed: nesting makes this .detail .text .textHeading,
 		// which already outranks the single-class rule in Heading.module.scss.
 		.textHeading {
 			@include accent-bar;
 
-			margin-bottom: 20px;
+			margin-bottom: 26px;
 			font-size: clamp(1.5rem, 2.4vw, 2rem);
 			text-transform: uppercase;
 			color: #fff;
+		}
+
+		.section + .section {
+			margin-top: 24px;
+		}
+
+		.kicker {
+			display: block;
+			margin-bottom: 6px;
+
+			color: $red-on-dark;
+			font-size: 0.78rem;
+			font-weight: 700;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
 		}
 
 		.paragraph {
 			color: rgba(#fff, 0.8);
 			font-size: 1.05rem;
 			line-height: 1.7;
-
-			& + .paragraph {
-				margin-top: 16px;
-			}
 		}
 	}
 }
@@ -41,7 +62,15 @@
 @media (max-width: $screen-tb) {
 	.detail {
 		.text {
-			padding: 25px 20px;
+			padding: 34px 0;
+
+			.textHeading {
+				margin-bottom: 20px;
+			}
+
+			.section + .section {
+				margin-top: 20px;
+			}
 
 			.paragraph {
 				font-size: 0.95rem;

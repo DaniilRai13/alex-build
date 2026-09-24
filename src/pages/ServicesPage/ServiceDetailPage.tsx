@@ -73,10 +73,21 @@ const ServiceDetailPage: FC = () => {
 					{service.detailHeading}
 				</Heading>
 
-				{service.longDescription.map(paragraph => (
-					<p className={styles.paragraph} key={paragraph.slice(0, 40)}>
-						{paragraph}
-					</p>
+				{/*
+					Each paragraph under its own kicker. The three always do three
+					different jobs — what it is, why it works that way, who it is
+					for — and run as identical grey blocks a reader has to wade
+					through to find the one that applies to them.
+
+					The kicker is a <b>, not an <h3>: these name paragraphs inside
+					one section, and putting them in the page outline would bury
+					the h2 they belong to under three siblings.
+				*/}
+				{service.longDescription.map(({ heading, text }) => (
+					<div className={styles.section} key={heading}>
+						<b className={styles.kicker}>{heading}</b>
+						<p className={styles.paragraph}>{text}</p>
+					</div>
 				))}
 			</div>
 

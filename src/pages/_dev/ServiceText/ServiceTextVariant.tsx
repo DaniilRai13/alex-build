@@ -16,13 +16,11 @@ export type TextStyle =
 	| 'combo';
 
 const service = services[0];
-const [intro, why, whenTo] = service.longDescription;
+const [intro, why, whenTo] = service.longDescription.map(p => p.text);
 
-// Kickers for the subhead variants. Each paragraph already does a different
-// job — what it is, why one contractor, who it is for — and these only name
-// the job it was already doing. If the variant wins they belong in
-// services.data.ts beside longDescription, not here.
-const KICKERS = ['Co to znamená', 'Proč jeden dodavatel', 'Kdy to dává smysl'];
+// The subhead option won and shipped, so these come from the data now rather
+// than being held here.
+const KICKERS = service.longDescription.map(p => p.heading);
 
 // The sequence buried in the first paragraph: "od demolice a odvozu suti přes
 // nové příčky, elektroinstalace a rozvody vody až po podlahy, dveře a finální
