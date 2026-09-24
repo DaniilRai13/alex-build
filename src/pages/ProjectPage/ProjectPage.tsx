@@ -1,4 +1,5 @@
 import Breadcrumbs from '@/components/common/Breadcrumbs/Breadcrumbs';
+import Enquiry from '@/components/common/Enquiry/Enquiry';
 import Seo from '@/components/common/Seo/Seo';
 import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
@@ -6,7 +7,8 @@ import Image from '@/components/ui/Image/Image';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { company, ORGANIZATION_ID } from '@/config/company';
 import { breadcrumbJsonLd } from '@/config/jsonLd';
-import { projectPath, ROUTES } from '@/config/routes';
+import { projectPath, ROUTES, servicePath } from '@/config/routes';
+import { serviceForCategory } from '@/data/services.data';
 import { getProjectBySlug, portfolioData } from '@/data/portfolio/portfolio.data';
 import { useState, type FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -38,6 +40,7 @@ const ProjectPage: FC = () => {
 	if (!project) return <NotFoundPage />;
 
 	const url = projectPath(project.slug);
+	const service = serviceForCategory(project.category);
 	const [cover, ...gallery] = project.images;
 
 	const crumbs = [
@@ -103,6 +106,23 @@ const ProjectPage: FC = () => {
 						<dt>Rok realizace</dt>
 						<dd>{project.year}</dd>
 					</div>
+
+					{/*
+						The way back from the work to the thing you can order. A visitor
+						impressed by a project had nowhere to go but the portfolio list;
+						this puts the service one click away, in the row of facts they
+						are already reading.
+					*/}
+					{service && (
+						<div>
+							<dt>Služba</dt>
+							<dd>
+								<Link className={styles.metaLink} to={servicePath(service.slug)}>
+									{service.title}
+								</Link>
+							</dd>
+						</div>
+					)}
 				</dl>
 			</header>
 
@@ -162,6 +182,8 @@ const ProjectPage: FC = () => {
 					</ul>
 				</section>
 			)}
+
+			<Enquiry />
 
 			<section className={styles.related}>
 				<Heading as='h2' className={styles.relatedHeading}>

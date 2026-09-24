@@ -1,4 +1,5 @@
 import type { IResponsiveImage } from '@/types/image.interface';
+import type { PortfolioCategory } from '@/types/portfolio.interface';
 import type { IService } from '@/types/services.interface';
 
 // Original PNGs (the <img> fallback) and their WebP twins from
@@ -47,6 +48,7 @@ export const services: IService[] = [
 	{
 		id: 1,
 		slug: 'kompletni-rekonstrukce',
+		projectCategory: 'renovation',
 		title: 'Kompletní rekonstrukce',
 		description:
 			'Rekonstrukce bytů a domů od demolice až po finální dokončení – vše potřebné pod jednou střechou a s důrazem na kvalitu provedení.',
@@ -82,6 +84,7 @@ export const services: IService[] = [
 	{
 		id: 2,
 		slug: 'kosmeticke-upravy',
+		projectCategory: 'interior',
 		title: 'Kosmetické úpravy',
 		description:
 			'Rychlé a efektivní obnovení interiéru bez rozsáhlých stavebních zásahů. Ideální pro přípravu bytu k pronájmu i zvýšení jeho hodnoty.',
@@ -116,6 +119,7 @@ export const services: IService[] = [
 	{
 		id: 3,
 		slug: 'stavebni-a-remeslne-prace',
+		projectCategory: 'facade',
 		title: 'Stavební & řemeslné práce',
 		description:
 			'Stavební a řemeslné práce od základů přes hrubou stavbu a omítky až po fasády.',
@@ -181,3 +185,11 @@ export const services: IService[] = [
 /** Look up a service by its URL segment. */
 export const getServiceBySlug = (slug?: string) =>
 	services.find(service => service.slug === slug);
+
+/**
+ * The service a project demonstrates, for the link back from a project page.
+ * Lives here rather than beside the portfolio because it searches the services:
+ * the mapping is declared once, on the service, and read from both directions.
+ */
+export const serviceForCategory = (category: PortfolioCategory) =>
+	services.find(service => service.projectCategory === category);

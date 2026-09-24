@@ -1,3 +1,4 @@
+import type { PortfolioCategory } from './portfolio.interface';
 import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
 import type { IResponsiveImage } from './image.interface';
 
@@ -9,6 +10,15 @@ export interface IService {
 	description: string;
 	/** <h2> above the long-form text on the service detail page. */
 	detailHeading: string;
+	/**
+	 * Portfolio category that shows this service off, if any. Drives the links
+	 * between a service and the work that proves it — there were none in either
+	 * direction, so a visitor convinced by a service page had no way to see it
+	 * done, and a visitor impressed by a project had no way to order it.
+	 *
+	 * Optional because not every service has built evidence yet.
+	 */
+	projectCategory?: PortfolioCategory;
 	/**
 	 * Long-form text used only on the detail page — unique content for search
 	 * engines. Each paragraph carries its own kicker: the three of them always

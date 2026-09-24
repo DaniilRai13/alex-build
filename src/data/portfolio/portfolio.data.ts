@@ -129,3 +129,21 @@ export const aboutProject = (() => {
 
 	return portfolioData[HOME_STRIP_SIZE] ?? featuredProject;
 })();
+
+/**
+ * The projects that demonstrate a service. Feeds the links between a service
+ * and the work that proves it: there were none in either direction, so anyone
+ * convinced by a service page had no way to see it done, and anyone impressed
+ * by a project had no way to order it.
+ *
+ * Returns nothing for a service with no category, rather than falling back to
+ * recent projects — a service page that shows unrelated work is worse than one
+ * that shows none.
+ */
+export const projectsForCategory = (
+	category?: PortfolioCategory,
+	limit = 3,
+): IPortfolioProject[] =>
+	category
+		? portfolioData.filter(project => project.category === category).slice(0, limit)
+		: [];

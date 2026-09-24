@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { type FC } from 'react';
 import styles from './HeroSection.module.scss';
 import { animations } from '@/components/common/animation/variants';
+import { primaryRegions } from '@/data/regions.data';
 import { animationTransition } from '@/components/common/animation/transition';
 
 const HeroSection: FC = () => {
@@ -31,7 +32,15 @@ const HeroSection: FC = () => {
 					it has always been. Naming the town in both would put "Teplice"
 					twice in two adjacent elements.
 				*/}
-				<span className={styles.badge}>Teplice · Ústecký kraj</span>
+				<span className={styles.badge}>
+					{/*
+						Built from the same list that feeds areaServed rather than typed
+						here, so the badge and the structured data cannot drift apart —
+						which is exactly what had happened: this said Teplice while the
+						markup opened with "po celé České republice".
+					*/}
+					{primaryRegions.map(region => region.name).join(' · ')}
+				</span>
 
 				{/*
 					No forced line break: the heading is set in a fluid clamp, so a

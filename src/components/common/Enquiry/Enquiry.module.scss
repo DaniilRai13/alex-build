@@ -1,0 +1,44 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+// Copy on the left, form on the right. Stacked full width the form reads as a
+// chore; beside a short reason to fill it in, it reads as the next step.
+.enquiry {
+	@include card;
+
+	display: grid;
+	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+	align-items: start;
+	gap: 32px 44px;
+
+	margin-bottom: 25px;
+	padding: 34px 38px;
+
+	@media (max-width: $screen-tb) {
+		grid-template-columns: 1fr;
+		gap: 22px;
+		padding: 26px 20px;
+	}
+}
+
+.copy {
+	min-width: 0;
+}
+
+// Nested so it outranks the single-class rule in Heading.module.scss.
+.copy .title {
+	@include accent-bar;
+
+	margin-bottom: 12px;
+	font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+	letter-spacing: 0;
+}
+
+.lead {
+	color: $text-secondary;
+	line-height: 1.6;
+}
+
+.form {
+	min-width: 0;
+}

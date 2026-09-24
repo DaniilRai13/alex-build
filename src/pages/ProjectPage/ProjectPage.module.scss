@@ -50,6 +50,23 @@
 			font-weight: 600;
 			color: $text-primary;
 		}
+
+		// The one value in the row that is a link. Inherits the size and weight
+		// of its neighbours so the row still reads as a row of facts, and takes
+		// the accent colour plus an underline to say it can be clicked — colour
+		// alone is not a signal for anyone who cannot see it.
+		.metaLink {
+			color: $red;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+			text-decoration-thickness: 1px;
+			transition: color 0.25s;
+
+			&:hover,
+			&:focus-visible {
+				color: $red-dark;
+			}
+		}
 	}
 }
 
