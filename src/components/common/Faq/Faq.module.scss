@@ -1,0 +1,144 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+// The block always closes a page, so it owns the gap to whatever came before
+// rather than making every caller remember to add one.
+.faq {
+	@include card;
+
+	margin-top: 40px;
+	padding: 36px 40px;
+
+	// Nested on purpose. Heading.module.scss styles .heading with a single
+	// class, so a top-level .title here only wins by source order — which is
+	// how this heading ended up smaller and lighter than its neighbours. Two
+	// classes settle it, the same way every other section heading on the site
+	// does it.
+	.title {
+		margin-bottom: 28px;
+
+		// No font-size and no font-weight: the section headings on the home page
+		// take both from the Heading component — clamp(2.3rem, 4vw, 2.9rem) at
+		// weight 700 — and this block sits directly below three of them.
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: $red;
+	}
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+}
+
+.item {
+	border-bottom: 1px solid $border-warm;
+
+	// The rail that marks the open question. Always present so opening only
+	// changes its colour — a border appearing from nothing would shift the
+	// text sideways every time.
+	//
+	// Warm dark rather than the brand red: red is what the buttons use, and
+	// spending it on "this one is open" makes a quiet state shout.
+	border-left: 3px solid transparent;
+	border-radius: 2px;
+
+	transition:
+		border-left-color $transition-fast,
+		padding-left $transition-fast;
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&[open] {
+		border-left-color: $accent-warm;
+		padding-left: 18px;
+	}
+}
+
+.question {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+
+	padding: 18px 0;
+
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: $text-primary;
+
+	cursor: pointer;
+	list-style: none;
+
+	// Safari draws its own triangle through ::-webkit-details-marker, which
+	// `list-style: none` alone does not remove.
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&:hover {
+		color: $red;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $red;
+		outline-offset: 4px;
+		border-radius: $radius-md;
+	}
+}
+
+.marker {
+	flex-shrink: 0;
+	color: $accent-warm;
+	transition: transform $transition-fast;
+}
+
+.item[open] .marker {
+	transform: rotate(180deg);
+}
+
+.answer {
+	margin: 0;
+	padding: 0 0 20px;
+
+	max-width: 68ch;
+
+	color: $text-secondary;
+	line-height: 1.65;
+}
+
+@media (max-width: $screen-tb) {
+	.faq {
+		margin-top: 28px;
+		padding: 24px;
+
+		// Only the gap. The size still comes from Heading, whose clamp already
+		// bottoms out at 2.3rem here — the same as every heading beside it.
+		.title {
+			margin-bottom: 20px;
+		}
+	}
+
+	.question {
+		font-size: 1rem;
+		padding: 15px 0;
+	}
+
+	.answer {
+		font-size: 0.92rem;
+		padding-bottom: 16px;
+	}
+
+	.item[open] {
+		padding-left: 14px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.item,
+	.marker {
+		transition: none;
+	}
+}

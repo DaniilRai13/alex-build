@@ -75,7 +75,7 @@ export const portfolioData: IPortfolioProject[] = remote.map(project => ({
 	],
 }));
 
-/** Look up a project by its URL segment (/project/{slug}). */
+/** Look up a project by its URL segment (/portfolio/{slug}). */
 export const getProjectBySlug = (slug?: string) =>
 	portfolioData.find(project => project.slug === slug);
 
@@ -96,4 +96,36 @@ export const featuredProject = (() => {
 		throw new Error('The portfolio is empty — scripts/fetch-portfolio.mjs found no projects.');
 
 	return project;
+})();
+
+/** How many projects the home page shows in its portfolio strip. */
+export const HOME_STRIP_SIZE = 4;
+
+/** The projects that strip renders. */
+export const homeStripProjects = portfolioData.slice(0, HOME_STRIP_SIZE);
+
+/**
+ * Photo for the About block on the home page.
+ *
+ * Two constraints. It must not be one of the projects the strip below already
+ * shows — the same shot twice on one screen reads as a mistake rather than a
+ * choice. And it should be finished work: the block is the company introducing
+ * itself, so a site mid-scaffolding sells nothing, however honest it is.
+ *
+ * Named rather than derived, because "the first one the strip skips" happened
+ * to land on the facade job. But the name is still checked against the strip,
+ * so reordering the portfolio in the admin cannot quietly reintroduce the
+ * duplicate — it falls back to the old rule instead.
+ */
+const ABOUT_SLUG = 'rekonstrukce-bytu-radova-kuchyne';
+
+export const aboutProject = (() => {
+	const chosen = getProjectBySlug(ABOUT_SLUG);
+	const clashesWithStrip = homeStripProjects.some(
+		project => project.slug === ABOUT_SLUG,
+	);
+
+	if (chosen && !clashesWithStrip) return chosen;
+
+	return portfolioData[HOME_STRIP_SIZE] ?? featuredProject;
 })();

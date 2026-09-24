@@ -1,0 +1,110 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+// Everything the paragraphs need is a custom property, so a variant is four
+// declarations rather than a repeated block of rules.
+.demo {
+	--font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--size: 1.05rem;
+	--line: 1.65;
+	--track: 0;
+	--ink: #5c5349;
+
+	@include card;
+
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 40px;
+
+	padding: 32px 36px;
+
+	@media (max-width: $screen-tb) {
+		grid-template-columns: 1fr;
+		gap: 28px;
+		padding: 24px;
+	}
+}
+
+.col {
+	min-width: 0;
+}
+
+.eyebrow {
+	display: block;
+	margin-bottom: 8px;
+
+	font-family: var(--font);
+	color: $red;
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.heading {
+	margin: 0 0 12px;
+
+	font-family: var(--font);
+	font-size: 1.75rem;
+	font-weight: 700;
+	line-height: 1.15;
+	color: $text-primary;
+}
+
+.lead {
+	margin: 0 0 12px;
+	max-width: 54ch;
+
+	font-family: var(--font);
+	font-size: var(--size);
+	line-height: var(--line);
+	letter-spacing: var(--track);
+	color: var(--ink);
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+// --- 01 exactly what ships today -------------------------------------------
+// line-height and letter-spacing are heading settings applied to running text,
+// and the grey is a cool slate on a warm ground at 3.84:1 — under the 4.5:1
+// minimum for body copy.
+.now {
+	--size: 1.2rem;
+	--line: 1.2;
+	--track: 1px;
+	--ink: #64748b;
+}
+
+// --- 02 same font, the three defects corrected ------------------------------
+.fixed {
+	--line: 1.65;
+	--track: 0;
+	--ink: #5c5349;
+}
+
+// --- 03-06 the same corrections, with a font actually loaded ----------------
+.inter {
+	--font: 'Inter', sans-serif;
+}
+
+.plex {
+	--font: 'IBM Plex Sans', sans-serif;
+}
+
+.source {
+	--font: 'Source Sans 3', sans-serif;
+}
+
+.manrope {
+	--font: 'Manrope', sans-serif;
+}
+
+// --- 07 larger, darker, more confident --------------------------------------
+.bigger {
+	--font: 'Inter', sans-serif;
+	--size: 1.15rem;
+	--line: 1.7;
+	--ink: #4a423a;
+}

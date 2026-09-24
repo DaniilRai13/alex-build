@@ -1,9 +1,11 @@
 import Breadcrumbs from '@/components/common/Breadcrumbs/Breadcrumbs';
+import Faq from '@/components/common/Faq/Faq';
 import Seo from '@/components/common/Seo/Seo';
 import Heading from '@/components/ui/Heading/Heading';
 import { company, ORGANIZATION_ID } from '@/config/company';
-import { breadcrumbJsonLd } from '@/config/jsonLd';
+import { breadcrumbJsonLd, faqJsonLd } from '@/config/jsonLd';
 import { ROUTES, servicePath } from '@/config/routes';
+import { faqForService } from '@/data/faq.data';
 import { getServiceBySlug } from '@/data/services.data';
 import type { FC } from 'react';
 import { useParams } from 'react-router-dom';
@@ -18,6 +20,7 @@ const ServiceDetailPage: FC = () => {
 	if (!service) return <NotFoundPage />;
 
 	const url = servicePath(service.slug);
+	const faq = faqForService(service.slug);
 	const crumbs = [
 		{ name: 'Domů', href: ROUTES.HOME },
 		{ name: 'Služby', href: ROUTES.SERVICES },
@@ -48,7 +51,7 @@ const ServiceDetailPage: FC = () => {
 				title={service.seoTitle}
 				description={service.seoDescription}
 				path={url}
-				jsonLd={[breadcrumbJsonLd(crumbs), serviceJsonLd]}
+				jsonLd={[breadcrumbJsonLd(crumbs), serviceJsonLd, faqJsonLd(faq)]}
 			/>
 
 			<Breadcrumbs items={crumbs} />
@@ -76,6 +79,8 @@ const ServiceDetailPage: FC = () => {
 					</p>
 				))}
 			</div>
+
+			<Faq items={faq} />
 		</section>
 	);
 };

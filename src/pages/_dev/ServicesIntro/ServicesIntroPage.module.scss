@@ -1,0 +1,7 @@
+@import '@styles/abstracts/var';
+
+.stage {
+	padding: 28px;
+	border-radius: $radius-lg;
+	background: rgba($text-primary, 0.05);
+}

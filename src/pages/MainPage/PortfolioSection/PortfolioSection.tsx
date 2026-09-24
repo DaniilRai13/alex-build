@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
 import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { ROUTES } from '@/config/routes';
-import { portfolioData } from '@/data/portfolio/portfolio.data';
+import { homeStripProjects } from '@/data/portfolio/portfolio.data';
 import type { IPortfolioProject } from '@/types/portfolio.interface';
 import { motion } from 'framer-motion';
 import PortfolioItem from './PortfolioItem/PortfolioItem';
@@ -23,8 +23,7 @@ const layoutClasses = [
 	styles.house,
 ];
 
-const portfolioItems: IPortfolioItems[] = portfolioData
-	.slice(0, 4)
+const portfolioItems: IPortfolioItems[] = homeStripProjects
 	.map((project, index) => ({
 		project,
 		className: layoutClasses[index],

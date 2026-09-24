@@ -16,19 +16,46 @@ import styles from './ServicesSection.module.scss';
 const ServicesSection: FC = () => {
 	return (
 		<section className={styles.services}>
+			{/*
+				Copy on the left, cards on the right. The heading, the lead and the
+				button used to sit above and below a full-width grid; moving them
+				into their own column puts the call to action beside the services
+				rather than after the fold.
+			*/}
 			<motion.div
-				className={styles.servicesHeader}
+				className={styles.intro}
 				initial={'hidden'}
 				whileInView={'visible'}
-				transition={{ ...animationTransition.defaultTransition, delay: 0 }}
+				viewport={{ once: true }}
+				transition={animationTransition.defaultTransition}
 				variants={animations.fadeLeft}
 			>
+				<span className={styles.eyebrow}>Co nabízíme</span>
+
 				<Heading className={styles.heading}>Naše služby</Heading>
+
 				<Subtitle className={styles.description}>
 					Vybíráme řešení pro úkoly jakékoli složitosti – od konceptu až po
 					realizaci.
 				</Subtitle>
+
+				{/*
+					Set off by the red rule rather than run as a second grey paragraph:
+					this is the block's actual claim, and two paragraphs of body text in
+					a row gave the eye nothing to land on.
+
+					Restates what the service pages already promise rather than adding a
+					new one: one contractor for the whole job, and a schedule and budget
+					before anything is torn out.
+				*/}
+				<p className={styles.claim}>
+					Celou stavbu vede jeden dodavatel, takže jednotlivé profese na sebe
+					navazují bez prostojů a vy nedomlouváte desítky řemeslníků zvlášť.
+					Před zahájením prací připravíme harmonogram i rozpočet — dopředu
+					tedy víte, co a kdy se bude dít.
+				</p>
 			</motion.div>
+
 			<div className={styles.grid}>
 				{services.slice(0, 4).map(service => {
 					return (
@@ -48,6 +75,18 @@ const ServicesSection: FC = () => {
 										{service.title}
 									</Heading>
 									<p>{service.description}</p>
+
+									{/*
+										The features arrays already exist for the service pages and
+										were shown nowhere on the home page — seventeen phrases a
+										customer might search for, "Omítky", "Fasády", "Elektro a
+										instalatérství", sitting unused.
+									*/}
+									<ul className={styles.features}>
+										{service.features.map(feature => (
+											<li key={feature}>{feature}</li>
+										))}
+									</ul>
 								</div>
 								<ChevronRight
 									className={cn(styles.arrow, styles.mobileArrow)}
@@ -59,19 +98,17 @@ const ServicesSection: FC = () => {
 				})}
 			</div>
 
-			<motion.div
-				className={styles.buttonWrapper}
-				initial={'hidden'}
-				whileInView={'visible'}
-				transition={{ ...animationTransition.defaultTransition, delay: 0.1 }}
-				variants={animations.fadeUp}
-			>
-				<Button
-					title='Všechny služby'
-					className={styles.button}
-					to={ROUTES.SERVICES}
-				/>
-			</motion.div>
+			{/*
+				A sibling of the grid, not a child of the intro. On the desktop it is
+				placed back under the copy by the stylesheet; stacked, it can then
+				follow the cards instead of offering "all services" before a single
+				one has been shown.
+			*/}
+			<Button
+				title='Všechny služby'
+				className={styles.button}
+				to={ROUTES.SERVICES}
+			/>
 		</section>
 	);
 };

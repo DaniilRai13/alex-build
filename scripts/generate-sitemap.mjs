@@ -40,8 +40,11 @@ const PRIORITIES = [
 		changefreq: 'monthly',
 		priority: '0.8',
 	},
+	// Project pages moved from /project/:slug to /portfolio/:slug. The exact
+	// match on '/portfolio' above runs first, so the listing keeps its 0.9 and
+	// only the projects beneath it fall through to this rule.
 	{
-		match: url => url.startsWith('/project/'),
+		match: url => url.startsWith('/portfolio/'),
 		changefreq: 'yearly',
 		priority: '0.7',
 	},

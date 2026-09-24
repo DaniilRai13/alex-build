@@ -1,0 +1,324 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+// Seven treatments of the same block. The red rail on the open question is in
+// all of them — that part is decided; what differs is everything around it.
+
+// --- shared skeleton --------------------------------------------------------
+.faq {
+	@include card;
+
+	margin-top: 0;
+	padding: 36px 40px;
+}
+
+.title {
+	margin-bottom: 24px;
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+}
+
+.item {
+	border-bottom: 1px solid $border-warm;
+	border-left: 3px solid transparent;
+	border-radius: 2px;
+
+	transition:
+		border-left-color $transition-fast,
+		padding-left $transition-fast,
+		background $transition-fast;
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&[open] {
+		border-left-color: $red;
+		padding-left: 18px;
+	}
+}
+
+.question {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+
+	padding: 16px 0;
+
+	font-size: 1.02rem;
+	font-weight: 600;
+	color: $text-primary;
+
+	cursor: pointer;
+	list-style: none;
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&:hover {
+		color: $red;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $red;
+		outline-offset: 4px;
+		border-radius: $radius-md;
+	}
+}
+
+.marker {
+	position: relative;
+	flex-shrink: 0;
+
+	width: 18px;
+	height: 18px;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+
+		width: 100%;
+		height: 2px;
+
+		background: $red;
+		border-radius: 2px;
+		transition: transform $transition-fast;
+	}
+
+	&::after {
+		transform: rotate(90deg);
+	}
+}
+
+.item[open] .marker::after {
+	transform: rotate(0deg);
+}
+
+.answer {
+	margin: 0;
+	padding: 0 0 18px;
+
+	max-width: 68ch;
+
+	color: $text-secondary;
+	line-height: 1.65;
+}
+
+// --- 02 accent --------------------------------------------------------------
+// The red rule beside a heading is the site's recurring section marker; the
+// block heading is the one place it was missing.
+.accent {
+	.title {
+		@include accent-bar;
+
+		display: flex;
+		align-items: center;
+
+		min-height: 36px;
+		margin-bottom: 28px;
+		font-size: 1.7rem;
+	}
+
+	.question {
+		font-size: 1.1rem;
+	}
+
+	.item[open] .question {
+		color: $red;
+	}
+}
+
+// --- 03 cards ---------------------------------------------------------------
+.cards {
+	background: transparent;
+	box-shadow: none;
+	padding: 0;
+
+	.list {
+		gap: 12px;
+	}
+
+	.item {
+		@include card;
+
+		border-bottom: none;
+		border-left: 3px solid transparent;
+
+		padding: 4px 22px;
+
+		&[open] {
+			padding-left: 22px;
+			background: #fff;
+		}
+	}
+
+	.answer {
+		padding-bottom: 16px;
+	}
+}
+
+// --- 04 numbered ------------------------------------------------------------
+.numbered {
+	.list {
+		counter-reset: faq;
+	}
+
+	.item {
+		counter-increment: faq;
+	}
+
+	.text::before {
+		content: counter(faq, decimal-leading-zero);
+
+		display: inline-block;
+		width: 2.2em;
+
+		color: $red;
+		font-weight: 700;
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+// --- 05 dark ----------------------------------------------------------------
+// The same dark panel the long-form text uses on the service pages, so the two
+// blocks read as one chapter rather than two unrelated boxes.
+.dark {
+	@include card(rgba(#000, 0.8));
+
+	.title,
+	.question {
+		color: #fff;
+	}
+
+	.answer {
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.item {
+		border-bottom-color: rgba(255, 255, 255, 0.12);
+	}
+
+	.question:hover,
+	.item[open] .question {
+		color: $red;
+	}
+}
+
+// --- 06 split ---------------------------------------------------------------
+.split {
+	display: grid;
+	grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+	gap: 48px;
+	align-items: start;
+
+	.title {
+		@include accent-bar;
+
+		display: flex;
+		align-items: center;
+
+		min-height: 36px;
+		margin-bottom: 14px;
+	}
+
+	@media (max-width: $screen-tb) {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+}
+
+.aside {
+	position: sticky;
+	top: calc(#{$header-height} + 20px);
+}
+
+.asideText {
+	margin-bottom: 20px;
+	color: $text-secondary;
+	font-size: 0.95rem;
+}
+
+.asideButton {
+	padding: 14px 26px;
+}
+
+// --- 07 editorial -----------------------------------------------------------
+// No panel at all: the questions carry the block on type alone.
+.editorial {
+	background: transparent;
+	box-shadow: none;
+	padding: 0;
+
+	.title {
+		margin-bottom: 36px;
+
+		font-size: clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem);
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		text-transform: none;
+	}
+
+	.item {
+		border-bottom: 1px solid rgba($text-primary, 0.14);
+	}
+
+	.question {
+		padding: 24px 0;
+		font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+		font-weight: 500;
+	}
+
+	.answer {
+		padding-bottom: 26px;
+		font-size: 1.02rem;
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.faq {
+		padding: 24px;
+	}
+
+	.cards,
+	.editorial {
+		padding: 0;
+	}
+
+	.title {
+		font-size: 1.25rem;
+		margin-bottom: 18px;
+	}
+
+	.question {
+		font-size: 0.95rem;
+		padding: 14px 0;
+	}
+
+	.answer {
+		font-size: 0.92rem;
+		padding-bottom: 14px;
+	}
+
+	.item[open] {
+		padding-left: 14px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.item,
+	.marker::before,
+	.marker::after {
+		transition: none;
+	}
+}

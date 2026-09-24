@@ -1,7 +1,7 @@
 # Forpsi / Apache – servírování předrenderovaných stránek.
 
 Options -MultiViews
-# No directory listings: /services/ and /project/ are real folders full of
+# No directory listings: /services/ and /portfolio/ are real folders full of
 # prerendered pages and must never be browsable.
 Options -Indexes
 
@@ -10,12 +10,12 @@ Options -Indexes
 # that the slash-stripping rule below completes, and a looping URL is
 # unreachable for crawlers and for anyone opening it directly.
 #
-# That loop is what took /services and /project down. Those two are now handled
-# before a folder can reach mod_dir — the .html rule catches /services, an
-# explicit redirect catches /project — so this line is what covers everything
-# else: /static-loader-data today, and any folder a future build drops into
-# dist/ without a page beside it. Nothing here is meant to be browsed as a
-# directory anyway (see -Indexes).
+# That loop is what took /services and /project down. Both branches now have a
+# page beside the folder — services.html next to services/, portfolio.html next
+# to portfolio/ — so the .html rule below claims them before mod_dir ever sees
+# a directory. This line covers everything else: /static-loader-data today, and
+# any folder a future build drops into dist/ without a page beside it. Nothing
+# here is meant to be browsed as a directory anyway (see -Indexes).
 #
 # Needs AllowOverride Indexes. If Forpsi does not grant it, Apache answers 500
 # for the whole site — check the site loads right after deploying and drop this
@@ -37,10 +37,18 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
-# /project holds the project pages but has no page of its own, so the bare URL
-# has nothing to serve. Send it to the portfolio. Matching the trailing slash
-# here too keeps it to a single hop instead of bouncing through the rule below.
-RewriteRule ^project/?$ /portfolio [R=301,L]
+# Project pages moved from /project/<slug> to /portfolio/<slug>, so the listing
+# and the things it lists finally share a branch. The nine old URLs are indexed
+# and linked from outside, so these two redirects are permanent — deleting them
+# later would 404 every project result Google still holds.
+#
+# Absolute https, not a relative target: Forpsi terminates TLS, so Apache
+# believes it is serving plain HTTP and builds the Location header with that
+# scheme. The relative form sent https://kartstav.cz/project to
+# http://kartstav.cz/portfolio, which the HTTPS rule then had to bounce back up
+# — two hops and a plaintext one in the middle, for what is one redirect.
+RewriteRule ^project/(.+?)/?$ https://%{HTTP_HOST}/portfolio/$1 [R=301,L]
+RewriteRule ^project/?$ https://%{HTTP_HOST}/portfolio [R=301,L]
 
 # One canonical URL shape: /services/ redirects to /services, so the same page
 # is never reachable under two addresses.

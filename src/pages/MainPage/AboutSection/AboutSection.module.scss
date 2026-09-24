@@ -1,51 +1,267 @@
 @import '@styles/abstracts/var';
 
-.aboutSection {
-	
-	background-color: transparent;
-	display: flex;
-	justify-content: space-between;
+// Photo left, copy right. The block used to be copy on the left and a 2×2 wall
+// of white cards on the right, which left the text column half empty on a
+// laptop and showed none of the work the text talks about.
+.about {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+	// Top, not centre. As the screen narrows the copy wraps and grows while the
+	// photo shrinks, and centred it ended up floating in the middle of the row
+	// with dead space above and below it.
+	align-items: start;
+	gap: 30px;
+
 	padding-top: 80px;
-	gap: 20px;
 
-	@media (max-width: $screen-tb-lg2) {
-		flex-wrap: wrap;
-		gap: 40px;
-		padding: 50px 0 0;
+	// 900 rather than $screen-tb-lg2: below this the two columns are too narrow
+	// to read side by side. The hero already breaks at the same width.
+	@media (max-width: $screen-tb) {
+		grid-template-columns: 1fr;
+		gap: 25px;
+		padding-top: 50px;
+	}
+}
+
+.media {
+	min-width: 0;
+
+	// Stacked, the photo opens the block as a strip across the full width.
+	// Below the copy it was 460px of height at the bottom of the block, where
+	// fewest people are still scrolling; as a band up top it costs a third of
+	// that and is seen by everyone.
+	@media (max-width: $screen-tb) {
+		order: 1;
+
+		width: 100%;
+	}
+}
+
+// The clickable frame the photo, the badge and the caption share. Rounded and
+// clipped here rather than on the photo, so the overlays follow the corners.
+.frame {
+	position: relative;
+	display: block;
+
+	border-radius: $radius-lg;
+	overflow: hidden;
+	box-shadow: $shadow-md;
+
+	text-decoration: none;
+
+	&:hover .caption {
+		background: linear-gradient(
+			to top,
+			rgba(0, 0, 0, 0.88),
+			rgba(0, 0, 0, 0.15)
+		);
 	}
 
-	.info {
-		.infoContainer {
-			position: sticky;
-			top: calc($header-height);
-			.infoText {
-				width: 100%;
+	&:focus-visible {
+		outline: 3px solid $red;
+		outline-offset: 3px;
+	}
+}
 
-				.infoTitle {
-					text-transform: uppercase;
-					letter-spacing: 0.05em;
-					color: $red;
-					margin-bottom: 0.75rem;
-				}
+// Category, top left. Says what kind of job it was before the eye reaches the
+// caption — not every renovation is a gut job, and "Kosmetika" says so.
+.badge {
+	position: absolute;
+	z-index: 2;
+	top: 14px;
+	left: 14px;
 
-				.infoSubtitle {
-					margin-bottom: 1.5rem;
-				}
-			}
+	padding: 6px 12px;
+
+	border-radius: $radius-xl;
+	background: rgba(0, 0, 0, 0.6);
+
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
+// Project details over a fade. `to top` puts the darkest part under the text,
+// which is what keeps it readable on a bright kitchen.
+.caption {
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+
+	padding: 44px 20px 16px;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.82), transparent);
+
+	color: #fff;
+	line-height: 1.3;
+
+	transition: background $transition-fast;
+
+	b {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+
+	> span {
+		font-size: 0.82rem;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	// The band is only ~167px tall on a phone; the desktop padding would take
+	// a third of it before the text even starts.
+	@media (max-width: $screen-tb) {
+		padding: 28px 16px 12px;
+
+		b {
+			font-size: 0.92rem;
+		}
+
+		> span {
+			font-size: 0.76rem;
 		}
 	}
+}
 
-	// Stats grid
+.arrow {
+	position: absolute;
+	right: 18px;
+	bottom: 18px;
+}
+
+.photo {
+	display: block;
+	width: 100%;
+
+	// 10/9 rather than 4/3: about 83px taller in the ~550px column this sits in.
+	// It also wastes less of the source — every portfolio preview but one is a
+	// portrait shot, and a wide frame threw most of each away.
+	aspect-ratio: 10 / 9;
+	object-fit: cover;
+
+	// A band, not a panel: 21:9 keeps the photo to about 330px at the
+	// breakpoint and 167px on a phone, instead of 460px and 224px.
+	@media (max-width: $screen-tb) {
+		aspect-ratio: 21 / 9;
+	}
+}
+
+.copy {
+	min-width: 0;
+
+	@media (max-width: $screen-tb) {
+		order: 2;
+	}
+}
+
+.eyebrow {
+	display: block;
+	margin-bottom: 10px;
+
+	color: $red;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+// Nested so it outranks the single-class rule in Heading.module.scss: this
+// heading is the statement of the block, not a section label, so it keeps the
+// dark text while the eyebrow above carries the red.
+.copy .title {
+	margin-bottom: 1rem;
+	letter-spacing: 0;
+}
+
+.text {
+	margin-bottom: 2rem;
+	max-width: 54ch;
+}
+
+.stats {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 22px 28px;
+	// Without this the cards stretch to the row height, their auto rows grow to
+	// fill it, and the figure drifts to the middle of the card. A pair whose
+	// label wraps onto two lines then sat lower than the pair beside it, which
+	// is why the numbers looked like they were on different levels.
+	align-items: start;
+
+	margin-bottom: 2rem;
+
+	// Stays two columns all the way down. Collapsing to one left every figure
+	// with most of the row empty to its right: the pairs are short, so the
+	// width was going to waste rather than being needed. Only the gaps tighten.
+	@media (max-width: $screen-sm) {
+		gap: 18px 14px;
+	}
+}
+
+// Outline rather than filled. The solid red button belongs to the primary
+// action — "Všechny služby" beside the services, the CTA in the banner; this
+// one leads to the portfolio, so it asks rather than insists.
+//
+// Two classes plus the same pseudo-classes Button.module.scss uses, otherwise
+// its own :hover:not(:disabled) rule ties on specificity and wins by source
+// order — taking the fill and the lift back with it.
+.copy .button {
+	padding: 14px 30px;
+
+	// Shorter on a phone. At full height it was the tallest thing in the
+	// column and sat right above the services button, so the two read as a
+	// stack of competing calls to action.
+	//
+	// Stacked it also centres: alone on a full-width row it has nothing to line
+	// up with on the left. display:flex rather than the component's inline-flex,
+	// so the auto margins have a block box to centre.
+	@media (max-width: $screen-tb) {
+		padding: 11px 24px;
+		font-size: 0.95rem;
+
+		display: flex;
+		width: fit-content;
+		margin-inline: auto;
+	}
+
+	// Full width on a phone: at this size a centred pill leaves a margin either
+	// side that reads as a gap rather than as breathing room.
+	@media (max-width: $screen-sm) {
+		width: 100%;
+	}
+
+	background: transparent;
+	border: 2px solid rgba($red, 0.4);
+	color: $red;
+	box-shadow: none;
+
+	&:hover:not(:disabled),
+	&:focus-visible {
+		background: transparent;
+		border-color: $red;
+		color: $red-dark;
+
+		transform: translateY(-2px);
+		box-shadow: none;
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+		box-shadow: none;
+	}
+}
+
+@media (max-width: $screen-md) {
+	.text {
+		margin-bottom: 1.5rem;
+	}
+
 	.stats {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.5rem;
-		@media (max-width: $screen-tb-lg2) {
-			width: 100%;
-			gap: 1.5rem;
-		}
-		@media (max-width: $screen-xs) {
-			grid-template-columns: 1fr;
-		}
+		margin-bottom: 1.5rem;
 	}
 }

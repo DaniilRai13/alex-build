@@ -1,0 +1,72 @@
+@import '@styles/abstracts/var';
+
+.stage {
+	display: grid;
+	grid-template-columns: 390px minmax(0, 1fr);
+	align-items: start;
+	gap: 24px;
+
+	padding: 24px;
+	border-radius: $radius-lg;
+	background: rgba($text-primary, 0.05);
+
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.col {
+	min-width: 0;
+}
+
+.caption {
+	display: block;
+	margin-bottom: 8px;
+
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: $text-secondary;
+}
+
+/// The phone band, at the width and shape the block actually uses.
+.band {
+	width: 100%;
+	aspect-ratio: 21 / 9;
+	object-fit: cover;
+
+	border-radius: $radius-lg;
+	box-shadow: $shadow-md;
+	display: block;
+}
+
+/// The desktop column. Capped so a wide screen does not blow it up past the
+/// ~550px the real column gets.
+.deskPhoto {
+	width: 100%;
+	max-width: 550px;
+	aspect-ratio: 10 / 9;
+	object-fit: cover;
+
+	border-radius: $radius-lg;
+	box-shadow: $shadow-md;
+	display: block;
+}
+
+.good {
+	color: $green-dark;
+	font-weight: 600;
+}
+
+.warnTag {
+	color: $red;
+	font-weight: 600;
+}
+
+.missing {
+	padding: 24px;
+	border: 1px dashed $border-medium;
+	border-radius: $radius-lg;
+	color: $text-secondary;
+}

@@ -71,10 +71,51 @@ export const routes: RouteRecord[] = [
 			...(import.meta.env.DEV
 				? [
 						{
-							path: '/about-variants',
+							path: '/faq-variants',
 							lazy: page(
-								() =>
-									import('./pages/_dev/AboutVariants/AboutVariantsPage'),
+								() => import('./pages/_dev/FaqVariants/FaqVariantsPage'),
+							),
+						},
+						{
+							path: '/text-variants',
+							lazy: page(
+								() => import('./pages/_dev/TextVariants/TextVariantsPage'),
+							),
+						},
+						{
+							path: '/about-mobile',
+							lazy: page(
+								() => import('./pages/_dev/AboutMobile/AboutMobilePage'),
+							),
+						},
+						{
+							path: '/about-photo',
+							lazy: page(
+								() => import('./pages/_dev/AboutPhoto/AboutPhotoPage'),
+							),
+						},
+						{
+							path: '/about-caption',
+							lazy: page(
+								() => import('./pages/_dev/AboutCaption/AboutCaptionPage'),
+							),
+						},
+						{
+							path: '/services-intro',
+							lazy: page(
+								() => import('./pages/_dev/ServicesIntro/ServicesIntroPage'),
+							),
+						},
+						{
+							path: '/service-board',
+							lazy: page(
+								() => import('./pages/_dev/ServiceBoard/ServiceBoardPage'),
+							),
+						},
+						{
+							path: '/service-text',
+							lazy: page(
+								() => import('./pages/_dev/ServiceText/ServiceTextPage'),
 							),
 						},
 					]

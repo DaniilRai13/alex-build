@@ -19,12 +19,32 @@ $bg-main: #eae7dc;
 $bg-card: #f3f0e8;
 $bg-secondary: #f1f5f9;
 $bg-dark: #1e293b;
+// Warm dark, for surfaces that have to sit on the beige palette — $bg-dark is
+// cool slate and reads as a foreign blue-grey next to it. Used by the services
+// rail, which needs to be the one dark thing on a page of creams.
+$bg-dark-warm: #2b2621;
 
 // Цвета текста
 $text-primary: #1e293b;
-$text-secondary: #64748b;
+
+// Secondary copy — paragraphs, captions, card descriptions.
+//
+// Was #64748b, a cool slate that measured 3.84:1 against $bg-main: under the
+// 4.5:1 minimum for body text, and blue-tinted on a warm beige ground — the
+// same mismatch $border-warm exists to avoid. This is the warm equivalent at
+// 6.08:1.
+$text-secondary: #5c5349;
 $text-light: #94a3b8;
 $text-white: #ffffff;
+
+// Warm dark for state on the beige surfaces — the rail on an open FAQ answer,
+// and anything else that marks "this one" rather than "click me".
+//
+// Not $red: that is the action colour, and spending it on a passive state makes
+// the page read as an alarm. Not $text-primary either — it is a cool slate and
+// goes blue next to the beige, the same reason $border-warm exists. This is the
+// warm counterpart, ~8:1 on both $bg-main and $bg-card.
+$accent-warm: #4a423a;
 
 // Цвета границ
 $border-light: #e2e8f0;

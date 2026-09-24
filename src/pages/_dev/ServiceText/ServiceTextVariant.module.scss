@@ -1,0 +1,203 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+// $red is #a1322e — fine on cream, far too dark against the panel. Accents on
+// the dark surface use this lighter warm red instead: 5.4:1, comfortably past
+// the 4.5:1 a small caps label needs.
+$red-on-dark: #e08a7c;
+
+// Base: the panel as it is today. Every variant is a diff against this.
+.text {
+	@include card(rgba(#000, 0.8));
+
+	padding: 35px 40px;
+
+	@media (max-width: $screen-tb) {
+		padding: 25px 20px;
+	}
+}
+
+.heading {
+	@include accent-bar;
+
+	margin-bottom: 20px;
+
+	font-size: clamp(1.5rem, 2.4vw, 2rem);
+	font-weight: 700;
+	line-height: 1.2;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+.paragraph {
+	color: rgba(#fff, 0.8);
+	font-size: 1.05rem;
+	line-height: 1.7;
+
+	& + .paragraph {
+		margin-top: 16px;
+	}
+
+	@media (max-width: $screen-tb) {
+		font-size: 0.95rem;
+	}
+}
+
+// --------------------------------------------------------------- подзаголовки
+.section {
+	& + .section {
+		margin-top: 22px;
+	}
+}
+
+.kicker {
+	display: block;
+	margin-bottom: 6px;
+
+	color: $red-on-dark;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+// ------------------------------------------------------------- цепочка этапов
+.steps {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+
+	margin: 18px 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: none;
+}
+
+.step {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	padding: 7px 14px 7px 8px;
+
+	border: 1px solid rgba(#fff, 0.16);
+	border-radius: $radius-xl;
+
+	color: rgba(#fff, 0.85);
+	font-size: 0.85rem;
+	line-height: 1.3;
+}
+
+.stepNum {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+
+	width: 20px;
+	height: 20px;
+
+	border-radius: 50%;
+	background: rgba($red-on-dark, 0.2);
+
+	color: $red-on-dark;
+	font-size: 0.72rem;
+	font-weight: 700;
+}
+
+// -------------------------------------------------------------------- выноска
+// The paragraph that answers "is this for me?" — the one sentence in the block
+// that decides whether a visitor keeps reading, and currently the last and
+// quietest thing in it.
+.callout {
+	margin-top: 20px;
+	padding: 4px 0 4px 18px;
+
+	border-left: 3px solid $red-on-dark;
+
+	color: rgba(#fff, 0.92);
+	font-size: 1.05rem;
+	line-height: 1.7;
+
+	@media (max-width: $screen-tb) {
+		font-size: 0.95rem;
+	}
+}
+
+// ---------------------------------------------------------------- крупный лид
+.lead {
+	color: rgba(#fff, 0.95);
+	font-size: 1.22rem;
+	line-height: 1.6;
+
+	@media (max-width: $screen-tb) {
+		font-size: 1.05rem;
+	}
+}
+
+// ---------------------------------------------------------------- фотография
+.photo {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 320px;
+	align-items: stretch;
+	gap: 34px;
+
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+}
+
+.photoCopy {
+	min-width: 0;
+}
+
+.photoFrame {
+	overflow: hidden;
+	border-radius: $radius-md;
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	@media (max-width: $screen-tb-lg2) {
+		aspect-ratio: 16 / 9;
+	}
+}
+
+// -------------------------------------------------------------- светлая панель
+// Worth comparing now that the rail in the card above went dark: the page may
+// not want two dark blocks in a row.
+.light {
+	background: $bg-card;
+
+	.heading {
+		color: $text-primary;
+	}
+
+	.paragraph,
+	.callout {
+		color: $text-secondary;
+	}
+
+	.kicker,
+	.stepNum {
+		color: $red;
+	}
+
+	.callout {
+		border-left-color: $red;
+	}
+
+	.step {
+		border-color: $border-warm;
+		color: $text-primary;
+	}
+
+	.stepNum {
+		background: rgba($red, 0.12);
+	}
+}
