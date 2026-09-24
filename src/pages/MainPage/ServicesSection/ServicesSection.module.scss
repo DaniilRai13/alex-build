@@ -129,8 +129,20 @@
 	padding: 0.875rem 2rem;
 	color: $text-white;
 
+	// Stacked, the button is alone on a full-width row with nothing to line up
+	// with on the left, so it centres. justify-self overrides the `start` set
+	// with the desktop grid placement above.
+	@media (max-width: $screen-tb) {
+		justify-self: center;
+	}
+
 	@media (max-width: $screen-md) {
 		padding: 0.65em 1.7rem;
+	}
+
+	// Full width on a phone, to match the button in the About block above it.
+	@media (max-width: $screen-sm) {
+		width: 100%;
 	}
 }
 

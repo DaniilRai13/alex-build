@@ -2,7 +2,10 @@
 
 .stat {
 	display: grid;
-	grid-template-columns: auto 1fr;
+	// minmax(0, 1fr) rather than 1fr: a plain fr track refuses to shrink below
+	// its longest word, so on a narrow phone one label would push the pair past
+	// its column instead of wrapping inside it.
+	grid-template-columns: auto minmax(0, 1fr);
 	align-items: center;
 	gap: 2px 12px;
 }
@@ -53,5 +56,29 @@
 
 	.label {
 		font-size: 0.8rem;
+	}
+}
+
+// Below 480 the pair shares its row with a second one. On a 375px screen that
+// leaves about 164px per column, so the icon and the gap give back the width
+// the longer labels — "Dokončených projektů", "záruka na veškeré práce" — need
+// to wrap onto two lines instead of three.
+@media (max-width: $screen-sm) {
+	.stat {
+		gap: 2px 10px;
+	}
+
+	.icon {
+		width: 30px;
+		height: 30px;
+	}
+
+	.value {
+		font-size: 0.92rem;
+	}
+
+	.label {
+		font-size: 0.75rem;
+		line-height: 1.25;
 	}
 }

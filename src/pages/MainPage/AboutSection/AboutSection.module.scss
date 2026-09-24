@@ -187,12 +187,19 @@
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 22px 28px;
+	// Without this the cards stretch to the row height, their auto rows grow to
+	// fill it, and the figure drifts to the middle of the card. A pair whose
+	// label wraps onto two lines then sat lower than the pair beside it, which
+	// is why the numbers looked like they were on different levels.
+	align-items: start;
 
 	margin-bottom: 2rem;
 
+	// Stays two columns all the way down. Collapsing to one left every figure
+	// with most of the row empty to its right: the pairs are short, so the
+	// width was going to waste rather than being needed. Only the gaps tighten.
 	@media (max-width: $screen-sm) {
-		grid-template-columns: 1fr;
-		gap: 16px;
+		gap: 18px 14px;
 	}
 }
 
@@ -209,9 +216,23 @@
 	// Shorter on a phone. At full height it was the tallest thing in the
 	// column and sat right above the services button, so the two read as a
 	// stack of competing calls to action.
+	//
+	// Stacked it also centres: alone on a full-width row it has nothing to line
+	// up with on the left. display:flex rather than the component's inline-flex,
+	// so the auto margins have a block box to centre.
 	@media (max-width: $screen-tb) {
 		padding: 11px 24px;
 		font-size: 0.95rem;
+
+		display: flex;
+		width: fit-content;
+		margin-inline: auto;
+	}
+
+	// Full width on a phone: at this size a centred pill leaves a margin either
+	// side that reads as a gap rather than as breathing room.
+	@media (max-width: $screen-sm) {
+		width: 100%;
 	}
 
 	background: transparent;

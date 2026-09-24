@@ -5,4 +5,12 @@
 	line-height: 1.2;
 	letter-spacing: 1px;
 	color: $text-primary;
+
+	// Below 480 the 4vw term is already under the floor, so the clamp is pinned
+	// at 2.3rem and the heading stops shrinking with the screen — which is why
+	// it reads as oversized on a phone. Written as the subtraction rather than
+	// the result so the 7px is still visible as a decision.
+	@media (max-width: $screen-sm) {
+		font-size: calc(2.3rem - 7px);
+	}
 }
