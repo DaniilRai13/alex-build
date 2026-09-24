@@ -28,7 +28,10 @@
 
 /// Short accent rule to the left of a heading — the site's recurring marker
 /// for a section title.
-@mixin accent-bar($offset: 20px) {
+/// $color exists because $red is mixed for cream: on a dark surface it drops to
+/// 1.95:1, under the 3:1 a graphical element needs to stay visible at all. Pass
+/// $red-on-dark there.
+@mixin accent-bar($offset: 20px, $color: $red) {
 	position: relative;
 	padding-left: $offset;
 
@@ -42,6 +45,6 @@
 		height: 100%;
 
 		border-radius: 10px;
-		background: $red;
+		background: $color;
 	}
 }
