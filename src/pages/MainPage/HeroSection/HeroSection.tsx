@@ -3,12 +3,9 @@ import Heading from '@/components/ui/Heading/Heading';
 import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { ROUTES } from '@/config/routes';
 import img from '@assets/hero-bg.jpg';
-import { motion } from 'framer-motion';
 import { type FC } from 'react';
 import styles from './HeroSection.module.scss';
-import { animations } from '@/components/common/animation/variants';
 import { primaryRegions } from '@/data/regions.data';
-import { animationTransition } from '@/components/common/animation/transition';
 
 const HeroSection: FC = () => {
 	return (
@@ -20,13 +17,19 @@ const HeroSection: FC = () => {
 				fetchPriority='high'
 			/>
 			<div className={styles.overlay} />
-			<motion.div
-				className={styles.content}
-				initial={'hidden'}
-				animate={'visible'}
-				transition={{ ...animationTransition.defaultTransition, delay: 0.2 }}
-				variants={animations.fadeLeft}
-			>
+			{/*
+				A plain div with a CSS entrance, not motion.div. framer-motion's
+				initial state is serialised into the prerendered HTML, so this
+				block used to arrive as style="opacity:0" and the <h1> — the
+				page's LCP element — stayed invisible until 324 KB of vendor and
+				framer-motion had downloaded, parsed and hydrated. The measured
+				LCP was six seconds for a heading that was in the HTML all along.
+
+				The CSS keyframes animate transform only. The text is painted at
+				full opacity on the first frame, so LCP fires when the browser
+				paints rather than when React catches up.
+			*/}
+			<div className={styles.content}>
 				{/*
 					The badge carries the geography so the heading can stay the line
 					it has always been. Naming the town in both would put "Teplice"
@@ -55,20 +58,17 @@ const HeroSection: FC = () => {
 					špičkový výsledek. Působíme v Ústeckém kraji i v dalších městech
 					České republiky.
 				</Subtitle>
-			</motion.div>
+			</div>
 			<div className={styles.buttonContainer}>
-				<motion.div
-					initial={'hidden'}
-					animate={'visible'}
-					transition={animationTransition.defaultTransition}
-					variants={animations.fadeUp}
-				>
+				{/* Same reason as above: the call to action is on the first
+				    screen and must not wait for hydration to become visible. */}
+				<div className={styles.buttonIn}>
 					<Button
 						title='Získat konzultaci'
 						className={styles.button}
 						to={ROUTES.CONTACTS}
 					/>
-				</motion.div>
+				</div>
 			</div>
 		</div>
 	);

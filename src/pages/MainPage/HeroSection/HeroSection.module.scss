@@ -208,3 +208,36 @@
 		}
 	}
 }
+
+// Entrance for the first screen, in CSS rather than framer-motion.
+//
+// Only transform is animated — never opacity. An element that starts
+// transparent is not painted, and LCP is measured at paint: fading the <h1> in
+// would hand back the six seconds this change was made to remove, just in
+// smaller pieces. Sliding text is visible on the first frame.
+@keyframes heroSlideIn {
+	from {
+		transform: translateX(-40px);
+	}
+}
+
+@keyframes heroRiseIn {
+	from {
+		transform: translateY(24px);
+	}
+}
+
+.content {
+	animation: heroSlideIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.buttonIn {
+	animation: heroRiseIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.content,
+	.buttonIn {
+		animation: none;
+	}
+}
