@@ -19,6 +19,10 @@ $bg-main: #eae7dc;
 $bg-card: #f3f0e8;
 $bg-secondary: #f1f5f9;
 $bg-dark: #1e293b;
+// Warm dark, for surfaces that have to sit on the beige palette — $bg-dark is
+// cool slate and reads as a foreign blue-grey next to it. Used by the services
+// rail, which needs to be the one dark thing on a page of creams.
+$bg-dark-warm: #2b2621;
 
 // Цвета текста
 $text-primary: #1e293b;

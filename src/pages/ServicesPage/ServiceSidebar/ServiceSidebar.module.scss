@@ -1,10 +1,15 @@
 @import '@styles/abstracts/var';
 
+// The rail used to be filled with $bg-main — the page colour — so a third of
+// the board was literally the background and the card had no left edge. Dark
+// is what separates it: the card sits on cream at 1.09:1, and no lighter fill
+// can beat 1.24:1 against a page this light, so contrast has to come from a
+// dark element rather than a brighter one.
 .sidebar {
 	min-width: 0;
 	padding: 22px 0 22px 18px;
-	border-right: 1px solid $border-warm;
-	background: $bg-main;
+	// No border: the colour change is the boundary now.
+	background: $bg-dark-warm;
 }
 
 .nav {
@@ -29,7 +34,10 @@
 	padding: 14px 16px;
 	border-radius: 12px 0 0 12px;
 
-	color: $text-primary;
+	// Inactive items are white held back, not grey: a fixed grey would have to
+	// be re-picked for every surface, while the alpha keeps working if the rail
+	// colour is ever adjusted. 8.4:1 against the rail.
+	color: rgba($text-white, 0.72);
 	font-size: 1rem;
 	font-weight: 600;
 	line-height: 1.3;
@@ -37,7 +45,9 @@
 
 	.itemIcon {
 		flex-shrink: 0;
-		color: $text-secondary;
+		// 4.2:1 — quieter than the label but still above the 3:1 a graphical
+		// element needs to stay legible.
+		color: rgba($text-white, 0.45);
 		transition: 0.25s;
 	}
 
@@ -49,27 +59,30 @@
 	.chevron {
 		display: none;
 		flex-shrink: 0;
-		color: $text-light;
+		color: rgba($text-white, 0.4);
 	}
 
 	@media (hover: hover) {
 		&:hover {
-			background: rgba($red, 0.07);
-			color: $red;
+			background: rgba($text-white, 0.07);
+			color: $text-white;
 
 			.itemIcon {
-				color: $red;
+				color: rgba($text-white, 0.8);
 			}
 		}
 	}
 
+	// Solid red, and the radius leaves the right side square — the pill runs to
+	// the edge of the rail and meets the panel, so the open service reads as
+	// attached to what it opened rather than merely highlighted.
 	&.active {
-		background: rgba($red, 0.1);
-		color: $red;
+		background: $red;
+		color: $text-white;
 
 		.itemIcon,
 		.chevron {
-			color: $red;
+			color: $text-white;
 		}
 	}
 }
@@ -78,11 +91,12 @@
 // board is still two columns the list has to keep its column styling, otherwise
 // rows-with-chevrons show up inside a desktop layout.
 @media (max-width: $screen-tb) {
+	// Stacked, the rail becomes a band across the top of the card. It stays
+	// dark: the card's overflow:hidden rounds its top corners, so it reads as
+	// the card's own header rather than a stray block above the content.
 	.sidebar {
 		padding: 0;
-		border-right: none;
-		border-bottom: 1px solid $border-warm;
-		background: transparent;
+		background: $bg-dark-warm;
 	}
 
 	.nav {
@@ -92,7 +106,9 @@
 	.item {
 		padding: 16px 20px;
 		border-radius: 0;
-		border-bottom: 1px solid $border-warm;
+		// Light-on-dark now. $border-warm is dark ink at 8 percent and was
+		// invisible here the moment the band stopped being cream.
+		border-bottom: 1px solid rgba($text-white, 0.1);
 
 		&:last-child {
 			border-bottom: none;
