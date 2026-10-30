@@ -41,4 +41,27 @@
 			}
 		}
 	}
+
+	// The header's row (the burger menu is never open this wide): small
+	// tracked caps in the warm ink, so the red of the current page is the one
+	// thing that stands out — not a bigger word as well.
+	@media (min-width: $screen-tb-lg2) {
+		gap: 2.5rem;
+
+		.navLink {
+			color: $accent-warm;
+			font-size: 0.85rem;
+			letter-spacing: 0.08em;
+		}
+
+		.navLinkActive {
+			color: $red;
+			font-size: 0.85rem;
+			font-weight: 600;
+
+			&:after {
+				bottom: -8px;
+			}
+		}
+	}
 }

@@ -11,12 +11,18 @@ interface INavigation {
 	className?: string;
 	closeMenu?: () => void;
 	activeClassName?: string;
+	/**
+	 * An icon before each name. The burger menu keeps them; the header's row
+	 * reads lighter as words alone.
+	 */
+	icons?: boolean;
 }
 
 const Navigation: FC<INavigation> = ({
 	className,
 	closeMenu,
 	activeClassName,
+	icons = true,
 }) => {
 	const { isActive } = useIsActiveLink();
 	return (
@@ -32,7 +38,7 @@ const Navigation: FC<INavigation> = ({
 						)}
 						onClick={closeMenu}
 					>
-						<Icon icon={item.icon} />
+						{icons && <Icon icon={item.icon} />}
 						<span>{item.name}</span>
 					</Link>
 				</motion.div>

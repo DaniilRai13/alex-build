@@ -1,0 +1,5 @@
+# Renders, .blend saves and exports — rebuilt from the scripts.
+out/
+
+# Poly Haven downloads (CC0) — re-fetched by fetch-assets.mjs.
+assets/

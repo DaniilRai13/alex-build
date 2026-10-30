@@ -1,0 +1,855 @@
+@import '@styles/abstracts/var';
+
+// Red marks what can be pressed — markers, the seam, the active toggle — and
+// nothing else. Everything around the model is light and unboxed: it floats
+// on the page.
+//
+// How the flat sits in its frame is set by the page around it (the hero sets
+// these per layout) and read by both the poster below and the live scene
+// (apartmentScene.ts), so the two always match:
+//   --stage-aspect  the frame's shape
+//   --model-zoom    the flat's size against the frame
+//   --model-lift    share of the frame's height it sits above the middle
+//   --model-shift   share of the width it moves left, to sit centred
+//   --model-inset   share of the width on the left that is faded out
+//   --fade-l0/l1    where the left fade starts and ends; --fade-top the top's
+
+.root {
+	position: relative;
+	width: 100%;
+}
+
+// ---- the label, top right, pointing at the model: small, editorial
+.note {
+	position: absolute;
+	// Above the flat's right wing, not on it.
+	top: var(--note-top, 4%);
+	right: var(--note-right, 5%);
+	z-index: 3;
+	margin: 0;
+	font-size: 0.62rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	line-height: 1.5;
+	text-align: right;
+	text-transform: uppercase;
+	color: $accent-warm;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+
+	// Zoomed in, the model fills the frame under it: the caption steps aside.
+	.closer & {
+		opacity: 0;
+	}
+
+	small {
+		display: block;
+		margin-top: 2px;
+		font-size: 0.78rem;
+		font-weight: 400;
+		font-style: italic;
+		letter-spacing: 0.01em;
+		text-transform: none;
+		color: $text-secondary;
+	}
+
+	svg {
+		display: block;
+		width: 40px;
+		height: 26px;
+		margin: 6px 40px 0 auto;
+		fill: none;
+		stroke: rgba($accent-warm, 0.45);
+		stroke-width: 1;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+}
+
+// ---- the model. The same frame as the poster render (1200 × 1000), so the
+// still and the live model line up exactly when one fades into the other.
+.stage {
+	position: relative;
+	width: 100%;
+	aspect-ratio: var(--stage-aspect, 6 / 5);
+	// Markers that slide past the edge when zoomed in are hidden but still
+	// laid out; without clipping they would widen the page.
+	overflow: clip;
+}
+
+// Zoomed in, the model runs off the canvas: let it dissolve into the page
+// instead of stopping at a hard rectangle. In the hero the frame reaches in
+// under the copy, and its left edge stays clear until just short of the flat
+// (--fade-l0/l1), so a zoomed model never lies under the text.
+%soft-edges {
+	-webkit-mask-image:
+		linear-gradient(
+			to right,
+			transparent var(--mask-l0, var(--fade-l0, 0%)),
+			#000 var(--mask-l1, var(--fade-l1, 7%)),
+			#000 93%,
+			transparent
+		),
+		linear-gradient(to bottom, transparent, #000 var(--fade-top, 7%), #000 93%, transparent);
+	-webkit-mask-composite: source-in;
+	mask-image:
+		linear-gradient(
+			to right,
+			transparent var(--mask-l0, var(--fade-l0, 0%)),
+			#000 var(--mask-l1, var(--fade-l1, 7%)),
+			#000 93%,
+			transparent
+		),
+		linear-gradient(to bottom, transparent, #000 var(--fade-top, 7%), #000 93%, transparent);
+	mask-composite: intersect;
+}
+
+// Zoomed in, nothing of the flat has to reach the frame's left edge at rest,
+// so the clear strip widens and leaves air between the text and the model.
+// Set by the page (--fade-l0/l1-closer); where it sets none, the usual fade.
+.closer {
+	--mask-l0: var(--fade-l0-closer);
+	--mask-l1: var(--fade-l1-closer);
+}
+
+.poster,
+.canvas {
+	@extend %soft-edges;
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	// Graded on the page, not in the model (the bake stays as it is): more
+	// contrast and warmth, so the flat reads as the rich, solid object of the
+	// hero rather than a pale diagram on paper. The still and the live canvas
+	// get the same grade, so the swap stays invisible.
+	filter: contrast(1.12) saturate(1.18) brightness(0.99);
+}
+
+// The still grows into place on load — transform only: it may be the page's
+// LCP element, and a fade would hold that back. On the poster itself, not a
+// wrapper: a transform on any ancestor of the fullscreen root would become
+// the box that "position: fixed" is measured from.
+@keyframes modelIn {
+	from {
+		transform: scale(0.965);
+	}
+}
+
+.poster {
+	object-fit: contain;
+	// Placed as the scene places the live model (see the top of the file).
+	// translate and scale, not transform: the entrance below animates transform.
+	translate: calc(var(--model-shift, 0) * -100%) calc(var(--model-lift, 0) * -100%);
+	scale: var(--model-zoom, 1);
+	transition: opacity 0.6s ease;
+	animation: modelIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+
+// The live model fades in over the still — the still itself never fades in,
+// it may be the page's LCP element.
+.canvas {
+	opacity: 0;
+	transform: scale(0.985);
+	transition:
+		opacity 0.7s ease,
+		transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+	cursor: grab;
+
+	&:active {
+		cursor: grabbing;
+	}
+}
+
+.ready {
+	.canvas {
+		opacity: 1;
+		transform: none;
+	}
+	.poster {
+		opacity: 0;
+	}
+}
+
+// Controls exist from the first paint (the scene needs them to mount on)
+// but only show once there is a model to control.
+.seam,
+.bar {
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.4s ease;
+
+	.ready & {
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+
+%round-control {
+	display: grid;
+	place-items: center;
+	border: 0;
+	border-radius: 50%;
+	background: rgba($bg-card, 0.92);
+	color: $accent-warm;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+	cursor: pointer;
+	transition:
+		background $transition-fast,
+		color $transition-fast,
+		transform $transition-fast;
+
+	&:hover {
+		background: #fff;
+		transform: translateY(-1px);
+	}
+}
+
+.explore,
+.loading {
+	position: absolute;
+	left: 50%;
+	bottom: 3%;
+	transform: translateX(-50%);
+	white-space: nowrap;
+}
+
+// A light pill, not a second red one: the hero has one red button, the
+// consultation, and on a phone this sits just below it.
+.explore {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 22px;
+	border: 1px solid rgba($text-primary, 0.12);
+	border-radius: $radius-xl;
+	background: rgba(#fff, 0.85);
+	color: $text-primary;
+	font: inherit;
+	font-size: 0.9rem;
+	font-weight: 600;
+	box-shadow: 0 8px 22px rgba(43, 38, 33, 0.1);
+	cursor: pointer;
+
+	svg {
+		color: $red;
+	}
+}
+
+.loading {
+	color: $text-secondary;
+	font-size: 0.85rem;
+}
+
+// ---- room markers: small floating labels, "+ name"
+.marker {
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	padding: 4px 12px 4px 4px;
+	border: 0;
+	border-radius: $radius-xl;
+	background: rgba(#fff, 0.92);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	box-shadow: 0 4px 14px rgba(43, 38, 33, 0.1);
+	font: inherit;
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	color: $text-primary;
+	white-space: nowrap;
+	cursor: pointer;
+	transition:
+		opacity 0.3s,
+		background $transition-fast,
+		box-shadow $transition-fast;
+	// Moved every frame by fractions of a pixel: as its own layer the marker
+	// slides as one picture, instead of its parts snapping to the pixel grid
+	// separately — which made the "+" jump inside its circle. The same reason
+	// the hover below never touches the marker's own transform.
+	will-change: transform;
+
+	&:hover,
+	&.active {
+		background: #fff;
+		box-shadow: 0 8px 22px rgba(43, 38, 33, 0.16);
+
+		i {
+			transform: scale(1.1);
+			box-shadow: 0 0 0 4px rgba($red, 0.14);
+		}
+	}
+
+	// Opened to the left, near the frame's right edge (set by the scene).
+	&[data-flip='true'] {
+		flex-direction: row-reverse;
+		padding: 4px 4px 4px 12px;
+	}
+
+	// The plus is drawn, not typed: a glyph sits on its font's baseline and
+	// never lands in the exact middle of the circle.
+	i {
+		position: relative;
+		flex: none;
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		background: $red;
+		transition:
+			transform 0.25s ease,
+			box-shadow 0.25s ease;
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 8px;
+			height: 1.6px;
+			margin: -0.8px 0 0 -4px;
+			border-radius: 1px;
+			background: #fff;
+		}
+		&::after {
+			transform: rotate(90deg);
+		}
+	}
+}
+
+// A room marked by its dot alone: the name floats out beside it on hover or
+// focus, and is the button's name for a screen reader all along.
+@mixin dot-only {
+	padding: 4px;
+
+	&[data-flip='true'] {
+		padding: 4px;
+	}
+
+	span {
+		position: absolute;
+		left: calc(100% + 6px);
+		top: 50%;
+		padding: 5px 11px;
+		border-radius: $radius-xl;
+		background: #fff;
+		box-shadow: 0 8px 22px rgba(43, 38, 33, 0.16);
+		opacity: 0;
+		translate: -4px -50%;
+		pointer-events: none;
+		transition:
+			opacity 0.2s ease,
+			translate 0.2s ease;
+	}
+
+	&:hover span,
+	&:focus-visible span,
+	&.active span {
+		opacity: 1;
+		translate: 0 -50%;
+	}
+
+	// Crowded or near the frame's edge, the name floats out to the left.
+	&[data-flip='true'] span {
+		left: auto;
+		right: calc(100% + 6px);
+		translate: 4px -50%;
+	}
+
+	&[data-flip='true']:hover span,
+	&[data-flip='true']:focus-visible span,
+	&[data-flip='true'].active span {
+		translate: 0 -50%;
+	}
+}
+
+.dotOnly {
+	@include dot-only;
+}
+
+// A narrow window that still has the two columns (a landscape tablet): the
+// flat is about 400–550px wide.
+@media (min-width: #{$screen-tb-lg2 + 1}) and (max-width: 1100px) {
+	// Five names on it overlapped: every room is a dot, named on hover.
+	.marker {
+		@include dot-only;
+	}
+}
+
+// Grip on the before/after seam.
+//
+// Its own styles, not %round-control: the scene positions it with
+// transform every frame, and the shared control style transitions transform
+// (and lifts it on hover). The grip trailed the seam line by a fifth of a
+// second and jumped to the corner on hover. Nothing here may touch transform.
+.seam {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: $red;
+	color: #fff;
+	box-shadow: 0 8px 22px rgba($red, 0.35);
+	cursor: ew-resize;
+	touch-action: none;
+	will-change: transform;
+	transition:
+		opacity 0.4s ease,
+		background $transition-fast;
+
+	&:hover,
+	&[data-dragging] {
+		background: $red-dark;
+	}
+}
+
+// Parked past an end of the flat, the grip is only a way in: a red disc on
+// the frame's edge read as a carousel arrow and drew the eye off the model.
+// It shows while the pointer is on the model, and always in a phone's
+// fullscreen, where dragging it is the way to compare. On a tablet's page the
+// toggle does the comparing; a grip, three buttons and the toggle always on
+// a small model made it a configurator.
+.ready .seam[data-parked='true'] {
+	opacity: 0;
+}
+
+.ready .stage:hover .seam,
+.ready .seam:focus-visible,
+.fullscreen.ready .seam {
+	opacity: 1;
+}
+
+// A phone's fullscreen with a room's card open: the card covers the lower
+// half of the screen, and the grip would sit half under it.
+.ready.fullscreen.roomOpen .seam {
+	opacity: 0;
+	pointer-events: none;
+}
+
+// ---- the bottom bar: a segmented control, before / after. Centred with
+// auto margins, not a transform: a transform would become the box the
+// fullscreen view controls' "position: fixed" is measured from.
+.bar {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 3%;
+	width: fit-content;
+	margin: 0 auto;
+}
+
+// Two equal segments, so one red pill can slide between them — the state
+// changes with the seam's sweep, not with a jump.
+.toggle {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	padding: 4px;
+	border: 1px solid rgba($text-primary, 0.12);
+	border-radius: $radius-xl;
+	background: rgba(#fff, 0.5);
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
+	box-shadow: 0 6px 20px rgba(43, 38, 33, 0.06);
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 4px;
+		bottom: 4px;
+		left: 4px;
+		width: calc(50% - 4px);
+		border-radius: $radius-xl;
+		background: $red;
+		box-shadow: 0 6px 16px rgba($red, 0.26);
+		transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	&[data-after='true']::before {
+		transform: translateX(100%);
+	}
+
+	button {
+		position: relative;
+		padding: 11px 24px;
+		border: 0;
+		border-radius: $radius-xl;
+		background: transparent;
+		font: inherit;
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: $text-primary;
+		white-space: nowrap;
+		cursor: pointer;
+		transition: color 0.35s ease;
+
+		&:hover:not([aria-pressed='true']) {
+			color: $red;
+		}
+
+		&[aria-pressed='true'] {
+			color: #fff;
+		}
+
+		&:focus-visible {
+			outline: 2px solid rgba($red, 0.5);
+			outline-offset: 2px;
+		}
+	}
+}
+
+// Closer, further, back to the whole flat: beside the toggle, and only while
+// the model is being looked at — pointer on it, focus in it — or has been
+// moved (zoomed, turned, a room open), so the way back stays in sight. On a
+// touch screen, with no hover, that is how it appears: after a pinch, a turn
+// or a tap on a room.
+.view {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: calc(100% + 10px);
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 0 4px;
+	border: 1px solid rgba($text-primary, 0.12);
+	border-radius: $radius-xl;
+	background: rgba(#fff, 0.5);
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+
+	.ready .stage:hover &,
+	.ready .stage:focus-within &,
+	.ready.moved & {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	// The same narrow two-column window: beside the toggle it ran off the
+	// window, so it sits above the toggle's right end — and steps aside while
+	// a room's card is open, which takes that corner (its × goes back).
+	@media (min-width: #{$screen-tb-lg2 + 1}) and (max-width: 1100px) {
+		top: auto;
+		bottom: calc(100% + 8px);
+		left: auto;
+		right: 0;
+		height: 42px;
+
+		// As specific as the :focus-within rule above — a tap on a marker
+		// leaves the focus in the frame, and that rule kept it showing.
+		.ready.roomOpen .stage & {
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+}
+
+.zoom {
+	display: flex;
+	gap: 2px;
+}
+
+.zoom button,
+.reset {
+	display: grid;
+	place-items: center;
+	width: 34px;
+	height: 34px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: $accent-warm;
+	cursor: pointer;
+	transition:
+		background $transition-fast,
+		color $transition-fast;
+
+	&:hover {
+		background: rgba($text-primary, 0.06);
+		color: $text-primary;
+	}
+}
+
+// ---- the room card
+.card {
+	position: absolute;
+	// In the hero the frame runs past the window on the right: the card lines
+	// up with the flat's right edge instead of the frame's.
+	right: var(--card-right, 8px);
+	bottom: 76px;
+	z-index: 4;
+	width: min(320px, calc(100% - 32px));
+	padding: 20px 20px 18px;
+	border-radius: $radius-lg;
+	background: $bg-card;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.14);
+	opacity: 0;
+	transform: translateY(10px);
+	pointer-events: none;
+	transition:
+		opacity 0.25s ease,
+		transform 0.25s ease;
+
+	&.open {
+		opacity: 1;
+		transform: none;
+		pointer-events: auto;
+	}
+
+	h3 {
+		margin: 0 24px 8px 0;
+		font-size: 1.05rem;
+		color: $text-primary;
+	}
+
+	p {
+		margin: 0 0 12px;
+		font-size: 0.88rem;
+		line-height: 1.5;
+		color: $text-secondary;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+
+		a {
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: $red;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.works {
+	display: grid;
+	gap: 4px;
+	margin: 0 0 14px;
+	padding: 0;
+	list-style: none;
+
+	li {
+		position: relative;
+		padding-left: 20px;
+		font-size: 0.84rem;
+		font-weight: 600;
+		color: $accent-warm;
+
+		// A drawn tick, in the neutral ink: it is information, not a control.
+		&::before {
+			content: '';
+			position: absolute;
+			left: 3px;
+			top: 0.3em;
+			width: 5px;
+			height: 9px;
+			border: solid $accent-warm;
+			border-width: 0 2px 2px 0;
+			transform: rotate(45deg);
+		}
+	}
+}
+
+.closeCard,
+.closeFull {
+	position: absolute;
+	border: 0;
+	background: none;
+	line-height: 1;
+	color: $text-secondary;
+	cursor: pointer;
+}
+
+.closeCard {
+	right: 10px;
+	top: 8px;
+	font-size: 20px;
+}
+
+// ---- fullscreen, the phone's way in: the model gets the whole screen and
+// every gesture — one finger turns, two zoom and slide, the red seam drags.
+.fullscreen {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: flex;
+	flex-direction: column;
+	background: $bg-main;
+
+	.note {
+		position: static;
+		padding: 18px 64px 6px 16px;
+		text-align: left;
+		transform: none;
+
+		svg {
+			display: none;
+		}
+	}
+
+	.stage {
+		flex: 1;
+		aspect-ratio: auto;
+		min-height: 0;
+	}
+
+	// A phone has no room beside the toggle: the view controls stand on their
+	// own near the top right — along the bottom they ran into the bar,
+	// mid-height into the seam grip.
+	.view {
+		position: fixed;
+		top: 22%;
+		right: 8px;
+		bottom: auto;
+		left: auto;
+		flex-direction: column;
+		gap: 6px;
+		padding: 0;
+		border: 0;
+		background: none;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.zoom {
+		flex-direction: column-reverse;
+		gap: 6px;
+	}
+
+	.zoom button,
+	.reset {
+		@extend %round-control;
+		width: 38px;
+		height: 38px;
+	}
+
+	.closeFull {
+		position: fixed;
+		top: 10px;
+		right: 12px;
+		z-index: 5;
+		display: grid;
+		place-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: $bg-card;
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+		font-size: 24px;
+		color: $text-primary;
+	}
+}
+
+@media (max-width: $screen-tb) {
+	.note {
+		font-size: 0.6rem;
+	}
+
+	.toggle button {
+		padding: 10px 14px;
+		font-size: 0.66rem;
+	}
+
+	// Clear of the toggle under it.
+	.card {
+		left: 12px;
+		right: 12px;
+		width: auto;
+		bottom: 84px;
+	}
+
+	// Five rooms on a phone's width: smaller labels, so they crowd less.
+	.marker {
+		gap: 6px;
+		padding: 3px 10px 3px 3px;
+		font-size: 0.68rem;
+
+		&[data-flip='true'] {
+			padding: 3px 3px 3px 10px;
+		}
+
+		i {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	.dotOnly,
+	.dotOnly[data-flip='true'] {
+		padding: 3px;
+	}
+
+	// Inline on a phone the model is a picture with a button; the view
+	// controls belong to fullscreen.
+	.root:not(.fullscreen) .view {
+		display: none;
+	}
+}
+
+// Two columns under 1280px: the caption keeps its size while the flat
+// shrinks with the window, and it lay on the flat's corner. The eyebrow and
+// the toggle say enough here.
+@media (min-width: #{$screen-tb-lg2 + 1}) and (max-width: 1279px) {
+	.note {
+		display: none;
+	}
+}
+
+// The narrow two-column window again (see the markers above).
+@media (min-width: #{$screen-tb-lg2 + 1}) and (max-width: 1100px) {
+	// The open card takes the frame's lower right; the grip would sit by its ×.
+	.ready.roomOpen .stage .seam {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	// The full card was taller than the frame: its top and × were cut off.
+	// Here it keeps the title, the text and the links, and never outgrows
+	// the frame.
+	.card {
+		max-height: calc(100% - 92px);
+		overflow-y: auto;
+		padding: 14px 16px 12px;
+
+		h3 {
+			font-size: 0.98rem;
+		}
+
+		p {
+			font-size: 0.82rem;
+		}
+	}
+
+	.works {
+		display: none;
+	}
+}

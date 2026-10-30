@@ -28,7 +28,7 @@ const Header: FC = () => {
 				<div className={`container ${styles.headerContainer}`}>
 					<div className={styles.headerInner}>
 						<Logo />
-						<Navigation closeMenu={closeMenu} />
+						<Navigation closeMenu={closeMenu} icons={false} />
 						<Button
 							className={styles.menuButton}
 							onClick={toggleMenu}

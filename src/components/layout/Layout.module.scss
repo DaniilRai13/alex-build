@@ -5,6 +5,11 @@
 	flex-direction: column;
 	.main {
 		flex: 1;
+		// A full-bleed section (the home hero) is 100vw wide, which counts a
+		// vertical scrollbar too; clip keeps those few pixels from adding a
+		// horizontal scrollbar. clip, not hidden: no scroll container, and
+		// position: fixed inside still means the viewport.
+		overflow-x: clip;
 		padding-top: 1rem;
 		padding-bottom: 4rem;
 		@media (max-width: $screen-tb-lg2) {

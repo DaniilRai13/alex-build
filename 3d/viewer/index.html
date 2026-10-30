@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KartSTAV — 3D byt (prototyp)</title>
+<!--
+	Prototype of the hero model, outside the site. Serve the 3d/ folder:
+	    npx vite 3d --port 5199
+	and open http://localhost:5199/viewer/
+	It loads ../apartment/out/apartment.glb, produced by bake_export.py.
+-->
+<style>
+	:root {
+		--bg: #eae7dc;
+		--card: #f3f0e8;
+		--text: #1e293b;
+		--muted: #5c5349;
+		--red: #a1322e;
+		--red-dark: #832620;
+		--warm: #4a423a;
+	}
+	* { box-sizing: border-box; }
+	html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+		font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; }
+	.hero { display: grid; grid-template-columns: 40% 60%; min-height: 100vh; align-items: center;
+		padding: 0 48px; gap: 16px; }
+	.copy .badge { display: inline-block; padding: 5px 14px; border-radius: 10rem; background: var(--red);
+		color: #fff; font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+	.copy h1 { font-size: clamp(2rem, 1rem + 2.6vw, 3.2rem); line-height: 1.05; margin: 16px 0 20px;
+		text-wrap: balance; }
+	.copy p { color: var(--muted); font-size: 1.1rem; line-height: 1.6; max-width: 520px; margin: 0 0 32px; }
+	.cta { display: inline-block; background: var(--red); color: #fff; padding: 18px 36px; border-radius: .4rem;
+		font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; }
+	.cta:hover { background: var(--red-dark); }
+
+	/* clip: hotspot labels that slide past the edge when zoomed in are hidden,
+	   but still laid out — without clipping they widen the page and bring
+	   up a horizontal scrollbar. */
+	.stage { position: relative; height: min(78vh, 720px); overflow: clip; }
+	canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab;
+		/* Zoomed in, the model runs off the canvas: let it dissolve into the
+		   page instead of stopping at a hard rectangle. */
+		-webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+			linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+		-webkit-mask-composite: source-in;
+		mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+			linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+		mask-composite: intersect; }
+	canvas:active { cursor: grabbing; }
+	.loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+
+	.toggle { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); display: flex;
+		background: var(--card); border-radius: 10rem; padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+	.toggle button { border: 0; background: transparent; padding: 11px 22px; border-radius: 10rem; font: inherit;
+		font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--warm);
+		cursor: pointer; }
+	.toggle button[aria-pressed="true"] { background: var(--red); color: #fff; }
+
+	.zoom { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: grid; gap: 8px; }
+	.zoom button { width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--card);
+		box-shadow: 0 6px 20px rgba(0,0,0,.08); font-size: 20px; color: var(--warm); cursor: pointer; }
+
+	.hint { position: absolute; right: 64px; top: 6%; font-family: 'Segoe Script', 'Bradley Hand', cursive;
+		color: var(--muted); font-size: .95rem; transform: rotate(-4deg); transition: opacity .6s; }
+
+	/* Small on purpose: five of them sit on the model and must not hide it. */
+	.hotspot { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 6px;
+		padding: 3px 10px 3px 3px; background: rgba(243,240,232,.86); border-radius: 10rem; border: 0;
+		-webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+		box-shadow: 0 3px 10px rgba(0,0,0,.1); font: inherit; font-size: .72rem; font-weight: 600;
+		color: var(--text); cursor: pointer; white-space: nowrap; transition: opacity .3s;
+		/* Moved every frame by fractions of a pixel: as its own layer the label
+		   slides as one picture, instead of the text and the circle being
+		   snapped to the pixel grid separately — which is what made "+" jump. */
+		will-change: transform; }
+	/* The plus is drawn, not typed: a glyph sits on its font's baseline and
+	   never lands in the exact middle of the circle. */
+	.hotspot i { position: relative; width: 16px; height: 16px; border-radius: 50%; background: var(--red);
+		flex: none; }
+	.hotspot i::before, .hotspot i::after { content: ''; position: absolute; left: 50%; top: 50%;
+		width: 8px; height: 1.6px; margin: -0.8px 0 0 -4px; border-radius: 1px; background: #fff; }
+	.hotspot:hover { background: #fff; }
+	.hotspot i::after { transform: rotate(90deg); }
+
+	/* Grip on the before/after seam. */
+	.seam { position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
+		border: 2px solid var(--red); background: var(--card); color: var(--red); display: grid;
+		place-items: center; cursor: ew-resize; touch-action: none; padding: 0;
+		box-shadow: 0 6px 20px rgba(0,0,0,.15); will-change: transform; z-index: 2; }
+	.seam:hover, .seam.dragging { background: var(--red); color: #fff; }
+
+	.card { position: absolute; right: 60px; bottom: 80px; width: min(340px, 90%); background: var(--card);
+		border-radius: 1.2rem; padding: 22px 22px 20px; box-shadow: 0 20px 50px rgba(0,0,0,.15);
+		opacity: 0; transform: translateY(10px); pointer-events: none; transition: .25s ease; }
+	.card.open { opacity: 1; transform: none; pointer-events: auto; }
+	.card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+	.card p { margin: 0 0 16px; color: var(--muted); line-height: 1.5; font-size: .95rem; }
+	.card .actions { display: flex; gap: 14px; align-items: center; }
+	.card a { color: var(--red); font-weight: 600; text-decoration: none; font-size: .9rem; }
+	.card .close { position: absolute; right: 12px; top: 10px; border: 0; background: none; font-size: 20px;
+		color: var(--muted); cursor: pointer; }
+
+	body.poster { background: transparent; }
+	body.poster .hero { display: block; padding: 0; min-height: 0; }
+	body.poster .copy, body.poster .toggle, body.poster .zoom, body.poster .hint,
+	body.poster .seam, body.poster .hotspot, body.poster .card { display: none !important; }
+	body.poster .stage { width: 1200px; height: 1000px; }
+	body.poster canvas { -webkit-mask-image: none; mask-image: none; }
+
+	@media (max-width: 900px) {
+		.hero { grid-template-columns: 1fr; padding: 24px 16px; }
+		.stage { height: 70vh; }
+		.hint, .zoom { display: none; }
+		.card { right: 16px; left: 16px; width: auto; bottom: 70px; }
+	}
+</style>
+</head>
+<body>
+<section class="hero">
+	<div class="copy">
+		<span class="badge">Teplice · Ústecký kraj</span>
+		<h1>Rekonstrukce bytů, které dávají smysl.</h1>
+		<p>Z panelového bytu s úzkou kuchyní a umakartovým jádrem uděláme světlý domov.
+			Přepněte si původní stav a návrh — přesně tohle pro vás děláme.</p>
+		<a class="cta" href="#">Získat konzultaci</a>
+	</div>
+
+	<div class="stage" id="stage">
+		<canvas id="c"></canvas>
+		<div class="loading" id="loading">Načítám 3D model…</div>
+		<div class="hint" id="hint">Interaktivní 3D model —<br>klikněte na místnost</div>
+		<div class="zoom">
+			<button id="zin" aria-label="Přiblížit">+</button>
+			<button id="zout" aria-label="Oddálit">−</button>
+			<button id="reset" aria-label="Zpět na celý byt" title="Zpět na celý byt">↻</button>
+		</div>
+		<button class="seam" id="seam" aria-label="Posuňte hranici mezi původním stavem a návrhem">
+			<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"
+				fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+		</button>
+		<div class="toggle" role="group" aria-label="Stav bytu">
+			<button data-state="before" aria-pressed="false">Původní stav</button>
+			<button data-state="after" aria-pressed="true">Po rekonstrukci</button>
+		</div>
+		<div class="card" id="card" role="dialog" aria-live="polite">
+			<button class="close" id="close" aria-label="Zavřít">×</button>
+			<h3 id="card-title"></h3>
+			<p id="card-text"></p>
+			<div class="actions">
+				<a id="card-link" href="#">Podívejte se na realizace →</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script type="importmap">
+{ "imports": {
+	"three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+	"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// Draft copy for the cards — the site's own texts should replace it.
+const HOTSPOTS = {
+	HS_Kuchyne: { label: 'Kuchyně s obývákem',
+		title: 'Spojení kuchyně s obývákem',
+		text: 'Příčku mezi kuchyní a pokojem jsme odstranili. Místo tmavé kuchyně je jeden světlý prostor s jídelnou.' },
+	HS_Koupelna: { label: 'Koupelna',
+		title: 'Zděná koupelna místo jádra',
+		text: 'Umakartové jádro a spíž jsme nahradili zděnou koupelnou s vanou, sprchovým koutem a závěsným WC.' },
+	HS_Loznice: { label: 'Ložnice',
+		title: 'Ložnice s vestavěnou skříní',
+		text: 'Skříň na míru využije celou stěnu a nová podlaha sjednotí byt do jednoho celku.' },
+	HS_Detsky: { label: 'Dětský pokoj',
+		title: 'Dětský pokoj',
+		text: 'Psací stůl u okna, knihovna a úložné prostory — místo, které s dítětem poroste.' },
+	HS_Pracovna: { label: 'Pracovna',
+		title: 'Pracovna',
+		text: 'Z nevyužitého pokoje je klidná pracovna s knihovnou a křeslem na čtení.' },
+};
+
+const stage = document.getElementById('stage');
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NoToneMapping; // the bake already went through AgX
+
+const scene = new THREE.Scene();
+// Only the props are lit live; everything else carries its baked light.
+scene.add(new THREE.HemisphereLight(0xfff4e6, 0xcfc4b2, 2.4));
+const sun = new THREE.DirectionalLight(0xffeedd, 1.6);
+sun.position.set(-6, 14, 8);
+scene.add(sun);
+const camera = new THREE.PerspectiveCamera(32, 1, 1, 200);
+
+// Blender (x, y, z) arrives as three (x, z, -y). The flat's middle:
+const TARGET = new THREE.Vector3(5.4, 0.3, -3.3);
+const START = { azimuth: -0.42, polar: 0.78, distance: 28.5 };
+// How far the view may slide: the flat's footprint, so a room can be brought
+// to the middle but the model can never be pushed off screen.
+const BOUNDS = { x: [0.3, 10.5], z: [-7.8, 0.6] };
+
+const controls = new OrbitControls(camera, canvas);
+controls.target.copy(TARGET);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.enablePan = true;            // right button / two fingers
+controls.screenSpacePanning = false;  // slide along the floor, not the screen
+controls.panSpeed = 0.9;
+controls.zoomToCursor = true;
+controls.minPolarAngle = 0.35;        // never flat on the floor…
+controls.maxPolarAngle = 1.12;        // …and never from underneath
+controls.minDistance = 7;
+controls.maxDistance = 34;
+controls.rotateSpeed = 0.6;
+
+// The wheel belongs to the page: only Ctrl + wheel (and pinch, which
+// browsers report as Ctrl + wheel) reaches the model.
+canvas.addEventListener('wheel', e => {
+	if (!e.ctrlKey) e.stopImmediatePropagation();
+}, { capture: true });
+
+function clampTarget() {
+	const t = controls.target;
+	t.x = THREE.MathUtils.clamp(t.x, ...BOUNDS.x);
+	t.z = THREE.MathUtils.clamp(t.z, ...BOUNDS.z);
+	t.y = TARGET.y;
+}
+
+function placeCamera({ azimuth, polar, distance }) {
+	const s = new THREE.Spherical(distance, polar, azimuth);
+	camera.position.copy(TARGET).add(new THREE.Vector3().setFromSpherical(s));
+	camera.lookAt(TARGET);
+}
+placeCamera(START);
+
+function resize() {
+	const { clientWidth: w, clientHeight: h } = stage;
+	renderer.setSize(w, h, false);
+	camera.aspect = w / h;
+	camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(stage);
+resize();
+
+const draco = new DRACOLoader().setDecoderPath(
+	'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/');
+const loader = new GLTFLoader().setDRACOLoader(draco);
+
+const states = { before: [], after: [] };
+const anchors = [];
+
+// ---- before / after as a wipe. A seam crosses the flat: the old flat stays
+// on one side of it, the renovated one on the other. Clipping planes do the
+// cutting, so both states are the same baked meshes as before.
+const SEAM = { min: -0.7, max: 11.5 };   // three x, just past the model's ends
+const keepBefore = new THREE.Plane(new THREE.Vector3(1, 0, 0), 0);  // x > seam
+const keepAfter = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);  // x < seam
+renderer.localClippingEnabled = true;
+
+// The seam made visible: a pale sheet of light with a red edge on top.
+const seamSheet = new THREE.Mesh(
+	new THREE.PlaneGeometry(10.6, 2.5),
+	new THREE.MeshBasicMaterial({ color: 0xfff6ea, transparent: true, opacity: 0.32,
+		depthWrite: false, side: THREE.DoubleSide }));
+seamSheet.rotation.y = Math.PI / 2;
+const seamEdge = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 10.6),
+	new THREE.MeshBasicMaterial({ color: 0xa1322e }));
+scene.add(seamSheet, seamEdge);
+
+let seam = SEAM.max;
+function setSeam(x) {
+	seam = THREE.MathUtils.clamp(x, SEAM.min, SEAM.max);
+	keepBefore.constant = -seam;
+	keepAfter.constant = seam;
+	seamSheet.position.set(seam, 1.25, -3.4);
+	seamEdge.position.set(seam, 2.5, -3.4);
+	const inside = seam > SEAM.min + 0.3 && seam < SEAM.max - 0.3;
+	seamSheet.visible = seamEdge.visible = inside;
+	const after = seam > (SEAM.min + SEAM.max) / 2;
+	document.querySelectorAll('.toggle button').forEach(b =>
+		b.setAttribute('aria-pressed', String((b.dataset.state === 'after') === after)));
+}
+setSeam(SEAM.max);
+
+let seamAnim = null;
+function sweepTo(x, ms = 1600) {
+	const from = seam;
+	const t0 = performance.now();
+	seamAnim = now => {
+		const k = Math.min(1, (now - t0) / ms);
+		setSeam(THREE.MathUtils.lerp(from, x, k < 0.5 ? 4 * k ** 3 : 1 - (-2 * k + 2) ** 3 / 2));
+		if (k === 1) seamAnim = null;
+	};
+	idle();
+}
+document.querySelectorAll('.toggle button').forEach(b => b.addEventListener('click', () =>
+	sweepTo(b.dataset.state === 'after' ? SEAM.max : SEAM.min)));
+
+// Drag the seam by its handle: the pointer is cast onto a level plane at
+// mid-wall height and the seam follows its x.
+const handle = document.getElementById('seam');
+const level = new THREE.Plane(new THREE.Vector3(0, 1, 0), -1.2);
+const ray = new THREE.Raycaster();
+const hit = new THREE.Vector3();
+handle.addEventListener('pointerdown', e => {
+	handle.setPointerCapture(e.pointerId);
+	controls.enabled = false;
+	seamAnim = null;
+	handle.classList.add('dragging');
+});
+handle.addEventListener('pointermove', e => {
+	if (!handle.hasPointerCapture(e.pointerId)) return;
+	const r = canvas.getBoundingClientRect();
+	ray.setFromCamera(new THREE.Vector2(
+		((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
+	if (ray.ray.intersectPlane(level, hit)) setSeam(hit.x);
+	idle();
+});
+const release = () => { controls.enabled = true; handle.classList.remove('dragging'); };
+handle.addEventListener('pointerup', release);
+handle.addEventListener('pointercancel', release);
+
+loader.load('../apartment/out/apartment.glb', gltf => {
+	gltf.scene.traverse(node => {
+		if (node.name.startsWith('HS_')) anchors.push(node);
+		if (!node.isMesh) return;
+		const src = node.material;
+		// Everything is lit already: paint the baked texture as it is.
+		if (node.name.startsWith('Glass')) {
+			node.material = new THREE.MeshBasicMaterial({
+				color: 0xdfe8ea, transparent: true, opacity: 0.28, depthWrite: false });
+		} else if (node.name.startsWith('Props')) {
+			// Plants and vases keep their own materials and take live light.
+			// Cloned: both states share them, but each is clipped differently.
+			node.material = src.clone();
+			node.material.side = THREE.DoubleSide;
+		} else if (node.name === 'Underlay') {
+			// The site draws its own sheets under the poster; keep the still clean of these.
+			if (POSTER) { node.visible = false; return; }
+			node.material = new THREE.MeshBasicMaterial({ color: 0xb3aca1 });
+		} else {
+			node.material = new THREE.MeshBasicMaterial({
+				map: src.map, transparent: node.name === 'Shadow', depthWrite: node.name !== 'Shadow' });
+		}
+		if (node.name === 'Shadow') node.renderOrder = -1;
+		if (/Before$/.test(node.name)) node.material.clippingPlanes = [keepBefore];
+		if (/After$/.test(node.name)) node.material.clippingPlanes = [keepAfter];
+	});
+	scene.add(gltf.scene);
+	buildHotspots();
+	document.getElementById('loading').remove();
+	// The first thing the visitor sees is the renovation happening.
+	if (reduced) return;
+	setSeam(SEAM.min);
+	setTimeout(() => sweepTo(SEAM.max, 2600), 700);
+}, undefined, err => {
+	document.getElementById('loading').textContent =
+		`Model se nepodařilo načíst: ${err?.message ?? err}`;
+	console.error(err);
+});
+
+function placeSeamHandle() {
+	const { clientWidth: w, clientHeight: h } = stage;
+	v.set(seam, 2.5, 1.2).project(camera);
+	const x = THREE.MathUtils.clamp((v.x * 0.5 + 0.5) * w, 24, w - 24);
+	const y = THREE.MathUtils.clamp((-v.y * 0.5 + 0.5) * h, 24, h - 24);
+	handle.style.transform = `translate(${x - 20}px, ${y - 20}px)`;
+}
+
+// ---- zoom buttons
+function zoom(f) {
+	const t = controls.target;
+	const d = camera.position.distanceTo(t);
+	const next = THREE.MathUtils.clamp(d * f, controls.minDistance, controls.maxDistance);
+	flyTo(t.clone(), next, 350);
+}
+document.getElementById('zin').onclick = () => zoom(0.75);
+document.getElementById('zout').onclick = () => zoom(1 / 0.75);
+document.getElementById('reset').onclick = () => {
+	card.classList.remove('open');
+	flyTo(TARGET.clone(), START.distance, 900, START);
+	focused = false;
+};
+
+// ---- camera flights: to a room, back to the whole flat
+let flight = null;
+let focused = false;
+function flyTo(target, distance, ms = 900, angles = null) {
+	const fromTarget = controls.target.clone();
+	const fromOffset = camera.position.clone().sub(fromTarget);
+	const from = new THREE.Spherical().setFromVector3(fromOffset);
+	const to = from.clone();
+	to.radius = distance;
+	if (angles) {
+		to.theta = angles.azimuth;
+		to.phi = angles.polar;
+	}
+	// Turn the short way round.
+	while (to.theta - from.theta > Math.PI) to.theta -= 2 * Math.PI;
+	while (from.theta - to.theta > Math.PI) to.theta += 2 * Math.PI;
+	const t0 = performance.now();
+	flight = now => {
+		const k = Math.min(1, (now - t0) / ms);
+		const e = 1 - Math.pow(1 - k, 3);
+		controls.target.lerpVectors(fromTarget, target, e);
+		const s = new THREE.Spherical(
+			THREE.MathUtils.lerp(from.radius, to.radius, e),
+			THREE.MathUtils.lerp(from.phi, to.phi, e),
+			THREE.MathUtils.lerp(from.theta, to.theta, e));
+		camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(s));
+		if (k === 1) flight = null;
+	};
+	idle();
+}
+
+// ---- hotspots
+const card = document.getElementById('card');
+const labels = [];
+function buildHotspots() {
+	for (const node of anchors) {
+		const info = HOTSPOTS[node.name];
+		if (!info) continue;
+		const el = document.createElement('button');
+		el.className = 'hotspot';
+		el.innerHTML = `<i aria-hidden="true"></i>${info.label}`;
+		el.onclick = () => focusRoom(node, info);
+		stage.appendChild(el);
+		labels.push({ el, node });
+	}
+}
+function focusRoom(node, info) {
+	const p = node.getWorldPosition(new THREE.Vector3());
+	p.y = TARGET.y;
+	focused = true;
+	flyTo(p, 14, 1000, { azimuth: START.azimuth, polar: 0.72 });
+	document.getElementById('card-title').textContent = info.title;
+	document.getElementById('card-text').textContent = info.text;
+	card.classList.add('open');
+	hint.style.opacity = 0;
+}
+document.getElementById('close').onclick = () => card.classList.remove('open');
+
+const v = new THREE.Vector3();
+function placeLabels() {
+	const { clientWidth: w, clientHeight: h } = stage;
+	for (const { el, node } of labels) {
+		node.getWorldPosition(v).project(camera);
+		const x = (v.x * 0.5 + 0.5) * w;
+		const y = (-v.y * 0.5 + 0.5) * h;
+		// Labels that leave the frame when zoomed in would float over the text.
+		const inside = x > 0 && x < w - 60 && y > 0 && y < h && v.z < 1;
+		el.style.opacity = inside ? 1 : 0;
+		el.style.pointerEvents = inside ? 'auto' : 'none';
+		el.style.transform = `translate(${x - 11}px, ${y - 11}px)`; // circle centre on the anchor
+	}
+}
+
+// ---- idle sway: only in the overview, never while a room is being looked at
+let lastInput = performance.now();
+const hint = document.getElementById('hint');
+function idle() { lastInput = performance.now(); }
+controls.addEventListener('start', () => {
+	idle();
+	flight = null;
+	hint.style.opacity = 0;
+});
+controls.addEventListener('change', () => { if (!swaying) idle(); });
+let swaying = false;
+// ?poster renders the still the site shows before its 3D loads: the model
+// alone, at rest, on a transparent 1200 × 1000 canvas (the site's 6:5 frame).
+const POSTER = new URLSearchParams(location.search).has('poster');
+if (POSTER) {
+	document.body.classList.add('poster');
+	document.documentElement.style.background = 'transparent';
+}
+const reduced = POSTER || matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function tick(now) {
+	if (seamAnim) seamAnim(now);
+	if (flight) flight(now);
+	const quiet = now - lastInput > 3500 && !card.classList.contains('open');
+	if (quiet && !focused && !flight && !reduced) {
+		swaying = true;
+		const t = controls.target;
+		const s = new THREE.Spherical().setFromVector3(v.copy(camera.position).sub(t));
+		const goal = START.azimuth + Math.sin(now / 6000) * 0.35;
+		s.theta += (goal - s.theta) * 0.02;
+		s.phi += (START.polar - s.phi) * 0.02;
+		camera.position.copy(t).add(v.setFromSpherical(s));
+	}
+	controls.update();
+	// Keep the slide inside the flat, moving the camera along with the target.
+	const before = controls.target.clone();
+	clampTarget();
+	camera.position.add(v.copy(controls.target).sub(before));
+	// Once the visitor has zoomed or slid in, the idle sway stays off until ↻.
+	if (!flight && !swaying && (controls.target.distanceTo(TARGET) > 0.5 ||
+		camera.position.distanceTo(controls.target) < 20)) focused = true;
+	swaying = false;
+	renderer.render(scene, camera);
+	placeLabels();
+	placeSeamHandle();
+	requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
