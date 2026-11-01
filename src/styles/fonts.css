@@ -1,0 +1,50 @@
+/*
+ * Inter, self-hosted. The latin and latin-ext faces are the ones in
+ * @fontsource-variable/inter/wght.css; the third is what changed.
+ *
+ * Czech needs only 18 letters from latin-ext (č ď ě ň ř š ť ů ž and capitals),
+ * but that file is 85 KB, and on a slow phone it was downloading beside the
+ * hero image. inter-czech-wght-normal.woff2 is those 18 letters cut out of it,
+ * weight axis kept (6 KB). It is declared last, so for its letters the browser
+ * tries it first; the full latin-ext file now loads only for some other letter.
+ *
+ * Regenerated with subset-font from the latin-ext file of the installed
+ * package, text "ČčĎďĚěŇňŘřŠšŤťŮůŽž", targetFormat woff2.
+ */
+
+@font-face {
+	font-family: 'Inter Variable';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2')
+		format('woff2-variations');
+	unicode-range:
+		U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+		U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+		U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+	font-family: 'Inter Variable';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
+		format('woff2-variations');
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+		U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+		U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Inter Variable';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('../assets/fonts/inter-czech-wght-normal.woff2') format('woff2-variations');
+	unicode-range:
+		U+010C-010F, U+011A-011B, U+0147-0148, U+0158-0159, U+0160-0161, U+0164-0165,
+		U+016E-016F, U+017D-017E;
+}

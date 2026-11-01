@@ -11,9 +11,9 @@ import { routes } from './App';
 // stylesheet from Google would hand every visitor's IP to Google and undo
 // that for the sake of one font.
 //
-// wght.css, not index.css: only the weight axis, and one file per subset with
-// a unicode-range, so a Czech page fetches latin and latin-ext and nothing else.
-import '@fontsource-variable/inter/wght.css';
+// Only the weight axis, one file per subset with a unicode-range, and the
+// Czech letters from a small cut of latin-ext — see fonts.css.
+import './styles/fonts.css';
 
 import './styles/main.scss';
 
