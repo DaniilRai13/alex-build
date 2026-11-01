@@ -1,16 +1,27 @@
 import Breadcrumbs from '@/components/common/Breadcrumbs/Breadcrumbs';
-import Enquiry from '@/components/common/Enquiry/Enquiry';
 import Seo from '@/components/common/Seo/Seo';
 import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
 import Image from '@/components/ui/Image/Image';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
+import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
 import { company, ORGANIZATION_ID } from '@/config/company';
 import { breadcrumbJsonLd } from '@/config/jsonLd';
 import { projectPath, ROUTES, servicePath } from '@/config/routes';
 import { serviceForCategory } from '@/data/services.data';
-import { getProjectBySlug, portfolioData } from '@/data/portfolio/portfolio.data';
-import { useState, type FC } from 'react';
+import {
+	BUILDING_LABELS,
+	getProjectBySlug,
+	portfolioData,
+} from '@/data/portfolio/portfolio.data';
+import { categoryLabel } from '@/data/portfolio/portfolioCategories.data';
+import { plural } from '@/utils/plural';
+import type {
+	IPortfolioProject,
+	IProjectPhoto,
+	PhotoPhase,
+} from '@/types/portfolio.interface';
+import { useState, type FC, type ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Lightbox from 'yet-another-react-lightbox';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
@@ -29,6 +40,100 @@ const metaDescription = (text: string) => {
 	return `${cut.slice(0, lastSpace > 0 ? lastSpace : cut.length)}…`;
 };
 
+const weeks = (count: number) => `${count} ${plural(count, 'týden', 'týdny', 'týdnů')}`;
+
+/**
+ * Story text as the admin stores it: paragraphs separated by a blank line, and
+ * a block whose every line starts with "-" or "•" shown as a list — the way
+ * people jot down what was done room by room.
+ */
+const Prose: FC<{ text: string }> = ({ text }) => (
+	<div className={styles.prose}>
+		{text.split(/\n\s*\n/).map((block, index) => {
+			const lines = block
+				.split('\n')
+				.map(line => line.trim())
+				.filter(Boolean);
+			const isList = lines.length > 1 && lines.every(line => /^[-•]\s+/.test(line));
+
+			return isList ? (
+				<ul key={index}>
+					{lines.map(line => (
+						<li key={line}>{line.replace(/^[-•]\s+/, '')}</li>
+					))}
+				</ul>
+			) : (
+				<p key={index}>{lines.join(' ')}</p>
+			);
+		})}
+	</div>
+);
+
+const PHASE_LABEL: Record<PhotoPhase, string> = {
+	before: 'Před',
+	during: 'Během',
+	after: 'Po',
+};
+
+interface Stage {
+	phase: PhotoPhase;
+	heading: string;
+	text?: string;
+	/** The smaller story fields, under their own h3 inside the stage. */
+	notes: { heading: string; text: string }[];
+	photos: IProjectPhoto[];
+}
+
+/**
+ * The case study as three stages of the job — before, the work, the result —
+ * the same numbered line the "Jak pracujeme" block on the home page draws for a
+ * job not started yet. Photos marked before / during / after in the admin sit
+ * in their stage, so the text reads as captions to a sequence of pictures. The
+ * brief belongs to the starting point, problems and materials to the work. A
+ * stage with neither text nor photos is left out.
+ */
+const stagesOf = (project: IPortfolioProject): Stage[] => {
+	const inPhase = (phase: PhotoPhase) =>
+		project.images.filter(photo => photo.phase === phase);
+	const { story } = project;
+	const notes = (...items: [string, string | undefined][]) =>
+		items.flatMap(([heading, text]) => (text ? [{ heading, text }] : []));
+
+	const stages: Stage[] = [
+		{
+			phase: 'before',
+			heading: 'Výchozí stav',
+			text: story.before,
+			notes: notes(['Co si klient přál', story.brief]),
+			photos: inPhase('before'),
+		},
+		{
+			phase: 'during',
+			heading: 'Co jsme udělali',
+			text: story.work,
+			notes: notes(['Na co jsme narazili', story.challenges], ['Materiály', story.materials]),
+			photos: inPhase('during'),
+		},
+		{
+			phase: 'after',
+			heading: 'Výsledek',
+			text: story.result,
+			notes: [],
+			photos: inPhase('after'),
+		},
+	];
+
+	return stages.filter(
+		stage => stage.text || stage.notes.length > 0 || stage.photos.length > 0,
+	);
+};
+
+interface Fact {
+	icon: IconNames;
+	label: string;
+	value: ReactNode;
+}
+
 const ProjectPage: FC = () => {
 	const { slug } = useParams();
 	const project = getProjectBySlug(slug);
@@ -41,12 +146,61 @@ const ProjectPage: FC = () => {
 
 	const url = projectPath(project.slug);
 	const service = serviceForCategory(project.category);
-	const [cover, ...gallery] = project.images;
+
+	const place = project.district
+		? `${project.location} – ${project.district}`
+		: project.location;
+	const building = project.buildingType && BUILDING_LABELS[project.buildingType];
+
+	const stages = stagesOf(project);
+	const untagged = project.images.filter(photo => !photo.phase);
+
+	// The stages regroup the photos, so a photo's place on the page is not its
+	// index in project.images — which is what the lightbox opens at.
+	const lightboxIndexOf = new Map(project.images.map((image, index) => [image.src, index]));
+
+	const altOf = (photo: IProjectPhoto) =>
+		photo.caption ??
+		`${project.title} – fotografie ${(lightboxIndexOf.get(photo.src) ?? 0) + 1} z ${project.images.length}`;
+
+	// When the admin has no title of its own for Google: the area and the city,
+	// which searches name and which also keep nine similar titles apart. The
+	// city is skipped when the title already carries it ("Teplice – Teplice").
+	const title =
+		project.seoTitle ??
+		(project.title.includes(project.location)
+			? `${project.title} – ${project.area} m²`
+			: `${project.title} – ${project.area} m², ${project.location}`);
 
 	const crumbs = [
 		{ name: 'Domů', href: ROUTES.HOME },
 		{ name: 'Portfolio', href: ROUTES.PORTFOLIO },
 		{ name: project.title },
+	];
+
+	const facts: Fact[] = [
+		{ icon: 'MapPin', label: 'Místo', value: place },
+		...(building ? [{ icon: 'Building2' as const, label: 'Typ domu', value: building }] : []),
+		...(project.layout
+			? [{ icon: 'House' as const, label: 'Dispozice', value: project.layout }]
+			: []),
+		{ icon: 'PencilRuler', label: 'Plocha', value: `${project.area} m²` },
+		...(project.durationWeeks
+			? [{ icon: 'Clock' as const, label: 'Délka realizace', value: weeks(project.durationWeeks) }]
+			: []),
+		{ icon: 'CalendarCheck', label: 'Rok realizace', value: project.year },
+		// The way back from the work to the thing you can order: a visitor
+		// impressed by a project gets the service one click away, in the list of
+		// facts they are already reading.
+		...(service
+			? [
+					{
+						icon: 'Drill' as const,
+						label: 'Služba',
+						value: <Link to={servicePath(service.slug)}>{service.title}</Link>,
+					},
+				]
+			: []),
 	];
 
 	const projectJsonLd = {
@@ -55,26 +209,98 @@ const ProjectPage: FC = () => {
 		name: project.title,
 		description: project.description,
 		url: `${company.url}${url}`,
-		image: project.images.map(image => `${company.url}${image.src}`),
+		image: project.images.map(image =>
+			image.caption
+				? {
+						'@type': 'ImageObject',
+						contentUrl: `${company.url}${image.src}`,
+						caption: image.caption,
+					}
+				: `${company.url}${image.src}`,
+		),
 		dateCreated: String(project.year),
 		locationCreated: {
 			'@type': 'Place',
-			name: project.location,
+			name: place,
 		},
 		creator: { '@id': ORGANIZATION_ID },
+		...(service
+			? {
+					about: {
+						'@type': 'Service',
+						name: service.title,
+						url: `${company.url}${servicePath(service.slug)}`,
+					},
+				}
+			: {}),
 	};
 
-	// Neighbouring projects keep every detail page linked from at least two
-	// others, so crawlers reach all of them without relying on the sitemap.
-	const related = portfolioData
-		.filter(item => item.slug !== project.slug)
-		.slice(0, 3);
+	// Same kind of work first: someone reading about a bathroom wants another
+	// bathroom, not the facade that happens to be next in the list. Every detail
+	// page still ends up linked from at least two others, so crawlers reach all
+	// of them without relying on the sitemap.
+	const others = portfolioData.filter(item => item.slug !== project.slug);
+	const related = [
+		...others.filter(item => item.category === project.category),
+		...others.filter(item => item.category !== project.category),
+	].slice(0, 3);
+
+	const photoGrid = (photos: IProjectPhoto[], className: string) => (
+		// Every photo is a real <img> in the HTML, so image search can index
+		// them — the gallery used to live only inside a modal.
+		<ul className={className}>
+			{photos.map(photo => {
+				const index = lightboxIndexOf.get(photo.src) ?? 0;
+
+				return (
+					<li key={photo.src}>
+						<figure className={styles.figure}>
+							<button
+								type='button'
+								className={styles.frame}
+								onClick={() => setLightboxIndex(index)}
+								aria-label={`Zvětšit fotografii ${index + 1}`}
+							>
+								<Image
+									src={photo.src}
+									srcSet={photo.srcSet}
+									sizes='(max-width: 768px) 62vw, 22vw'
+									alt={altOf(photo)}
+								/>
+							</button>
+							{photo.caption && <figcaption>{photo.caption}</figcaption>}
+						</figure>
+					</li>
+				);
+			})}
+		</ul>
+	);
+
+	const stageContent = (stage: Stage) => (
+		<>
+			<span className={styles.eyebrow}>{PHASE_LABEL[stage.phase]}</span>
+			<Heading as='h2' className={styles.h2}>
+				{stage.heading}
+			</Heading>
+
+			{stage.text && <Prose text={stage.text} />}
+			{stage.notes.map(note => (
+				<div key={note.heading} className={styles.note}>
+					<Heading as='h3' className={styles.h3}>
+						{note.heading}
+					</Heading>
+					<Prose text={note.text} />
+				</div>
+			))}
+			{stage.photos.length > 0 && photoGrid(stage.photos, styles.photos)}
+		</>
+	);
 
 	return (
 		<article className={styles.project}>
 			<Seo
-				title={project.title}
-				description={metaDescription(project.description)}
+				title={title}
+				description={project.seoDescription ?? metaDescription(project.description)}
 				path={url}
 				image={project.preview.src}
 				ogType='article'
@@ -83,107 +309,82 @@ const ProjectPage: FC = () => {
 
 			<Breadcrumbs items={crumbs} />
 
-			<header className={styles.header}>
-				<span className={styles.category}>{project.categoryLabel}</span>
+			<header className={styles.head}>
+				<div>
+					<span className={styles.eyebrow}>{categoryLabel(project.category)}</span>
+					<Heading as='h1' className={styles.title}>
+						{project.title}
+					</Heading>
+					<p className={styles.lead}>{project.description}</p>
+				</div>
 
-				<Heading as='h1' className={styles.title}>
-					{project.title}
-				</Heading>
-
-				<dl className={styles.meta}>
-					<div>
-						<dt>
-							<Icon icon='MapPin' size={16} />
-							Místo
-						</dt>
-						<dd>{project.location}</dd>
-					</div>
-					<div>
-						<dt>Plocha</dt>
-						<dd>{project.area} m²</dd>
-					</div>
-					<div>
-						<dt>Rok realizace</dt>
-						<dd>{project.year}</dd>
-					</div>
-
-					{/*
-						The way back from the work to the thing you can order. A visitor
-						impressed by a project had nowhere to go but the portfolio list;
-						this puts the service one click away, in the row of facts they
-						are already reading.
-					*/}
-					{service && (
-						<div>
-							<dt>Služba</dt>
-							<dd>
-								<Link className={styles.metaLink} to={servicePath(service.slug)}>
-									{service.title}
-								</Link>
-							</dd>
-						</div>
-					)}
-				</dl>
+				<div className={styles.card}>
+					<dl className={styles.facts}>
+						{facts.map(fact => (
+							<div key={fact.label}>
+								<dt>
+									<Icon icon={fact.icon} size={16} />
+									<span>{fact.label}</span>
+								</dt>
+								<dd>{fact.value}</dd>
+							</div>
+						))}
+					</dl>
+					<Button
+						title='Chci podobnou rekonstrukci'
+						className={styles.cta}
+						to={ROUTES.CONTACTS}
+					/>
+				</div>
 			</header>
 
-			<div className={styles.body}>
-				<button
-					className={styles.cover}
-					type='button'
-					onClick={() => setLightboxIndex(0)}
-					aria-label='Otevřít fotogalerii projektu'
-				>
-					<Image
-						src={cover.src}
-						srcSet={cover.srcSet}
-						sizes='(max-width: 1024px) 100vw, 55vw'
-						alt={`${project.title} – ${project.location}`}
-						priority
-					/>
-				</button>
+			{/* A line of one stage is just decoration, so a project with only
+			    "after" photos gets plain sections instead. */}
+			{stages.length > 1 ? (
+				<ol className={styles.timeline}>
+					{stages.map((stage, index) => (
+						<li className={styles.stage} key={stage.phase}>
+							<span className={styles.marker} aria-hidden='true'>
+								{index + 1}
+							</span>
+							<div className={styles.content}>{stageContent(stage)}</div>
+						</li>
+					))}
+				</ol>
+			) : (
+				stages.map(stage => (
+					<section className={styles.section} key={stage.phase}>
+						{stageContent(stage)}
+					</section>
+				))
+			)}
 
-				<div className={styles.description}>
-					<Heading as='h2' className={styles.descriptionHeading}>
-						O projektu
+			{untagged.length > 0 && (
+				<section className={styles.section}>
+					<Heading as='h2' className={styles.h2}>
+						{stages.length > 0 ? 'Další fotografie' : 'Fotogalerie realizace'}
 					</Heading>
 
-					<p>{project.description}</p>
-
-					<Button title='Chci nabídku' className={styles.cta} to={ROUTES.CONTACTS} />
-				</div>
-			</div>
-
-			{gallery.length > 0 && (
-				<section className={styles.gallerySection}>
-					<Heading as='h2' className={styles.galleryHeading}>
-						Fotogalerie realizace
-					</Heading>
-
-					{/* Every photo is a real <img> in the HTML, so image search can
-					    index them — the gallery used to live only inside a modal. */}
-					<ul className={styles.gallery}>
-						{gallery.map((image, index) => (
-							<li key={image.src}>
-								<button
-									type='button'
-									className={styles.galleryItem}
-									onClick={() => setLightboxIndex(index + 1)}
-									aria-label={`Zvětšit fotografii ${index + 2}`}
-								>
-									<Image
-										src={image.src}
-										srcSet={image.srcSet}
-										sizes='(max-width: 768px) 45vw, (max-width: 1200px) 33vw, 25vw'
-										alt={`${project.title} – fotografie ${index + 2} z ${project.images.length}`}
-									/>
-								</button>
-							</li>
-						))}
-					</ul>
+					{photoGrid(untagged, styles.gallery)}
 				</section>
 			)}
 
-			<Enquiry />
+			{project.testimonial && (
+				<section className={styles.section}>
+					<Heading as='h2' className={styles.h2}>
+						Slovy klienta
+					</Heading>
+
+					<figure className={styles.testimonial}>
+						<blockquote>
+							<p>„{project.testimonial.text}“</p>
+						</blockquote>
+						{project.testimonial.author && (
+							<figcaption>{project.testimonial.author}</figcaption>
+						)}
+					</figure>
+				</section>
+			)}
 
 			<section className={styles.related}>
 				<Heading as='h2' className={styles.relatedHeading}>
@@ -221,7 +422,10 @@ const ProjectPage: FC = () => {
 					open
 					close={() => setLightboxIndex(null)}
 					index={lightboxIndex}
-					slides={project.images.map(image => ({ src: image.src }))}
+					slides={project.images.map(image => ({
+						src: image.src,
+						alt: image.caption,
+					}))}
 					plugins={[Zoom, Fullscreen]}
 				/>
 			)}

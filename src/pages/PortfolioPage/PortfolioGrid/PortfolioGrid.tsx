@@ -4,9 +4,11 @@ import styles from './PortfolioGrid.module.scss';
 
 interface Props {
 	projects: IPortfolioProject[];
+	/** Load the first card eagerly — true only where it is the LCP image. */
+	priorityFirst?: boolean;
 }
 
-const PortfolioGrid = ({ projects }: Props) => {
+const PortfolioGrid = ({ projects, priorityFirst = true }: Props) => {
 	return (
 		<div className={styles.gallery}>
 			<div className={styles.grid}>
@@ -14,7 +16,7 @@ const PortfolioGrid = ({ projects }: Props) => {
 					<PortfolioCard
 						key={project.id}
 						project={project}
-						priority={index === 0}
+						priority={priorityFirst && index === 0}
 					/>
 				))}
 			</div>

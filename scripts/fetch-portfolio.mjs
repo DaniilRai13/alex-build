@@ -97,20 +97,50 @@ if (!SUPABASE_URL || !ANON_KEY) {
 	);
 }
 
-const SELECT =
-	'id,slug,title,description,category,category_label,location,area,year,sort_order,' +
+const BASE_SELECT =
+	'id,slug,title,description,category,category_label,location,area,year,sort_order,updated_at,' +
 	'portfolio_images(storage_path,sort_order,is_preview)';
 
-const fetchProjects = async () => {
+// The case-study columns (database/portfolio.sql in the admin app): the facts,
+// the story sections, the testimonial, and a caption and phase per photo.
+const CASE_STUDY_SELECT =
+	'id,slug,title,description,category,category_label,location,area,year,sort_order,updated_at,' +
+	'district,building_type,layout,duration_weeks,' +
+	'story_before,story_brief,story_work,story_challenges,story_materials,story_result,' +
+	'testimonial_text,testimonial_author,seo_title,seo_description,' +
+	'portfolio_images(storage_path,sort_order,is_preview,caption,phase)';
+
+const requestProjects = select => {
 	const url = new URL(`${SUPABASE_URL}/rest/v1/portfolio_projects`);
-	url.searchParams.set('select', SELECT);
+	url.searchParams.set('select', select);
 	// Unpublished projects are invisible to the anon key by policy; ordering is
 	// what the admin's up/down arrows write.
 	url.searchParams.set('order', 'sort_order.asc,created_at.asc');
 
-	const response = await fetch(url, {
+	return fetch(url, {
 		headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
 	});
+};
+
+const fetchProjects = async () => {
+	let response = await requestProjects(CASE_STUDY_SELECT);
+
+	// A database the new columns have not reached yet answers 400 "column ...
+	// does not exist". Falling back keeps a deploy from failing on the order in
+	// which the SQL and the site happen to ship; the pages simply render
+	// without the case study until the columns exist.
+	if (response.status === 400) {
+		const reason = await response.text();
+		if (/does not exist/i.test(reason)) {
+			console.warn(
+				'[portfolio] the case-study columns are missing — run database/portfolio.sql ' +
+					'from the admin app in Supabase. Building without them.',
+			);
+			response = await requestProjects(BASE_SELECT);
+		} else {
+			throw new Error(`HTTP 400 — ${reason.slice(0, 200)}`);
+		}
+	}
 
 	if (!response.ok) {
 		throw new Error(`HTTP ${response.status} — ${(await response.text()).slice(0, 200)}`);
@@ -118,6 +148,9 @@ const fetchProjects = async () => {
 
 	return response.json();
 };
+
+/** Trims a text column; an empty one counts as not written. */
+const text = value => (typeof value === 'string' && value.trim() ? value.trim() : null);
 
 const download = async storagePath => {
 	const response = await fetch(
@@ -197,7 +230,12 @@ const run = async () => {
 				downloaded += 1;
 			}
 
-			files.push({ name, isPreview: image.is_preview });
+			files.push({
+				name,
+				isPreview: image.is_preview,
+				caption: text(image.caption),
+				phase: image.phase ?? null,
+			});
 		}
 
 		await prune(dir, new Set(files.map(file => file.name)));
@@ -214,8 +252,31 @@ const run = async () => {
 			location: project.location,
 			area: project.area,
 			year: project.year,
+			updatedAt: project.updated_at ?? null,
+			district: text(project.district),
+			buildingType: project.building_type ?? null,
+			layout: text(project.layout),
+			durationWeeks: project.duration_weeks ?? null,
+			story: {
+				before: text(project.story_before),
+				brief: text(project.story_brief),
+				work: text(project.story_work),
+				challenges: text(project.story_challenges),
+				materials: text(project.story_materials),
+				result: text(project.story_result),
+			},
+			testimonial: text(project.testimonial_text)
+				? { text: text(project.testimonial_text), author: text(project.testimonial_author) }
+				: null,
+			seoTitle: text(project.seo_title),
+			seoDescription: text(project.seo_description),
 			preview: preview.name,
 			images: files.map(file => file.name),
+			// Keyed by file name so `images` keeps the plain shape an older
+			// download on disk still has.
+			photos: Object.fromEntries(
+				files.map(file => [file.name, { caption: file.caption, phase: file.phase }]),
+			),
 		});
 	}
 

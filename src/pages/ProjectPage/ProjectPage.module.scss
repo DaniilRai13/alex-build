@@ -1,65 +1,105 @@
 @import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
 
 .project {
 	display: block;
+	padding-top: 8px;
 }
 
-.header {
-	max-width: 820px;
-	margin-bottom: 35px;
+// ── Header: the story on the left, the facts and the button in a card ─────
 
-	.category {
-		display: inline-block;
-		margin-bottom: 14px;
-		padding: 0.4rem 1rem;
-		border-radius: 999px;
-		background: rgba($red, 0.15);
-		color: $red;
-		font-size: 0.85rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
+.head {
+	display: grid;
+	grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+	align-items: start;
+	gap: 40px;
+
+	margin-top: 24px;
+
+	@media (max-width: 900px) {
+		grid-template-columns: 1fr;
+		gap: 24px;
 	}
+}
 
-	.title {
-		margin-bottom: 22px;
-		font-size: clamp(2rem, 4vw, 2.4rem);
-		font-weight: 700;
-		line-height: 1.15;
-		color: $text-primary;
-	}
+.eyebrow {
+	display: block;
+	margin-bottom: 10px;
 
-	.meta {
+	color: $red;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+// Element plus class, so it outranks the single-class rule in
+// Heading.module.scss.
+h1.title {
+	margin-bottom: 14px;
+
+	color: $text-primary;
+	font-size: clamp(2rem, 1.2rem + 2.4vw, 3rem);
+	line-height: 1.1;
+	letter-spacing: 0;
+	text-wrap: balance;
+}
+
+.lead {
+	max-width: 62ch;
+	color: $text-secondary;
+	font-size: 1.05rem;
+	line-height: 1.65;
+}
+
+.card {
+	@include card;
+	padding: 12px 24px 24px;
+}
+
+.facts {
+	margin: 0;
+
+	> div {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 30px;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 16px;
+
+		padding: 11px 0;
+		border-bottom: 1px solid $border-warm;
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+
+	dt {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+
+		color: $text-secondary;
+		font-size: 0.9rem;
+
+		svg {
+			flex-shrink: 0;
+			color: $red;
+		}
+	}
+
+	dd {
 		margin: 0;
+		color: $text-primary;
+		font-weight: 600;
+		text-align: right;
 
-		dt {
-			display: flex;
-			align-items: center;
-			gap: 6px;
-			margin-bottom: 6px;
-			color: $text-secondary;
-			font-size: 0.85rem;
-		}
-
-		dd {
-			margin: 0;
-			font-size: 1.1rem;
-			font-weight: 600;
-			color: $text-primary;
-		}
-
-		// The one value in the row that is a link. Inherits the size and weight
-		// of its neighbours so the row still reads as a row of facts, and takes
-		// the accent colour plus an underline to say it can be clicked — colour
-		// alone is not a signal for anyone who cannot see it.
-		.metaLink {
+		// The one value that is a link: accent colour plus an underline, since
+		// colour alone is not a signal for anyone who cannot see it.
+		a {
 			color: $red;
 			text-decoration: underline;
 			text-underline-offset: 3px;
-			text-decoration-thickness: 1px;
 			transition: color 0.25s;
 
 			&:hover,
@@ -70,31 +110,230 @@
 	}
 }
 
-.body {
-	display: grid;
-	grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-	gap: 25px;
-	align-items: stretch;
-	margin-bottom: 55px;
+// A notch smaller than the default button: the card is ~360px wide on a laptop
+// and the full label wrapped there. Centred for the narrow widths where it
+// still does.
+.cta {
+	width: 100%;
+	margin-top: 16px;
+	padding: 14px 20px;
+	color: $text-white;
+	font-size: 0.9rem;
+	text-align: center;
 }
 
-.cover {
+// ── Stages ────────────────────────────────────────────────────────────────
+
+h2.h2 {
+	margin-bottom: 12px;
+
+	color: $text-primary;
+	font-size: clamp(1.4rem, 1rem + 1.2vw, 1.8rem);
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: 0;
+}
+
+h3.h3 {
+	margin-bottom: 8px;
+
+	color: $text-primary;
+	font-size: 1.1rem;
+	font-weight: 700;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.timeline {
+	margin: 56px 0 0;
+	padding: 0;
+	list-style: none;
+
+	@media (max-width: $screen-tb) {
+		margin-top: 40px;
+	}
+}
+
+// Marker in its own column, the line running down from it to the next one —
+// the timeline on /contacts and in "Jak pracujeme", at page scale.
+.stage {
+	position: relative;
+
+	display: grid;
+	grid-template-columns: 48px minmax(0, 1fr);
+	gap: 24px;
+
+	padding-bottom: 48px;
+
+	&:not(:last-child)::after {
+		content: '';
+		position: absolute;
+		left: 23px;
+		top: 48px;
+		bottom: 0;
+
+		width: 2px;
+		background: rgba($red, 0.3);
+	}
+
+	@media (max-width: $screen-md) {
+		grid-template-columns: 36px minmax(0, 1fr);
+		gap: 14px;
+		padding-bottom: 36px;
+
+		&:not(:last-child)::after {
+			left: 17px;
+			top: 36px;
+		}
+	}
+}
+
+.marker {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 48px;
+	height: 48px;
+
+	border: 2px solid $red;
+	border-radius: 50%;
+	background: $bg-main;
+
+	color: $red;
+	font-weight: 700;
+
+	@media (max-width: $screen-md) {
+		width: 36px;
+		height: 36px;
+		font-size: 0.85rem;
+	}
+}
+
+.content {
+	min-width: 0;
+	padding-top: 4px;
+}
+
+// A stage without the line, and the blocks after the timeline.
+.section {
+	margin-top: 48px;
+}
+
+.content,
+.section {
+	> .prose,
+	> .note {
+		margin-bottom: 20px;
+	}
+}
+
+.prose {
+	max-width: 62ch;
+	color: $text-secondary;
+	line-height: 1.7;
+
+	p + p,
+	p + ul,
+	ul + p {
+		margin-top: 14px;
+	}
+
+	// The work list, ticked rather than bulleted.
+	ul {
+		display: grid;
+		gap: 10px;
+
+		margin: 0;
+		padding: 0;
+
+		list-style: none;
+	}
+
+	li {
+		position: relative;
+		padding-left: 28px;
+
+		color: $text-primary;
+		line-height: 1.5;
+
+		&::before {
+			content: '';
+			position: absolute;
+			left: 2px;
+			top: 0.45em;
+
+			width: 12px;
+			height: 7px;
+
+			border-left: 2px solid $red;
+			border-bottom: 2px solid $red;
+			transform: rotate(-45deg);
+		}
+	}
+}
+
+// ── Photos ────────────────────────────────────────────────────────────────
+
+.photos,
+.gallery {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// Sideways on a phone: a dozen photos a stage, three stages, stacked, would be
+// the longest page on the site.
+.photos {
+	@media (max-width: $screen-tb) {
+		@include swipe-strip(10px);
+
+		> li {
+			flex: 0 0 62vw;
+			scroll-snap-align: start;
+		}
+	}
+}
+
+.gallery {
+	@media (max-width: $screen-tb) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+}
+
+.figure {
+	margin: 0;
+
+	figcaption {
+		margin-top: 8px;
+
+		color: $text-secondary;
+		font-size: 0.85rem;
+		line-height: 1.45;
+	}
+}
+
+// Portrait frame: the photos are shot on a phone, upright, and stay upright
+// instead of being cropped into a banner.
+.frame {
 	display: block;
 	width: 100%;
-	// Fixed 3:2 — the shape the layout already used below 1024px, now applied
-	// everywhere. Without it the row was as tall as whichever original photo
-	// happened to be there, so one near-square shot pushed the gallery and
-	// everything under it off the first screen.
-	aspect-ratio: 3 / 2;
+	aspect-ratio: 3 / 4;
 	padding: 0;
+
 	border: none;
 	border-radius: $radius-lg;
 	overflow: hidden;
-	box-shadow: $shadow-md;
-	background: none;
+	background: rgba($text-primary, 0.06);
 	cursor: zoom-in;
 
 	img {
+		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -103,90 +342,43 @@
 
 	@media (hover: hover) {
 		&:hover img {
-			transform: scale(1.03);
+			transform: scale(1.04);
 		}
 	}
 }
 
-.description {
-	display: flex;
-	flex-direction: column;
-	padding: 35px;
+.testimonial {
+	max-width: 760px;
+	margin: 0;
+	padding: 28px 32px;
+	border-left: 3px solid $red;
 	border-radius: $radius-lg;
 	background: $bg-card;
-	box-shadow: $shadow-md;
-
-	.descriptionHeading {
-		margin-bottom: 18px;
-		text-transform: uppercase;
-		font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-		color: $text-primary;
-	}
-
-	p {
-		margin-bottom: 28px;
-		color: $text-secondary;
-		font-size: 1.02rem;
-		line-height: 1.7;
-	}
-
-	.cta {
-		align-self: flex-start;
-		// Sits on the bottom edge rather than trailing the text: the card is
-		// stretched to the photo's height, and a short description used to leave
-		// the button floating in the middle of an empty panel.
-		margin-top: auto;
-		padding: 0.7rem 1.6rem;
-		color: #fff;
-	}
-}
-
-.gallerySection {
-	margin-bottom: 55px;
-
-	.galleryHeading {
-		margin-bottom: 20px;
-		font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-		color: $text-primary;
-	}
-}
-
-.gallery {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-	gap: 15px;
-
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}
-
-.galleryItem {
-	display: block;
-	width: 100%;
-	padding: 0;
-	border: none;
-	border-radius: $radius-lg;
-	overflow: hidden;
-	background: none;
 	box-shadow: $shadow-sm;
-	cursor: zoom-in;
 
-	img {
-		width: 100%;
-		aspect-ratio: 4 / 3;
-		object-fit: cover;
-		transition: transform 0.4s ease;
+	blockquote p {
+		color: $text-primary;
+		font-size: 1.1rem;
+		line-height: 1.65;
 	}
 
-	@media (hover: hover) {
-		&:hover img {
-			transform: scale(1.05);
-		}
+	figcaption {
+		margin-top: 12px;
+		color: $text-secondary;
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+
+	@media (max-width: $screen-tb) {
+		padding: 22px 20px;
 	}
 }
+
+// ── Related projects ──────────────────────────────────────────────────────
 
 .related {
+	margin-top: var(--section-gap);
+
 	.relatedHeading {
 		margin-bottom: 20px;
 		font-size: clamp(1.4rem, 2.2vw, 1.8rem);
@@ -201,6 +393,11 @@
 		padding: 0;
 		margin: 0 0 30px;
 		list-style: none;
+
+		@media (max-width: $screen-tb) {
+			grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+			gap: 12px;
+		}
 	}
 
 	.relatedLink {
@@ -246,46 +443,5 @@
 	.portfolioLink {
 		color: #fff;
 		padding: 0.7rem 1.6rem;
-	}
-}
-
-@media (max-width: $screen-tb) {
-	.body {
-		grid-template-columns: 1fr;
-	}
-
-	// One column, so the card sizes to its own text and there is no bottom edge
-	// to pin the button to.
-	.description .cta {
-		margin-top: 0;
-	}
-}
-
-@media (max-width: $screen-tb) {
-	.header {
-		margin-bottom: 25px;
-
-		.meta {
-			gap: 20px;
-		}
-	}
-
-	.body {
-		gap: 15px;
-		margin-bottom: 40px;
-	}
-
-	.description {
-		padding: 25px 20px;
-
-		p {
-			font-size: 0.95rem;
-		}
-	}
-
-	.gallery,
-	.related .relatedList {
-		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-		gap: 12px;
 	}
 }
