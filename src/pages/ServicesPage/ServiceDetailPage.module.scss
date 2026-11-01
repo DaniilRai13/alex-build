@@ -5,7 +5,7 @@
 	.board {
 		@include service-board;
 
-		margin-bottom: 25px;
+		margin-bottom: var(--section-gap);
 	}
 
 	// A full-bleed dark band rather than a second card. The rail in the board
@@ -26,7 +26,7 @@
 		box-shadow: 0 0 0 100vmax $bg-dark-warm;
 		clip-path: inset(0 -100vmax);
 
-		margin-bottom: 25px;
+		margin-bottom: var(--section-gap);
 		// Vertical only: horizontal alignment is the container's job now.
 		padding: 48px 0;
 
@@ -89,7 +89,7 @@
 // the reader to learn a second way of looking at a project.
 .detail {
 	.projects {
-		margin-bottom: 25px;
+		margin-bottom: var(--section-gap);
 	}
 
 	.projectsHeading {

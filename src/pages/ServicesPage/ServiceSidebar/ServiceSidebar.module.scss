@@ -87,7 +87,7 @@
 	}
 }
 
-// Switches at the same width as the card in ServicesPage.module.scss: while the
+// Switches at the same width as the service-board mixin: while the
 // board is still two columns the list has to keep its column styling, otherwise
 // rows-with-chevrons show up inside a desktop layout.
 @media (max-width: $screen-tb) {

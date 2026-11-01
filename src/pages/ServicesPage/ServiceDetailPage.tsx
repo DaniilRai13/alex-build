@@ -1,5 +1,4 @@
 import Breadcrumbs from '@/components/common/Breadcrumbs/Breadcrumbs';
-import Enquiry from '@/components/common/Enquiry/Enquiry';
 import Faq from '@/components/common/Faq/Faq';
 import Seo from '@/components/common/Seo/Seo';
 import Heading from '@/components/ui/Heading/Heading';
@@ -132,11 +131,12 @@ const ServiceDetailPage: FC = () => {
 				</section>
 			)}
 
+			{/*
+				No enquiry form of its own here: the site-wide "Máte projekt?" banner
+				follows straight after the questions, and a second call to action
+				above it only made the page say the same thing twice.
+			*/}
 			<Faq items={faq} />
-
-			<Enquiry
-				title={`Zajímá vás ${service.title.toLowerCase()}?`}
-			/>
 		</section>
 	);
 };
