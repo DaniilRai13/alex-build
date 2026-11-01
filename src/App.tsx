@@ -118,6 +118,19 @@ export const routes: RouteRecord[] = [
 								() => import('./pages/_dev/ServiceText/ServiceTextPage'),
 							),
 						},
+						{
+							path: '/services-all',
+							lazy: page(
+								() => import('./pages/_dev/ServicesAll/ServicesAllPage'),
+							),
+						},
+						{
+							path: '/services-featured',
+							lazy: page(
+								() =>
+									import('./pages/_dev/ServicesFeatured/ServicesFeaturedPage'),
+							),
+						},
 					]
 				: []),
 			{

@@ -1,0 +1,125 @@
+@import '@styles/abstracts/var';
+
+.live {
+	margin-bottom: 64px;
+}
+
+.sectionHead {
+	margin-bottom: 18px;
+
+	h2 {
+		font-size: 1.35rem;
+		font-weight: 600;
+		margin-bottom: 4px;
+	}
+
+	p {
+		max-width: 70ch;
+		color: $text-secondary;
+		font-size: 0.9rem;
+	}
+}
+
+// Each frame is a real viewport of the given size, scaled down to fit beside
+// the others: the iframe is laid out at full size and shrunk with a transform,
+// so its media queries see the true width.
+.frames {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 28px;
+	margin-bottom: 56px;
+}
+
+.frame {
+	margin: 0;
+}
+
+.screen {
+	width: calc(var(--w) * var(--s) * 1px);
+	height: calc(var(--h) * var(--s) * 1px);
+	overflow: hidden;
+
+	border: 1px solid rgba($text-primary, 0.14);
+	border-radius: 14px;
+	background: $bg-main;
+	box-shadow: $shadow-md;
+
+	iframe {
+		display: block;
+		width: calc(var(--w) * 1px);
+		height: calc(var(--h) * 1px);
+		border: 0;
+
+		transform: scale(var(--s));
+		transform-origin: 0 0;
+	}
+}
+
+.caption {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 10px;
+
+	color: $text-secondary;
+	font-size: 0.8rem;
+
+	b {
+		color: $text-primary;
+	}
+
+	a {
+		color: $red;
+		font-weight: 600;
+	}
+}
+
+.changes {
+	max-width: 76ch;
+	margin: 0 0 16px;
+	padding-left: 20px;
+
+	li {
+		margin-bottom: 8px;
+		color: $text-secondary;
+	}
+
+	b {
+		color: $text-primary;
+	}
+}
+
+.table {
+	width: 100%;
+	max-width: 640px;
+	border-collapse: collapse;
+	font-size: 0.88rem;
+	font-variant-numeric: tabular-nums;
+
+	th,
+	td {
+		padding: 8px 12px;
+		border-bottom: 1px solid $border-warm;
+		text-align: right;
+	}
+
+	th:first-child,
+	td:first-child {
+		text-align: left;
+	}
+
+	th {
+		color: $text-secondary;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+}
+
+// Frame mode: just the block, with the site header above it as on a real
+// screen.
+.bare {
+	padding-block: 24px 40px;
+}
