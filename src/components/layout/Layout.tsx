@@ -1,7 +1,7 @@
 import { organizationJsonLd } from '@/config/jsonLd';
 import { ROUTES } from '@/config/routes';
 import { trackPageView } from '@/services/analytics.service';
-import { useEffect, type FC } from 'react';
+import { useEffect, useLayoutEffect, type FC } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { Head } from 'vite-react-ssg';
 import CtaBanner from '../common/CtaBanner/CtaBanner';
@@ -17,8 +17,12 @@ const Layout: FC = () => {
 	// call to action above its own form would only get in the way.
 	const showCta = pathname !== ROUTES.CONTACTS;
 
-	useEffect(() => {
-		window.scrollTo(0, 0);
+	// A new page opens at the top. 'instant' overrides the smooth scrolling set
+	// on <html> for in-page anchors, which otherwise animated the whole climb
+	// from wherever the last page was left; the layout effect does it before
+	// the new page paints.
+	useLayoutEffect(() => {
+		window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 	}, [pathname]);
 
 	// Every page passes through this layout, and react-router navigations never
