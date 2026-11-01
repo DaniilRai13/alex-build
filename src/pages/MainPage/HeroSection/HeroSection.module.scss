@@ -213,8 +213,10 @@
 		.image {
 			position: static;
 			height: 340px;
-			-webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
-			mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+			// The text below overlaps the lower half of the photo, so the photo
+			// starts fading early enough for white text to read over it.
+			-webkit-mask-image: linear-gradient(180deg, #000 25%, transparent 100%);
+			mask-image: linear-gradient(180deg, #000 25%, transparent 100%);
 		}
 
 		.overlay {
@@ -224,7 +226,7 @@
 
 	.content {
 		max-width: none;
-		margin-top: -70px;
+		margin-top: -150px;
 		padding: 0 20px;
 
 		.title {
