@@ -105,7 +105,10 @@ ErrorDocument 404 /404.html
 
 # --- Komprese ---
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+	# The host serves .js as text/javascript, not application/javascript: with
+	# only the latter listed, every script went out uncompressed (vendor.js
+	# 203 KB instead of ~65 KB).
+	AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
 </IfModule>
 
 # --- Cache pro statické assety (mají hash v názvu) ---
@@ -113,6 +116,9 @@ ErrorDocument 404 /404.html
 	ExpiresActive On
 	ExpiresByType text/css "access plus 1 year"
 	ExpiresByType application/javascript "access plus 1 year"
+	# What the host actually sends for .js and the fonts — both went uncached.
+	ExpiresByType text/javascript "access plus 1 year"
+	ExpiresByType font/woff2 "access plus 1 year"
 	ExpiresByType image/jpeg "access plus 1 year"
 	ExpiresByType image/png "access plus 1 year"
 	# WebP is what <picture> actually serves to every current browser — without
