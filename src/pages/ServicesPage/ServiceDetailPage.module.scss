@@ -61,6 +61,22 @@
 			font-size: 1.05rem;
 			line-height: 1.7;
 		}
+
+		.sectionLink {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			margin-top: 8px;
+
+			color: $red-on-dark;
+			font-weight: 600;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+
+			&:hover {
+				color: #fff;
+			}
+		}
 	}
 }
 

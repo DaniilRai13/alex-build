@@ -57,6 +57,10 @@ export const routes: RouteRecord[] = [
 				lazy: page(() => import('./pages/ContactPage/ContactPage')),
 			},
 			{
+				path: ROUTES.PRICING,
+				lazy: page(() => import('./pages/PricingPage/PricingPage')),
+			},
+			{
 				path: ROUTES.PRIVACY,
 				lazy: page(() => import('./pages/legal/PrivacyPage')),
 			},

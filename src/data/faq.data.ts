@@ -113,6 +113,14 @@ const byService: Record<string, IFaqItem[]> = {
 			q: 'Kdy má kompletní rekonstrukce smysl?',
 			a: 'U starších bytů s dožilými rozvody, u panelových bytů s nevyhovující dispozicí a všude tam, kde kosmetické úpravy problém neřeší.',
 		},
+		{
+			q: 'Jak dlouho kompletní rekonstrukce trvá?',
+			a: 'Záleží na velikosti bytu a na rozsahu prací – hlavně na tom, jestli se mění bytové jádro a dispozice. Přesný harmonogram dostanete spolu s cenovou nabídkou po prohlídce.',
+		},
+		{
+			q: 'Potřebuji k rekonstrukci bytu povolení?',
+			a: 'U úprav uvnitř bytu, které nezasahují do nosných konstrukcí ani do společných rozvodů domu, obvykle ne. Výměna stoupaček nebo zásah do nosné stěny ale vyžaduje souhlas SVJ nebo družstva, případně i stavebního úřadu. Probereme to při prohlídce.',
+		},
 	],
 
 	'kosmeticke-upravy': [
@@ -132,6 +140,10 @@ const byService: Record<string, IFaqItem[]> = {
 			q: 'Hodí se to před pronájmem nebo prodejem bytu?',
 			a: 'Ano, je to nejčastější důvod. Interiér působí jako nový za zlomek času i nákladů kompletní rekonstrukce, což zvyšuje hodnotu bytu rychle a předvídatelně.',
 		},
+		{
+			q: 'Jak dlouho kosmetické úpravy trvají?',
+			a: 'Výrazně kratší dobu než kompletní rekonstrukce, protože se nebourá a nemění se rozvody. Konkrétní termíny najdete v harmonogramu, který dostanete s nabídkou.',
+		},
 	],
 
 	'stavebni-a-remeslne-prace': [
@@ -147,6 +159,10 @@ const byService: Record<string, IFaqItem[]> = {
 			q: 'Kdo řeší staveniště a odvoz odpadu?',
 			a: 'My. Rozsah prací i jejich návaznost dohodneme předem — včetně přístupu na staveniště, skladování materiálu a odvozu odpadu.',
 		},
+		{
+			q: 'Zateplujete i panelové domy?',
+			a: 'Ano. V portfoliu najdete zateplení fasády panelového domu na ploše 2 400 m², včetně fotek z průběhu prací.',
+		},
 	],
 
 	'navrhy-a-vizualizace': [
@@ -161,6 +177,10 @@ const byService: Record<string, IFaqItem[]> = {
 		{
 			q: 'K čemu je vizualizace, když mám půdorys?',
 			a: 'Vizualizace ukáže reálné proporce a barevnost, takže se rozhodujete nad obrázkem, ne nad představou. Změnit něco v této fázi je nesrovnatelně levnější než na stavbě.',
+		},
+		{
+			q: 'Musím mít přesnou představu předem?',
+			a: 'Nemusíte. Stačí vědět, co vám v současném bytě nevyhovuje a jak v něm chcete žít. Varianty řešení připravíme a vizualizace pomůže mezi nimi vybrat.',
 		},
 	],
 };

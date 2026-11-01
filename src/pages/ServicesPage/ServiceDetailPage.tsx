@@ -5,6 +5,7 @@ import Heading from '@/components/ui/Heading/Heading';
 import { company, ORGANIZATION_ID } from '@/config/company';
 import { breadcrumbJsonLd, faqJsonLd } from '@/config/jsonLd';
 import Image from '@/components/ui/Image/Image';
+import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { projectPath, ROUTES, servicePath } from '@/config/routes';
 import { projectsForCategory } from '@/data/portfolio/portfolio.data';
 import { faqForService } from '@/data/faq.data';
@@ -86,10 +87,16 @@ const ServiceDetailPage: FC = () => {
 					one section, and putting them in the page outline would bury
 					the h2 they belong to under three siblings.
 				*/}
-				{service.longDescription.map(({ heading, text }) => (
+				{service.longDescription.map(({ heading, text, link }) => (
 					<div className={styles.section} key={heading}>
 						<b className={styles.kicker}>{heading}</b>
 						<p className={styles.paragraph}>{text}</p>
+						{link && (
+							<Link className={styles.sectionLink} to={link.to}>
+								{link.label}
+								<Icon icon='ArrowRight' size={16} aria-hidden='true' />
+							</Link>
+						)}
 					</div>
 				))}
 			</div>

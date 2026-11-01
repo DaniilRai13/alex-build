@@ -25,7 +25,12 @@ export interface IService {
 	 * do three different jobs (what it is, why it works that way, who it is
 	 * for), and dressed identically they read as one wall of text.
 	 */
-	longDescription: { heading: string; text: string }[];
+	longDescription: {
+		heading: string;
+		text: string;
+		/** A link under the paragraph, to the page that goes deeper. */
+		link?: { to: string; label: string };
+	}[];
 	/** <title>/meta description of the detail page — tighter and more keyword-led than the card title. */
 	seoTitle: string;
 	seoDescription: string;
