@@ -14,6 +14,7 @@ import { plural } from '@/utils/plural';
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 import PortfolioGrid from './PortfolioGrid/PortfolioGrid';
+import PortfolioGuide from './PortfolioGuide/PortfolioGuide';
 import styles from './PortfolioPage.module.scss';
 
 const crumbs = [{ name: 'Domů', href: ROUTES.HOME }, { name: 'Portfolio' }];
@@ -131,6 +132,8 @@ const PortfolioPage: FC = () => {
 					<PortfolioGrid projects={section.projects} priorityFirst={index === 0} />
 				</section>
 			))}
+
+			<PortfolioGuide />
 
 			<Faq items={faqPortfolio} title='Časté dotazy k realizacím' />
 		</section>
