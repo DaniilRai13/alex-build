@@ -53,7 +53,8 @@ export const services: IService[] = [
 		title: 'Kompletní rekonstrukce',
 		description:
 			'Rekonstrukce bytů a domů od demolice až po finální dokončení – vše potřebné pod jednou střechou a s důrazem na kvalitu provedení.',
-		seoTitle: 'Kompletní rekonstrukce bytů a domů',
+		seoTitle: 'Kompletní rekonstrukce bytu na klíč – Teplice',
+		headline: 'Kompletní rekonstrukce bytu na klíč',
 		seoDescription:
 			'Kompletní rekonstrukce bytu nebo domu na klíč – od demolice a nových rozvodů přes podlahy a dveře až po finální povrchy. Jeden dodavatel pro celou stavbu.',
 		detailHeading: 'Co kompletní rekonstrukce zahrnuje',
@@ -106,7 +107,8 @@ export const services: IService[] = [
 		title: 'Kosmetické úpravy',
 		description:
 			'Rychlé a efektivní obnovení interiéru bez rozsáhlých stavebních zásahů. Ideální pro přípravu bytu k pronájmu i zvýšení jeho hodnoty.',
-		seoTitle: 'Kosmetické úpravy a rychlá obnova interiéru',
+		seoTitle: 'Kosmetické úpravy a renovace bytu – Teplice',
+		headline: 'Kosmetické úpravy a renovace bytu',
 		seoDescription:
 			'Rychlá obnova interiéru bez velkých stavebních zásahů – úpravy stěn, nové podlahy, osvětlení a koupelna. Ideální před pronájmem či prodejem bytu.',
 		detailHeading: 'Kdy se kosmetické úpravy vyplatí',
@@ -158,7 +160,8 @@ export const services: IService[] = [
 		title: 'Stavební & řemeslné práce',
 		description:
 			'Stavební a řemeslné práce od základů přes hrubou stavbu a omítky až po fasády.',
-		seoTitle: 'Stavební a řemeslné práce, omítky a fasády',
+		seoTitle: 'Stavební a řemeslné práce, omítky a fasády – Teplice',
+		headline: 'Stavební a řemeslné práce',
 		seoDescription:
 			'Stavební a řemeslné práce od základů přes hrubou stavbu a omítky až po zateplení a fasády. Novostavby, přístavby i opravy stávajících objektů.',
 		detailHeading: 'Jaké stavební a řemeslné práce zajišťujeme',
@@ -204,7 +207,8 @@ export const services: IService[] = [
 		title: 'Návrhy & vizualizace',
 		description:
 			'Promyšlený návrh prostoru s vizualizacemi a kompletní projektovou dokumentací.',
-		seoTitle: 'Návrh interiéru a 3D vizualizace',
+		seoTitle: 'Návrh interiéru a 3D vizualizace – Teplice',
+		headline: 'Návrh interiéru a 3D vizualizace',
 		seoDescription:
 			'Návrh interiéru s vizualizacemi a projektovou dokumentací – dispoziční řešení, výběr materiálů a podklady, podle kterých se dá stavět.',
 		detailHeading: 'Jak probíhá návrh a vizualizace',

@@ -65,6 +65,7 @@ const ServiceDetailPage: FC = () => {
 
 				<ServicePreview
 					service={service}
+					heading={service.headline}
 					headingAs='h1'
 					secondaryTitle='Zobrazit realizace'
 					secondaryTo={ROUTES.PORTFOLIO}

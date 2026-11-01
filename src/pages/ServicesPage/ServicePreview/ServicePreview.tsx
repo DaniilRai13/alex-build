@@ -9,6 +9,8 @@ import styles from './ServicePreview.module.scss';
 
 interface Props {
 	service: IService;
+	/** Text of the heading; the service's short name by default. */
+	heading?: string;
 	headingAs?: 'h1' | 'h2';
 	headingHref?: string;
 	ctaTitle?: string;
@@ -20,6 +22,7 @@ interface Props {
 
 const ServicePreview = ({
 	service,
+	heading = service.title,
 	headingAs = 'h2',
 	headingHref,
 	ctaTitle = 'Kontaktujte nás',
@@ -43,10 +46,10 @@ const ServicePreview = ({
 				<Heading as={headingAs} className={styles.heading}>
 					{headingHref ? (
 						<Link className={styles.headingLink} to={headingHref}>
-							{service.title}
+							{heading}
 						</Link>
 					) : (
-						service.title
+						heading
 					)}
 				</Heading>
 

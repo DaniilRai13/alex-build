@@ -312,8 +312,12 @@ const ProjectPage: FC = () => {
 			<header className={styles.head}>
 				<div>
 					<span className={styles.eyebrow}>{categoryLabel(project.category)}</span>
+					{/* The town in the heading: "rekonstrukce bytu Chomutov" is how the
+					    long-tail searches for these pages are worded. */}
 					<Heading as='h1' className={styles.title}>
-						{project.title}
+						{project.title.includes(project.location)
+							? project.title
+							: `${project.title}, ${project.location}`}
 					</Heading>
 					<p className={styles.lead}>{project.description}</p>
 				</div>

@@ -28,7 +28,7 @@ const itemListJsonLd = {
 const ServicesPage = () => (
 	<section>
 		<Seo
-			title='Služby – rekonstrukce bytů a domů Teplice'
+			title='Naše služby – rekonstrukce, renovace a fasády'
 			description='Kompletní i kosmetické rekonstrukce, stavební a řemeslné práce, návrhy interiéru s vizualizacemi. Podívejte se, co pro vás zajistíme.'
 			path={ROUTES.SERVICES}
 			jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd]}
@@ -38,7 +38,7 @@ const ServicesPage = () => (
 
 		<ServicesHero
 			eyebrow='Naše služby'
-			heading='Kompletní rekonstrukce bytů a domů'
+			heading='Služby: od návrhu interiéru po předání bytu'
 			text='Postaráme se o celý průběh rekonstrukce od návrhu až po finální dokončení. Kvalitní řemeslná práce, ověřené materiály a dodržené termíny jsou pro nás samozřejmostí.'
 			regions={REGIONS_SENTENCE}
 			image={featuredProject.preview}

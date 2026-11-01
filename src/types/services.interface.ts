@@ -33,6 +33,8 @@ export interface IService {
 	}[];
 	/** <title>/meta description of the detail page — tighter and more keyword-led than the card title. */
 	seoTitle: string;
+	/** The <h1> of the detail page: the service the way people search for it, where the card title is the short name. */
+	headline: string;
 	seoDescription: string;
 	icon: IconNames;
 	features: string[];
