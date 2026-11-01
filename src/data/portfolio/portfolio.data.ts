@@ -5,10 +5,10 @@ import type {
 	PhotoPhase,
 	PortfolioCategory,
 } from '@/types/portfolio.interface';
-import remoteJson from './portfolio.remote.json';
+import projectsJson from './projects.json';
 
 /**
- * The shape scripts/fetch-portfolio.mjs writes. Declared rather than inferred:
+ * The shape of projects.json. Declared rather than inferred:
  * TypeScript would type `photos` as one object literal per project, keyed by
  * that project's file names, and nothing could look a photo up by name.
  */
@@ -18,7 +18,6 @@ interface IRemoteProject {
 	title: string;
 	description: string;
 	category: string;
-	categoryLabel: string;
 	location: string;
 	area: number;
 	year: number;
@@ -37,32 +36,32 @@ interface IRemoteProject {
 
 // Through `unknown`: the inferred per-project `photos` literals are not
 // comparable to a record, which is the very reason for declaring the shape.
-const remote = remoteJson as unknown as IRemoteProject[];
+const remote = projectsJson as unknown as IRemoteProject[];
 
-/** null from the database becomes an absent property, which is what the pages test for. */
+/** null in the JSON becomes an absent property, which is what the pages test for. */
 const optional = <T>(value: T | null | undefined): T | undefined => value ?? undefined;
 
-// The projects themselves are edited in the admin app and downloaded before
-// every build by scripts/fetch-portfolio.mjs — this module only turns that
-// download into the shape the pages already expect. Nothing here talks to the
-// network: by the time Vite runs, the photos are ordinary files on disk.
-
-// Original photos: the <img> fallback and what the lightbox shows.
-const allImages = import.meta.glob(
-	'../../assets/portfolio-remote/**/*.{jpg,jpeg,png,webp}',
-	{ eager: true, import: 'default' },
-) as Record<string, string>;
+// The projects live in this repository since 1 Nov 2026: projects.json for the
+// facts and texts, public/photos/<slug>/ for the photos. They used to be edited
+// in the admin and downloaded from Supabase before every build; the owner now
+// sends new projects to be added here by hand, and the admin only shows the
+// list the site publishes (scripts/export-portfolio.mjs). This module turns the
+// JSON into the shape the pages expect.
+//
+// The original photos are served from public/ as they are, at stable URLs: the
+// <img> fallback, what the lightbox shows, and the thumbnails the admin loads
+// from the live site.
 
 // Responsive WebP variants produced by scripts/generate-image-variants.mjs.
 // A portfolio card is ~380 CSS px wide while the originals are 1500-2560px,
 // so without these every card downloads several hundred KB it cannot use.
 const allVariants = import.meta.glob(
-	'../../assets/generated/portfolio-remote/**/*.webp',
+	'../../assets/generated/photos/**/*.webp',
 	{ eager: true, import: 'default' },
 ) as Record<string, string>;
 
-// "…/generated/portfolio-remote/some-slug/main-480.webp" -> key "some-slug/main", width 480
-const VARIANT_RE = /\/generated\/portfolio-remote\/(.+)-(\d+)\.webp$/;
+// "…/generated/photos/some-slug/main-480.webp" -> key "some-slug/main", width 480
+const VARIANT_RE = /\/generated\/photos\/(.+)-(\d+)\.webp$/;
 
 const srcSets = new Map<string, string>();
 
@@ -78,21 +77,23 @@ for (const [path, url] of Object.entries(allVariants)) {
 
 /** Widths arrive in glob order; srcset is order-independent, so sorting is cosmetic. */
 const imageOf = (project: IRemoteProject, file: string): IProjectPhoto => {
-	const path = `../../assets/portfolio-remote/${project.slug}/${file}`;
-	const src = allImages[path];
+	const srcSet = srcSets.get(`${project.slug}/${file.replace(/\.\w+$/, '')}`);
 
-	// A photo listed in the manifest but missing on disk means the download was
-	// interrupted. Breaking the build is better than shipping a blank card.
-	if (!src)
+	// The variants are made from the files in public/photos, so a photo with
+	// none is a photo listed in projects.json but missing on disk — or added
+	// since the variants were last generated. Breaking the build is better than
+	// shipping a blank card.
+	if (!srcSet)
 		throw new Error(
-			`Portfolio image not found: ${path}. Run "npm run portfolio:fetch" to download it.`,
+			`Portfolio photo not found: public/photos/${project.slug}/${file}. ` +
+				'Check the file, then run "npm run images:variants".',
 		);
 
 	const details = project.photos?.[file];
 
 	return {
-		src,
-		srcSet: srcSets.get(`${project.slug}/${file.replace(/\.\w+$/, '')}`),
+		src: `/photos/${project.slug}/${file}`,
+		srcSet,
 		caption: optional(details?.caption),
 		phase: optional(details?.phase),
 	};
@@ -188,7 +189,7 @@ export const featuredProject = (() => {
 	const project = getProjectBySlug(FEATURED_SLUG) ?? portfolioData[0];
 
 	if (!project)
-		throw new Error('The portfolio is empty — scripts/fetch-portfolio.mjs found no projects.');
+		throw new Error('The portfolio is empty — src/data/portfolio/projects.json has no projects.');
 
 	return project;
 })();

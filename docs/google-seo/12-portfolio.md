@@ -144,8 +144,9 @@ projektu» на 25–68 слов, галерея с `alt` вида «fotografie 
 > дата `completed_on` и пары фото `pair_id` пока не делались. Вместо пар фото
 > группируются по этапу в главы «Výchozí stav», «Co jsme udělali», «Výsledek».
 
-Путь данных: админка (`mini-app-kartstav`, выкладывается на Netlify) → Supabase → `scripts/fetch-portfolio.mjs`
-при сборке → `portfolio.remote.json` → [`portfolio.data.ts`](../../src/data/portfolio/portfolio.data.ts)
+Путь данных (с 1.11.2026): [`projects.json`](../../src/data/portfolio/projects.json) и фото в
+`public/photos/` в репозитории → [`portfolio.data.ts`](../../src/data/portfolio/portfolio.data.ts). Раньше
+проекты правились в админке и скачивались из Supabase при сборке; теперь админка их только показывает
 → [`ProjectPage.tsx`](../../src/pages/ProjectPage/ProjectPage.tsx).
 
 Новые поля нужны во всех звеньях. Предлагаемая схема (названия — для обсуждения):

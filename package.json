@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run portfolio:fetch && npm run images:variants && vite",
-    "prebuild": "npm run portfolio:fetch && npm run images:variants",
-    "build": "tsc -b && vite-react-ssg build && node scripts/generate-sitemap.mjs",
-    "portfolio:fetch": "node scripts/fetch-portfolio.mjs",
+    "dev": "npm run images:variants && vite",
+    "prebuild": "npm run images:variants",
+    "build": "tsc -b && vite-react-ssg build && node scripts/generate-sitemap.mjs && node scripts/export-portfolio.mjs",
     "images:variants": "node scripts/generate-image-variants.mjs",
     "lint": "eslint .",
     "preview": "vite preview",

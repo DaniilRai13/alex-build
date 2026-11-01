@@ -11,10 +11,9 @@
 // all 19 URLs as freshly changed, and a lastmod that is always today is a
 // lastmod nobody should believe.
 //
-// Project pages now have an honest one: `updated_at` of the project row in the
-// admin, which scripts/fetch-portfolio.mjs writes into portfolio.remote.json.
-// It moves when a project is edited (and, harmlessly, when the list is
-// reordered). /portfolio takes the newest of them. Everything else still goes
+// Project pages now have an honest one: `updatedAt` in
+// src/data/portfolio/projects.json, set by hand whenever a project is edited
+// there. /portfolio takes the newest of them. Everything else still goes
 // without: its content lives in the code, and dating it would need `git log`
 // per source file plus fetch-depth: 0 in the deploy workflow.
 import { readdir, readFile, writeFile } from 'node:fs/promises';
@@ -95,7 +94,7 @@ const contentDates = async () => {
 	try {
 		projects = JSON.parse(
 			await readFile(
-				path.resolve(__dirname, '..', 'src', 'data', 'portfolio', 'portfolio.remote.json'),
+				path.resolve(__dirname, '..', 'src', 'data', 'portfolio', 'projects.json'),
 				'utf8',
 			),
 		);

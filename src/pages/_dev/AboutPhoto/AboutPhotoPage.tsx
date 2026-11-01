@@ -5,14 +5,8 @@ import page from './AboutPhoto.module.scss';
 
 // Dev-only preview, wired up in App.tsx behind import.meta.env.DEV.
 
-const shots = import.meta.glob(
-	'../../../assets/portfolio-remote/**/*.jpg',
-	{ eager: true, import: 'default' },
-) as Record<string, string>;
-
-/** 'slug/file.jpg' -> the built URL, or undefined if the download is missing. */
-const shot = (ref: string) =>
-	Object.entries(shots).find(([path]) => path.endsWith(`/${ref}`))?.[1];
+/** 'slug/file.jpg' -> its URL in public/photos. */
+const shot = (ref: string) => `/photos/${ref}`;
 
 interface Candidate {
 	ref: string;
@@ -135,7 +129,7 @@ const AboutPhotoPage: FC = () => (
 					) : (
 						<p className={page.missing}>
 							Файл {candidate.ref} не найден — запусти{' '}
-							<code>npm run portfolio:fetch</code>.
+							проверь <code>public/photos</code>.
 						</p>
 					)}
 				</section>
