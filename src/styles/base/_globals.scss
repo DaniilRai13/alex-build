@@ -1,4 +1,27 @@
 @import '@styles/abstracts/var';
+
+// The vertical rhythm of every page, in two steps. Custom properties rather
+// than SCSS variables: the phone value lives here once, instead of a media
+// query in every block that uses it.
+//
+// --section-gap separates the blocks of a page — home sections, the FAQ, the
+//   banner at the bottom, chapters of a project. Was 25 to 80px depending on
+//   who wrote the block.
+// --group-gap holds together pieces of one block — a page heading and the
+//   stats or menu under it.
+//
+// 56px on phones, not the home page's old 60: the home page is already long
+// there, and this is the setting to turn if it has to get shorter still.
+:root {
+	--section-gap: 80px;
+	--group-gap: 32px;
+
+	@media (max-width: $screen-tb) {
+		--section-gap: 56px;
+		--group-gap: 24px;
+	}
+}
+
 html,
 body {
 	height: 100%;

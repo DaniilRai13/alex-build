@@ -50,6 +50,10 @@ const Seo: FC<SeoProps> = ({
 			) : (
 				<link rel='canonical' href={url} />
 			)}
+			{/* Lets Google show the photos large — in image search and Discover a
+			    thumbnail sells a renovation far worse. A sibling rather than a
+			    fragment with the canonical: <Head> drops tags nested in one. */}
+			{!noindex && <meta name='robots' content='max-image-preview:large' />}
 
 			{/* Open Graph — соцсети и мессенджеры */}
 			<meta property='og:type' content={ogType} />

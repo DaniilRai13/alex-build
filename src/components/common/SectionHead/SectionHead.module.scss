@@ -1,0 +1,31 @@
+@import '@styles/abstracts/var';
+
+.eyebrow {
+	display: block;
+	margin-bottom: 10px;
+
+	color: $red;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+// Nested so it outranks the single-class rule in Heading.module.scss: the
+// heading is the statement of the block, not a section label, so it keeps the
+// dark text while the eyebrow above carries the red.
+.head .title {
+	margin-bottom: 1rem;
+	letter-spacing: 0;
+}
+
+// The last child, so the space below the head is the caller's to set.
+.head > :last-child {
+	margin-bottom: 0;
+}
+
+// A custom property rather than a fixed value: a lead in a narrow column has
+// its measure from the column and sets this to none.
+.lead {
+	max-width: var(--lead-measure, 60ch);
+}
