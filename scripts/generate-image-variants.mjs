@@ -31,21 +31,26 @@ const OUTPUT = path.join(ASSETS, 'generated');
 // desktop cards, 1600 the project cover and retina. Anything larger is only
 // ever seen in the lightbox, which loads the original.
 //
+// The portfolio originals live in public/photos (served as they are, at
+// stable URLs the admin can load), so that group names its own source folder.
+//
 // Services: `widths: null` means one variant at the source size. Those
 // illustrations are already only ~400-480px wide, so there is nothing to
 // resize — the win there is purely PNG to WebP, which cuts them 4x.
-// `portfolio-remote` is the copy downloaded from Supabase by
-// scripts/fetch-portfolio.mjs and is what the site renders.
 //
-// The pre-migration `portfolio` folder is still in git as the way back, but it
-// is deliberately not listed here: nothing imports it any more, so resizing it
-// would burn half a minute of every build for files no page would ever ask for.
+// Hero: the full-width banner on the home page — up to ~1220 CSS px, so 2000
+// for retina laptops, 800 for phones.
 const GROUPS = [
-	{ name: 'portfolio-remote', widths: [480, 960, 1600] },
+	{
+		name: 'photos',
+		source: path.resolve(__dirname, '..', 'public', 'photos'),
+		widths: [480, 960, 1600],
+	},
 	{ name: 'services', widths: null },
+	{ name: 'hero', widths: [800, 1400, 2000] },
 ];
 
-const QUALITY = { 480: 75, 960: 78, 1600: 78, native: 80 };
+const QUALITY = { 480: 75, 800: 76, 960: 78, 1400: 78, 1600: 78, 2000: 76, native: 80 };
 
 // WebP belongs here now: the admin re-encodes uploads to WebP in the browser
 // before they are stored, so a photo added there arrives as .webp and would
@@ -57,8 +62,8 @@ async function* walk(dir) {
 	try {
 		entries = await readdir(dir, { withFileTypes: true });
 	} catch {
-		// A group whose folder does not exist yet — portfolio-remote before the
-		// first fetch. Nothing to resize is not an error.
+		// A group whose folder does not exist (yet). Nothing to resize is not an
+		// error.
 		return;
 	}
 
@@ -88,7 +93,7 @@ const run = async () => {
 	let bytes = 0;
 
 	for (const group of GROUPS) {
-		const root = path.join(ASSETS, group.name);
+		const root = group.source ?? path.join(ASSETS, group.name);
 
 		for await (const source of walk(root)) {
 			const relative = path.relative(root, source);

@@ -42,16 +42,9 @@ jobs:
         run: |
           printf "<?php\nreturn ['url' => '%s', 'key' => '%s', 'salt' => '%s'];\n" "$SB_URL" "$SB_SERVICE_KEY" "$SB_SALT" > public/analytics-config.php
 
-      # The portfolio lives in Supabase and is downloaded by
-      # scripts/fetch-portfolio.mjs during prebuild. Without these the build has
-      # no projects to render and stops rather than publishing an empty site.
-      #
-      # Deliberately unprefixed: Vite inlines only VITE_* into the browser
-      # bundle, so these stay in the build step where they belong.
+      # The portfolio is in the repository (src/data/portfolio/projects.json and
+      # public/photos) since 1 Nov 2026, so the build needs no Supabase access.
       - name: Build
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: npm run build
 
       - name: Deploy to Forpsi via FTP

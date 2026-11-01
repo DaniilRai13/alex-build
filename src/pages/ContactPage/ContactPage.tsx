@@ -9,8 +9,11 @@ import Seo from '@/components/common/Seo/Seo';
 const ContactPage: FC = () => {
 	return (
 		<div className={styles.contacts}>
+			{/* No "rekonstrukce bytů Teplice" here: that query belongs to the home
+			    page, and a contact page carrying it too only competes with it.
+			    People land here by the brand name, which the title suffix adds. */}
 			<Seo
-				title='Kontakt – rekonstrukce bytů Teplice'
+				title='Kontakt a nezávazná poptávka'
 				description='Kontaktujte nás a nezávazně proberte svůj projekt rekonstrukce. Zanechte poptávku – ozveme se a připravíme řešení na míru.'
 				path='/contacts'
 			/>

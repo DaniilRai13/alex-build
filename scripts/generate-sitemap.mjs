@@ -6,15 +6,16 @@
 // portfolio projects show up in the sitemap the moment they are added to the
 // data files — nobody has to remember to update an XML file.
 
-// No <lastmod>. It used to come from the generated file's mtime, which is the
-// build time — so every deploy announced all 19 URLs as freshly changed, and a
-// lastmod that is always today is a lastmod nobody should believe. Omitting it
-// is valid and lets crawlers fall back to what they observe.
+// <lastmod> only where the date comes from the content. It used to be the
+// generated file's mtime, which is the build time — so every deploy announced
+// all 19 URLs as freshly changed, and a lastmod that is always today is a
+// lastmod nobody should believe.
 //
-// To bring it back honestly, the date has to come from the content: either an
-// `updated` field maintained alongside each project and service, or `git log`
-// per source file — which would also need fetch-depth: 0 in the deploy
-// workflow, since the default shallow checkout has no history to read.
+// Project pages now have an honest one: `updatedAt` in
+// src/data/portfolio/projects.json, set by hand whenever a project is edited
+// there. /portfolio takes the newest of them. Everything else still goes
+// without: its content lives in the code, and dating it would need `git log`
+// per source file plus fetch-depth: 0 in the deploy workflow.
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -85,18 +86,45 @@ const isIndexable = async file => {
 const ruleFor = url =>
 	PRIORITIES.find(rule => rule.match(url)) ?? DEFAULT_RULE;
 
+/** URL -> YYYY-MM-DD for the project pages and the listing above them. */
+const contentDates = async () => {
+	const dates = new Map();
+
+	let projects;
+	try {
+		projects = JSON.parse(
+			await readFile(
+				path.resolve(__dirname, '..', 'src', 'data', 'portfolio', 'projects.json'),
+				'utf8',
+			),
+		);
+	} catch {
+		return dates;
+	}
+
+	for (const project of projects) {
+		if (project.updatedAt) dates.set(`/portfolio/${project.slug}`, project.updatedAt.slice(0, 10));
+	}
+
+	const newest = [...dates.values()].sort().at(-1);
+	if (newest) dates.set('/portfolio', newest);
+
+	return dates;
+};
+
 const run = async () => {
 	const files = [];
 	for await (const file of walk(DIST)) files.push(file);
 
 	const entries = [];
+	const dates = await contentDates();
 
 	for (const file of files) {
 		const url = toRoute(file);
 		if (EXCLUDED.has(url)) continue;
 		if (!(await isIndexable(file))) continue;
 
-		entries.push({ url, ...ruleFor(url) });
+		entries.push({ url, lastmod: dates.get(url), ...ruleFor(url) });
 	}
 
 	entries.sort((a, b) => a.url.localeCompare(b.url));
@@ -108,6 +136,7 @@ const run = async () => {
 			[
 				'  <url>',
 				`    <loc>${SITE_URL}${entry.url === '/' ? '/' : entry.url}</loc>`,
+				...(entry.lastmod ? [`    <lastmod>${entry.lastmod}</lastmod>`] : []),
 				`    <changefreq>${entry.changefreq}</changefreq>`,
 				`    <priority>${entry.priority}</priority>`,
 				'  </url>',

@@ -1,0 +1,402 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+// The lead service as a dark panel, the other three as compact cards: three
+// columns on a laptop, side-on cards stacked on a tablet, a swipeable strip on
+// a phone.
+
+.block {
+	display: grid;
+	gap: 24px;
+
+	@media (max-width: $screen-md) {
+		gap: 16px;
+	}
+}
+
+// ─── Shared pieces ───────────────────────────────────────────────────────────
+
+// Icon beside the name rather than above it: one row instead of two, ~60px
+// shorter per card, and the icon reads as part of the title.
+.head {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.badge {
+	display: grid;
+	place-items: center;
+	flex-shrink: 0;
+
+	width: 38px;
+	height: 38px;
+
+	border-radius: $radius-md;
+	background: rgba($red, 0.1);
+	color: $red;
+}
+
+// The service name is the link: four anchors that say where they go.
+.title {
+	margin: 0;
+
+	color: $text-primary;
+	font-size: 1.1rem;
+	font-weight: 600;
+	line-height: 1.25;
+
+	a {
+		color: inherit;
+		transition: color $transition-fast;
+
+		@media (hover: hover) {
+			&:hover {
+				color: $red;
+			}
+		}
+	}
+}
+
+.desc {
+	margin-bottom: 16px;
+
+	color: $text-secondary;
+	font-size: 0.9rem;
+	line-height: 1.6;
+}
+
+.features {
+	display: grid;
+	gap: 7px 24px;
+
+	margin: 0 0 18px;
+	padding: 0;
+	list-style: none;
+
+	li {
+		display: flex;
+		align-items: flex-start;
+		gap: 9px;
+
+		color: $text-primary;
+		font-size: 0.88rem;
+		line-height: 1.4;
+
+		&::before {
+			content: '✓';
+			flex-shrink: 0;
+			color: $red;
+			font-weight: 700;
+			line-height: 1.35;
+		}
+	}
+}
+
+.more {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+
+	color: $red;
+	font-size: 0.92rem;
+	font-weight: 600;
+	transition: 0.25s;
+
+	@media (hover: hover) {
+		&:hover {
+			color: $red-dark;
+			transform: translateX(3px);
+		}
+	}
+}
+
+// ─── Lead panel ──────────────────────────────────────────────────────────────
+
+.lead {
+	@include card($bg-dark-warm);
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
+	align-items: center;
+	gap: 40px;
+
+	padding: 36px 40px;
+
+	.head {
+		margin-bottom: 14px;
+	}
+
+	.badge {
+		width: 44px;
+		height: 44px;
+		background: rgba($text-white, 0.08);
+		// $red drops to 1.95:1 on this surface.
+		color: $red-on-dark;
+	}
+
+	.title {
+		color: $text-white;
+		font-size: clamp(1.35rem, 1rem + 1.2vw, 1.9rem);
+
+		a:hover {
+			color: $red-on-dark;
+		}
+	}
+
+	.desc {
+		max-width: 580px;
+		margin-bottom: 20px;
+		color: rgba($text-white, 0.72);
+		font-size: 0.97rem;
+	}
+
+	.features {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		margin-bottom: 26px;
+
+		li {
+			color: rgba($text-white, 0.9);
+			font-size: 0.93rem;
+
+			&::before {
+				color: $red-on-dark;
+			}
+		}
+	}
+
+	// One column: the sketch leaves the grid and fades in behind the copy, the
+	// way the live panel's drawing sits — otherwise the right side of a wide,
+	// single-column panel is just empty dark.
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: minmax(0, 1fr);
+		padding: 30px 28px;
+	}
+
+	@media (max-width: $screen-md) {
+		padding: 24px 20px;
+
+		.desc {
+			font-size: 0.92rem;
+			margin-bottom: 18px;
+		}
+
+		.features {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 8px;
+			margin-bottom: 22px;
+
+			li {
+				font-size: 0.9rem;
+			}
+		}
+	}
+}
+
+.leadText {
+	position: relative;
+	z-index: 1;
+}
+
+.button {
+	background: $red;
+	padding: 0.8rem 2rem;
+	color: $text-white;
+
+	@media (max-width: $screen-md) {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+.art {
+	pointer-events: none;
+
+	@media (max-width: $screen-tb-lg2) {
+		position: absolute;
+		right: -20px;
+		bottom: -10px;
+		z-index: 0;
+
+		width: 55%;
+		opacity: 0.4;
+	}
+
+	// Behind a single column of text a drawing at any visible strength fights
+	// the copy, and at this width it would be a couple of centimetres of smudge.
+	@media (max-width: $screen-md) {
+		display: none;
+	}
+}
+
+// A pencil sketch is dark lines on white. Inverted it becomes light lines on
+// black, and `screen` drops the black — what is left reads as chalk.
+.sketch {
+	display: block;
+	width: 100%;
+	max-width: 440px;
+	height: auto;
+	margin-left: auto;
+
+	filter: invert(1);
+	mix-blend-mode: screen;
+	opacity: 0.55;
+}
+
+// ─── The other three ─────────────────────────────────────────────────────────
+
+.restWrap {
+	min-width: 0;
+}
+
+.rest {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+
+	// Three in a row stop fitting here, but a tablet is still wide enough to
+	// lay each card on its side — see .card. A strip at this width showed two
+	// cards and a third of the last one, with nowhere to swipe to.
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 16px;
+	}
+
+	// Phones: a strip that scrolls sideways keeps the block one card tall
+	// instead of three stacked — and every card is still in the HTML, which a
+	// carousel that renders one slide at a time would not be.
+	@media (max-width: $screen-md) {
+		grid-template-columns: none;
+		grid-auto-flow: column;
+		grid-auto-columns: min(82%, 320px);
+		gap: 12px;
+
+		// Bleeds to the screen edges (the layout container pads 1rem here), so
+		// the next card is cut by the screen, which says "swipe", not by an
+		// invisible margin.
+		margin-inline: -1rem;
+		padding: 6px 1rem 20px;
+		scroll-padding-inline: 1rem;
+
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+}
+
+.card {
+	@include card;
+
+	display: flex;
+	flex-direction: column;
+	padding: 22px 24px;
+
+	// The link sits on the bottom edge whatever the copy length, so all three
+	// cards end on one line.
+	.more {
+		margin-top: auto;
+	}
+
+	// Tablet: the card on its side — name, description and link on the left,
+	// the list on the right — about 200px tall instead of 340.
+	@media (min-width: $screen-md + 1) and (max-width: $screen-tb-lg2) {
+		display: grid;
+		grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+		grid-template-rows: auto auto 1fr;
+		grid-template-areas:
+			'head features'
+			'desc features'
+			'more features';
+		column-gap: 32px;
+
+		padding: 22px 26px;
+
+		.head {
+			grid-area: head;
+		}
+
+		.desc {
+			grid-area: desc;
+		}
+
+		.features {
+			grid-area: features;
+			align-self: center;
+			margin: 0;
+		}
+
+		.more {
+			grid-area: more;
+			align-self: end;
+			justify-self: start;
+		}
+	}
+
+	@media (max-width: $screen-md) {
+		padding: 20px;
+		scroll-snap-align: start;
+		// The strip clips overflow, so the site's 40px shadow would be cut off
+		// at the strip's edge. A tighter one fits inside its padding.
+		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+	}
+}
+
+// ─── Dots ────────────────────────────────────────────────────────────────────
+
+.dots {
+	display: none;
+
+	@media (max-width: $screen-md) {
+		display: flex;
+		justify-content: center;
+		gap: 4px;
+		margin-top: -6px;
+	}
+}
+
+// The visible dot is 8px; the button around it is 24px, so a thumb can hit it.
+.dot {
+	display: grid;
+	place-items: center;
+
+	width: 24px;
+	height: 24px;
+	padding: 0;
+
+	border: none;
+	background: none;
+	cursor: pointer;
+
+	&::before {
+		content: '';
+		width: 8px;
+		height: 8px;
+
+		border-radius: 999px;
+		background: rgba($text-primary, 0.22);
+		transition:
+			width $transition-fast,
+			background $transition-fast;
+	}
+}
+
+.dotActive::before {
+	width: 22px;
+	background: $red;
+}
+
+// When the dot pill widens, the button has to as well or it overlaps its
+// neighbour.
+.dotActive {
+	width: 36px;
+}

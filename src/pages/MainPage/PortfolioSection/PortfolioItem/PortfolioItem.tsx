@@ -1,5 +1,6 @@
 import Image from '@/components/ui/Image/Image';
 import { projectPath } from '@/config/routes';
+import { projectFacts } from '@/data/portfolio/portfolio.data';
 import { type FC } from 'react';
 import { Link } from 'react-router-dom';
 import type { IPortfolioItems } from '../PortfolioSection';
@@ -23,8 +24,14 @@ const PortfolioItem: FC<Props> = ({ item }) => {
 					sizes='(max-width: 768px) 85vw, 33vw'
 					alt={`${project.title} – ${project.location}`}
 				/>
+				{/*
+					The facts under the title are the words a search for this kind of
+					job contains — the town, the size and, once the admin has them, the
+					layout and the building. The title alone said only what was done.
+				*/}
 				<div className={styles.overlay}>
-					<span>{project.title}</span>
+					<span className={styles.title}>{project.title}</span>
+					<span className={styles.facts}>{projectFacts(project).join(' · ')}</span>
 				</div>
 			</Link>
 		</article>

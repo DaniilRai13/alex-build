@@ -1,6 +1,7 @@
 import Image from '@/components/ui/Image/Image';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { projectPath } from '@/config/routes';
+import { hasBeforeAfter } from '@/data/portfolio/portfolio.data';
 import type { IPortfolioProject } from '@/types/portfolio.interface';
 import { Link } from 'react-router-dom';
 import styles from './PortfolioCard.module.scss';
@@ -21,17 +22,20 @@ const PortfolioCard = ({ project, priority = false }: Props) => {
 					src={project.preview.src}
 					srcSet={project.preview.srcSet}
 					sizes='(max-width: 530px) 100vw, (max-width: 834px) 50vw, 33vw'
-					alt={`${project.title} – ${project.location}`}
+					alt={project.preview.caption ?? `${project.title} – ${project.location}`}
 					priority={priority}
 				/>
 				<div className={styles.overlay} />
 
 				<div className={styles.content}>
-					<span className={styles.category}>{project.categoryLabel}</span>
+					{/* The category badge went: the section heading above already
+					    says it. What a card can add is whether the project shows
+					    where it started. */}
+					{hasBeforeAfter(project) && <span className={styles.badge}>Před a po</span>}
 
-					{/* h2, not h3: the card sits directly under the page <h1>, and
-					    skipping a level breaks the document outline. */}
-					<h2 className={styles.title}>{project.title}</h2>
+					{/* h3: the card sits under its section's <h2>, which sits under
+					    the page <h1>. */}
+					<h3 className={styles.title}>{project.title}</h3>
 
 					<div className={styles.info}>
 						<Icon icon='MapPin' size={14} />
@@ -40,6 +44,10 @@ const PortfolioCard = ({ project, priority = false }: Props) => {
 						<span>•</span>
 
 						<span>{project.area} m²</span>
+
+						<span>•</span>
+
+						<span>{project.year}</span>
 					</div>
 				</div>
 

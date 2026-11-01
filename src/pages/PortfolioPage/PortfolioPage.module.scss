@@ -4,7 +4,7 @@
 	position: relative;
 	max-width: 760px;
 	padding-left: 20px;
-	margin-bottom: 40px;
+	margin-bottom: var(--group-gap);
 	&::before {
 		content: '';
 		position: absolute;
@@ -27,7 +27,7 @@
 	}
 	.title {
 		margin-bottom: 20px;
-		font-size: clamp(2.2rem, 4vw, 2.9rem);
+		font-size: clamp(2.2rem, 4vw, 2.5rem);
 		font-weight: 700;
 		text-transform: uppercase;
 		line-height: 1.2;
@@ -36,21 +36,137 @@
 	}
 
 	.description {
-		max-width: 620px;
+		max-width: 720px;
 		font-size: 1.05rem;
-		line-height: 1.5;
+		line-height: 1.6;
 		margin-left: 3px;
 		color: $text-secondary;
+
+		p + p {
+			margin-top: 12px;
+		}
 	}
 }
 
-.filters {
+// The figures, counted from the data. A row of facts rather than cards: they
+// support the copy above, they are not a feature of their own.
+.stats {
 	display: flex;
-	justify-content: center;
 	flex-wrap: wrap;
-	gap: 12px;
+	gap: 14px 40px;
 
-	margin-bottom: 55px;
+	margin: 0 0 var(--group-gap);
+	padding: 0;
+	list-style: none;
+
+	li {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		color: $text-secondary;
+		font-size: 0.9rem;
+	}
+
+	strong {
+		color: $text-primary;
+		font-size: 1.6rem;
+		font-weight: 700;
+		line-height: 1.1;
+	}
+}
+
+// Where the filter buttons were. Links now, not toggles: every project stays in
+// the HTML and the buttons simply take you to its section.
+.jump {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+
+	margin-bottom: var(--section-gap);
+}
+
+.jumpLink {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+
+	padding: 0.6rem 1.1rem;
+	border: 1px solid rgba($red, 0.35);
+	border-radius: 999px;
+
+	color: $text-primary;
+	font-size: 0.95rem;
+	font-weight: 600;
+
+	transition:
+		background-color 0.25s,
+		color 0.25s;
+
+	&:hover,
+	&:focus-visible {
+		background: $red;
+		color: #fff;
+
+		.jumpCount {
+			background: rgba(#fff, 0.25);
+			color: #fff;
+		}
+	}
+}
+
+.jumpCount {
+	min-width: 1.6rem;
+	padding: 0.1rem 0.45rem;
+	border-radius: 999px;
+	background: rgba($red, 0.12);
+	color: $red;
+	font-size: 0.8rem;
+	text-align: center;
+}
+
+.section {
+	margin-bottom: var(--section-gap);
+	// The header is sticky; without this a jump link lands the heading under it.
+	scroll-margin-top: calc(#{$header-height} + 20px);
+}
+
+.sectionHead {
+	max-width: 760px;
+	margin-bottom: 25px;
+
+	.sectionTitle {
+		margin-bottom: 12px;
+		font-size: clamp(1.5rem, 2.4vw, 2rem);
+		color: $text-primary;
+	}
+
+	.sectionIntro {
+		margin-bottom: 12px;
+		color: $text-secondary;
+		font-size: 1rem;
+		line-height: 1.65;
+	}
+}
+
+.serviceLink {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+
+	color: $red;
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+
+	svg {
+		transition: transform 0.25s;
+	}
+
+	&:hover svg,
+	&:focus-visible svg {
+		transform: translateX(3px);
+	}
 }
 
 
@@ -67,6 +183,10 @@
 
 	.description {
 		font-size: 0.95rem;
+	}
+
+	.stats strong {
+		font-size: 1.35rem;
 	}
 }
 

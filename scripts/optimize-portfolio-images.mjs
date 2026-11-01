@@ -22,7 +22,7 @@ import sharp from 'sharp';
 sharp.cache(false);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..', 'src', 'assets', 'portfolio');
+const ROOT = path.resolve(__dirname, '..', 'public', 'photos');
 
 // Jemnější profil pro titulní snímky, agresivnější pro zbytek galerie.
 // skipUnder je zvolen tak, aby se už zpracované soubory při dalším běhu

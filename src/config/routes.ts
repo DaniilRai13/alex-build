@@ -6,6 +6,9 @@ export const ROUTES = {
 	SERVICE: '/services/:slug',
 	PORTFOLIO: '/portfolio',
 	CONTACTS: '/contacts',
+	// What the price depends on and how it is set. No figures yet — the owner
+	// has not given any; this is the URL they will go on once they arrive.
+	PRICING: '/cenik',
 	// Projects live under the listing that shows them. They used to sit on
 	// their own branch at /project/:slug while the listing was at /portfolio,
 	// which left the parent path /project with nothing to serve — and, because

@@ -12,14 +12,13 @@
 	align-items: start;
 	gap: 30px;
 
-	padding-top: 80px;
+	padding-top: var(--section-gap);
 
 	// 900 rather than $screen-tb-lg2: below this the two columns are too narrow
 	// to read side by side. The hero already breaks at the same width.
 	@media (max-width: $screen-tb) {
 		grid-template-columns: 1fr;
 		gap: 25px;
-		padding-top: 50px;
 	}
 }
 
@@ -159,28 +158,10 @@
 	}
 }
 
-.eyebrow {
-	display: block;
-	margin-bottom: 10px;
+.head {
+	--lead-measure: 54ch;
 
-	color: $red;
-	font-size: 0.85rem;
-	font-weight: 600;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-// Nested so it outranks the single-class rule in Heading.module.scss: this
-// heading is the statement of the block, not a section label, so it keeps the
-// dark text while the eyebrow above carries the red.
-.copy .title {
-	margin-bottom: 1rem;
-	letter-spacing: 0;
-}
-
-.text {
 	margin-bottom: 2rem;
-	max-width: 54ch;
 }
 
 .stats {
@@ -257,7 +238,7 @@
 }
 
 @media (max-width: $screen-md) {
-	.text {
+	.head {
 		margin-bottom: 1.5rem;
 	}
 

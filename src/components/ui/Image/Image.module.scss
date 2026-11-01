@@ -7,4 +7,12 @@
 // in its parent's layout, so existing selectors and grid/flex rules still apply.
 .picture {
 	display: contents;
+
+	// <source> is display: block by default. Once the <picture> stops making a
+	// box of its own, that empty block lands in the parent's layout as a grid
+	// item and takes a cell — the hero's text was pushed into its second
+	// column. Hiding it does not affect which source the browser picks.
+	source {
+		display: none;
+	}
 }

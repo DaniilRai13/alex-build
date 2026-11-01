@@ -1,0 +1,109 @@
+@import '@styles/abstracts/var';
+
+// Copy left, the pair right — the same split as the About block, so the page
+// keeps one rhythm.
+.section {
+	display: grid;
+	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+	align-items: center;
+	gap: 48px;
+
+	padding-top: var(--section-gap);
+
+	@media (max-width: 992px) {
+		grid-template-columns: 1fr;
+		gap: 28px;
+	}
+}
+
+.copy {
+	min-width: 0;
+}
+
+.head {
+	--lead-measure: 54ch;
+
+	margin-bottom: 2rem;
+
+	@media (max-width: 992px) {
+		margin-bottom: 1.5rem;
+	}
+}
+
+.copy .button {
+	padding: 14px 30px;
+	// Button defaults to dark text; every filled red button sets its own.
+	color: $text-white;
+
+	@media (max-width: $screen-tb) {
+		padding: 11px 24px;
+		font-size: 0.95rem;
+	}
+}
+
+// Side by side even on a phone: a before-and-after stacked one above the other
+// stops being a comparison.
+.pair {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+
+	@media (max-width: $screen-md) {
+		gap: 10px;
+	}
+}
+
+.figure {
+	margin: 0;
+
+	figcaption {
+		margin-top: 10px;
+
+		color: $text-secondary;
+		font-size: 0.9rem;
+		line-height: 1.45;
+
+		@media (max-width: $screen-md) {
+			font-size: 0.8rem;
+		}
+	}
+}
+
+.frame {
+	position: relative;
+
+	border-radius: $radius-lg;
+	overflow: hidden;
+	box-shadow: $shadow-md;
+}
+
+// The phone photos are portrait; 3:4 shows the floor and the window both,
+// which is the whole point of this pair.
+.photo {
+	display: block;
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	object-fit: cover;
+}
+
+.label {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+
+	padding: 5px 14px;
+
+	border-radius: $radius-xl;
+	background: rgba(0, 0, 0, 0.6);
+
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+// "Po" is the result, so it carries the accent.
+.figure + .figure .label {
+	background: $red;
+}

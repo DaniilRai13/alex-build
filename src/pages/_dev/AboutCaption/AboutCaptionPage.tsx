@@ -2,6 +2,7 @@ import Seo from '@/components/common/Seo/Seo';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { projectPath } from '@/config/routes';
 import { aboutProject } from '@/data/portfolio/portfolio.data';
+import { categoryLabel } from '@/data/portfolio/portfolioCategories.data';
 import cn from 'classnames';
 import type { FC, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -117,7 +118,7 @@ const variants: Variant[] = [
 		render: (
 			<>
 				<figcaption className={cn(page.overlay, page.badge)}>
-					{p.categoryLabel}
+					{categoryLabel(p.category)}
 				</figcaption>
 				<figcaption className={cn(page.overlay, page.gradient)}>
 					<b>{p.title}</b>

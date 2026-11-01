@@ -28,7 +28,10 @@
 
 /// Short accent rule to the left of a heading — the site's recurring marker
 /// for a section title.
-@mixin accent-bar($offset: 20px) {
+/// $color exists because $red is mixed for cream: on a dark surface it drops to
+/// 1.95:1, under the 3:1 a graphical element needs to stay visible at all. Pass
+/// $red-on-dark there.
+@mixin accent-bar($offset: 20px, $color: $red) {
 	position: relative;
 	padding-left: $offset;
 
@@ -42,6 +45,36 @@
 		height: 100%;
 
 		border-radius: 10px;
-		background: $red;
+		background: $color;
+	}
+}
+
+/// A row of cards that scrolls sideways on a phone, one snap point per card.
+/// The home page uses it wherever stacking the cards would run a block past a
+/// screen: the portfolio strip and the services.
+@mixin swipe-strip($gap: 15px) {
+	display: flex;
+	gap: $gap;
+
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	padding-bottom: 12px;
+
+	&::-webkit-scrollbar {
+		height: 4px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: rgba($red, 0.1);
+		border-radius: 999px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: rgba($red, 0.8);
+		border-radius: 999px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: rgba(0, 0, 0, 0.4);
 	}
 }

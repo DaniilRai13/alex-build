@@ -1,210 +1,354 @@
 @import '@styles/abstracts/var';
 
+// Sized to the first screen rather than a fixed 700px: at Alex's ~1568×748
+// window the fixed height pushed the bottom of the banner off-screen.
 .banner {
 	position: relative;
-	height: 700px;
-	border-bottom-left-radius: 1px;
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 340px;
+	gap: 40px;
+
+	height: clamp(540px, calc(100svh - 110px), 660px);
+	padding: 56px 64px;
+
+	border-radius: $radius-lg;
+	overflow: hidden;
 
 	.image {
+		position: absolute;
+		inset: 0;
+
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		border-radius: $radius-lg;
-		display: block;
+		// The sofa sits low in the frame; keep it in when the banner crops.
+		object-position: 50% 65%;
 	}
 
+	// Dark on the left where the text is, nearly clear on the right where the
+	// room is — the old flat 55% scrim greyed the whole photo.
 	.overlay {
 		position: absolute;
 		inset: 0;
-		border-radius: $radius-lg;
-		background: rgba(0, 0, 0, 0.55);
+		background: linear-gradient(
+			90deg,
+			rgba(0, 0, 0, 0.72) 0%,
+			rgba(0, 0, 0, 0.5) 40%,
+			rgba(0, 0, 0, 0.1) 75%
+		);
+	}
+}
+
+.content {
+	position: relative;
+	z-index: 1;
+
+	align-self: center;
+	max-width: 640px;
+
+	.title {
+		margin-bottom: 20px;
+
+		color: #fff;
+		font-size: clamp(2rem, 1rem + 2.6vw, 3.2rem);
+		font-weight: 700;
+		line-height: 1.05;
+		letter-spacing: 0;
+		// Replaces the hard <br /> the heading used to carry — the browser
+		// splits it into even lines at whatever size the clamp lands on.
+		text-wrap: balance;
+	}
+
+	.description {
+		max-width: 580px;
+		margin-bottom: 32px;
+
+		color: rgba(255, 255, 255, 0.88);
+		font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+		line-height: 1.55;
+		letter-spacing: 0;
+	}
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px 28px;
+}
+
+.button {
+	padding: 16px 32px;
+	color: #fff;
+	font-size: 0.85rem;
+	letter-spacing: 0.08em;
+}
+
+.phone {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+
+	color: #fff;
+	font-size: 1.1rem;
+	font-weight: 700;
+	white-space: nowrap;
+
+	svg {
+		color: $red-on-dark;
+	}
+
+	&:hover {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+}
+
+// ── Real projects beside the stock photo ──────────────────────────────────
+
+.proof {
+	position: relative;
+	z-index: 1;
+
+	align-self: end;
+	padding: 18px;
+
+	border-radius: $radius-lg;
+	background: rgba($bg-card, 0.94);
+	box-shadow: $shadow-md;
+	backdrop-filter: blur(8px);
+
+	ul {
+		display: grid;
+		gap: 10px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	li a {
+		display: grid;
+		grid-template-columns: 64px minmax(0, 1fr);
+		align-items: center;
+		gap: 12px;
+
+		color: $text-secondary;
+		font-size: 0.8rem;
+		line-height: 1.35;
+
+		&:hover b {
+			color: $red;
+		}
+	}
+
+	img {
+		width: 64px;
+		height: 64px;
+		border-radius: $radius-md;
+		object-fit: cover;
+	}
+
+	b {
+		display: block;
+		color: $text-primary;
+		font-size: 0.9rem;
+		transition: color $transition-fast;
+	}
+}
+
+.proofHead {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 12px;
+
+	span {
+		color: $text-primary;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+
+		color: $red;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+}
+
+// The phone's last circle; the desktop card has "Všech 9" in its head.
+.proofAll {
+	display: none;
+}
+
+// ── Tablet and phone: the photo on top melting into a dark block ──────────
+//
+// With the text laid over the photo, a phone showed a dark rectangle: the
+// room is wide and low, and in a tall narrow crop the sofa sat right under the
+// heading. Here the photo keeps the top in true colour and fades into the
+// block that carries the text.
+
+@mixin visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+@media (max-width: $screen-tb) {
+	.banner {
+		display: block;
+		height: auto;
+		padding: 0 0 22px;
+		background: $bg-dark-warm;
+
+		.image {
+			position: static;
+			height: 340px;
+			// The text below overlaps the lower half of the photo, so the photo
+			// starts fading early enough for white text to read over it.
+			-webkit-mask-image: linear-gradient(180deg, #000 25%, transparent 100%);
+			mask-image: linear-gradient(180deg, #000 25%, transparent 100%);
+		}
+
+		.overlay {
+			display: none;
+		}
 	}
 
 	.content {
-		position: absolute;
-		left: 64px;
-		bottom: 100px;
-		z-index: 2;
-		max-width: 720px;
-
-		@media (max-width: 900px) {
-			left: 50px;
-		}
-
-		// Where the geography lives, so the heading stays the line it was.
-		.badge {
-			display: inline-block;
-			margin-bottom: 14px;
-			padding: 5px 14px;
-
-			border-radius: $radius-xl;
-			background: $red;
-
-			color: #fff;
-			font-size: 0.75rem;
-			font-weight: 600;
-			letter-spacing: 0.1em;
-			text-transform: uppercase;
-		}
+		max-width: none;
+		margin-top: -150px;
+		padding: 0 20px;
 
 		.title {
-			font-size: clamp(2rem, 1rem + 3.4vw, 3.6rem);
-			line-height: 1.05;
-			font-weight: 700;
-			letter-spacing: 0;
-			color: #fff;
-			margin-bottom: 24px;
-			// Replaces the hard <br /> the heading used to carry — the browser
-			// splits it into even lines at whatever size the clamp lands on.
-			text-wrap: balance;
+			margin-bottom: 14px;
+			line-height: 1.08;
 		}
 
 		.description {
-			font-size: clamp(1rem, 0.9rem + 0.6vw, 1.25rem);
-			line-height: 1.6;
-			letter-spacing: 0;
-			color: rgba(255, 255, 255, 0.88);
-			margin-bottom: 40px;
-			max-width: 620px;
+			margin-bottom: 22px;
 		}
 	}
-	.buttonContainer {
-		position: absolute;
-		bottom: -5px;
-		left: -5px;
-		background-color: $bg-main;
-		padding: 20px 30px 15px 15px;
-		border-top-right-radius: $radius-lg;
 
-		&::before,
-		&::after {
-			content: '';
-			position: absolute;
-			width: 32px;
-			height: 32px;
-			background: transparent;
-			border-bottom-left-radius: 35px;
-			box-shadow: -8px 8px 0 $bg-main;
-		}
-
-		&::after {
-			right: -31px;
-			bottom: 4px;
-		}
-		&::before {
-			top: -31px;
-			left: 4px;
-		}
-		.button {
-			border: none;
-			background: $red;
-			color: #fff;
-			padding: 18px 40px;
-			font-size: 18px;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			transition: 0.25s ease;
-			&:hover {
-				background: $red-dark;
-				transform: translateY(-3px);
-				box-shadow: 0 10px 26px rgba($red, 0.5);
-			}
-		}
-	}
-}
-
-@media (max-width: 992px) {
-	.hero {
-		padding: 20px;
+	.actions {
+		flex-direction: column;
+		gap: 14px;
 	}
 
-	.banner {
-		height: 600px;
-	}
-
-	.content {
-		left: 32px;
-		bottom: 32px;
-	}
-}
-
-@media (max-width: 768px) {
-	.banner {
-		height: 650px;
-		border-radius: 24px;
-		border-bottom-left-radius: 24px;
-
-		.content {
-			left: 24px;
-			right: 24px;
-			bottom: 120px;
-			max-width: none;
-
-			.title {
-				line-height: 1.1;
-				margin-bottom: 18px;
-			}
-			.description {
-				line-height: 1.3;
-			}
-		}
-
-		.buttonContainer {
-			left: 20px;
-			right: 20px;
-			bottom: 24px;
-
-			padding: 0;
-			background: transparent;
-
-			&::before,
-			&::after {
-				display: none;
-			}
-
-			.button {
-				width: 100%;
-				padding: 18px;
-				font-size: 1.1rem;
-			}
-		}
-	}
-}
-
-@media (max-width: 560px) {
-	.banner {
-		height: 580px;
-
-		.content {
-			left: 20px;
-			right: 20px;
-			bottom: 100px;
-		}
-	}
-}
-@media (max-width: 480px) {
-	.banner {
-		height: 500px;
-
-		.content {
-			left: 15px;
-			right: 15px;
-			bottom: 90px;
-		}
-		.buttonContainer {
-			.button {
-				width: 100%;
-				padding: 12px;
-				font-size: 16px;
-			}
-		}
-	}
-}
-@media (max-width: $screen-xs) {
 	.button {
-		h3 {
-			font-size: 1rem;
+		width: 100%;
+		padding: 16px;
+	}
+
+	.phone {
+		align-self: center;
+	}
+
+	// The jobs as a row of circles, like stories: three cards of text would
+	// push the banner past the first screen. Titles and town stay in the HTML
+	// for screen readers and search; on screen each circle says its size.
+	.proof {
+		margin: 22px 20px 0;
+		padding: 18px 0 0;
+
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 0;
+		background: none;
+		box-shadow: none;
+		backdrop-filter: none;
+
+		ul {
+			display: flex;
+			gap: 12px;
 		}
+
+		li a {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 6px;
+
+			color: rgba(255, 255, 255, 0.75);
+			font-size: 0.75rem;
+		}
+
+		img {
+			width: 64px;
+			height: 64px;
+			padding: 2px;
+
+			border: 2px solid $red-on-dark;
+			border-radius: 50%;
+		}
+
+		b,
+		.place {
+			@include visually-hidden;
+		}
+	}
+
+	.proofHead {
+		display: none;
+	}
+
+	.proofAll {
+		display: block;
+	}
+
+	.proofCount {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 64px;
+		height: 64px;
+
+		border: 2px dashed rgba(255, 255, 255, 0.35);
+		border-radius: 50%;
+
+		color: #fff;
+		font-size: 1.3rem;
+		font-weight: 700;
+	}
+}
+
+// Entrance for the first screen, in CSS rather than framer-motion.
+//
+// Only transform is animated — never opacity. An element that starts
+// transparent is not painted, and LCP is measured at paint: fading the <h1> in
+// would hand back the six seconds this change was made to remove, just in
+// smaller pieces. Sliding text is visible on the first frame.
+@keyframes heroSlideIn {
+	from {
+		transform: translateX(-40px);
+	}
+}
+
+@keyframes heroRiseIn {
+	from {
+		transform: translateY(24px);
+	}
+}
+
+.content {
+	animation: heroSlideIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.proof {
+	animation: heroRiseIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.content,
+	.proof {
+		animation: none;
 	}
 }

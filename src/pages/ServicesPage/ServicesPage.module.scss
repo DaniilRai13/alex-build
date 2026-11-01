@@ -1,8 +1,0 @@
-@import '@styles/abstracts/var';
-@import '@styles/abstracts/mixins';
-
-.services {
-	.board {
-		@include service-board;
-	}
-}

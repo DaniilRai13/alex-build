@@ -1,4 +1,4 @@
-import Heading from '@/components/ui/Heading/Heading';
+import SectionHead from '@/components/common/SectionHead/SectionHead';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
 import type { IFaqItem } from '@/data/faq.data';
 import type { FC } from 'react';
@@ -20,9 +20,11 @@ const Faq: FC<FaqProps> = ({ items, title = 'Časté dotazy' }) => {
 
 	return (
 		<section className={styles.faq}>
-			<Heading as='h2' className={styles.title}>
-				{title}
-			</Heading>
+			{/* The head every section on the home page opens with. It used to be
+			    the heading in red spaced capitals at full section size, which on
+			    a long title ("Časté dotazy k realizacím") shouted over the
+			    questions below it. */}
+			<SectionHead eyebrow='Otázky a odpovědi' title={title} className={styles.head} />
 
 			<div className={styles.list}>
 				{items.map(item => (

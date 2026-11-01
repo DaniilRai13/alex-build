@@ -1,15 +1,20 @@
 import Breadcrumbs from '@/components/common/Breadcrumbs/Breadcrumbs';
+import Faq from '@/components/common/Faq/Faq';
 import Seo from '@/components/common/Seo/Seo';
 import Heading from '@/components/ui/Heading/Heading';
-import { company } from '@/config/company';
-import { breadcrumbJsonLd } from '@/config/jsonLd';
-import { projectPath, ROUTES } from '@/config/routes';
-import { portfolioData } from '@/data/portfolio/portfolio.data';
-import { portfolioCategories } from '@/data/portfolio/portfolioCategories.data';
-import type { PortfolioCategory } from '@/types/portfolio.interface';
-import { useMemo, useState, type FC } from 'react';
-import PortfolioFilters from './PortfolioFilters/PortfolioFilters';
+import { Icon } from '@/components/ui/LucidIcon/Icon';
+import { company, COMPLETED_PROJECTS } from '@/config/company';
+import { breadcrumbJsonLd, faqJsonLd } from '@/config/jsonLd';
+import { projectPath, ROUTES, servicePath } from '@/config/routes';
+import { faqPortfolio } from '@/data/faq.data';
+import { portfolioData, portfolioStats } from '@/data/portfolio/portfolio.data';
+import { portfolioSections } from '@/data/portfolio/portfolioCategories.data';
+import { serviceForCategory } from '@/data/services.data';
+import { plural } from '@/utils/plural';
+import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 import PortfolioGrid from './PortfolioGrid/PortfolioGrid';
+import PortfolioGuide from './PortfolioGuide/PortfolioGuide';
 import styles from './PortfolioPage.module.scss';
 
 const crumbs = [{ name: 'Domů', href: ROUTES.HOME }, { name: 'Portfolio' }];
@@ -27,47 +32,110 @@ const itemListJsonLd = {
 	})),
 };
 
+// One section per kind of job, each with what that job is and a way to order
+// it. The page used to be a heading, one sentence and a filter over the grid:
+// 68 words of its own, which read to a search engine as a list of links. The
+// filter buttons are now links to the sections, so nothing is hidden from the
+// HTML any more.
+const sections = portfolioSections
+	.map(section => ({
+		...section,
+		projects: portfolioData.filter(project => project.category === section.category),
+		service: serviceForCategory(section.category),
+	}))
+	.filter(section => section.projects.length > 0);
+
 const PortfolioPage: FC = () => {
-	const [category, setCategory] = useState<PortfolioCategory>('all');
-
-	const projects = useMemo(() => {
-		if (category === 'all') return portfolioData;
-
-		return portfolioData.filter(project => project.category === category);
-	}, [category]);
+	const stats = portfolioStats;
 
 	return (
 		<section className={styles.portfolio}>
 			<Seo
-				title='Portfolio rekonstrukcí bytů – Teplice'
-				description='Prohlédněte si naše dokončené projekty rekonstrukcí bytů, domů a fasád. Reálné realizace s fotografiemi před a po, plochou i rokem dokončení.'
+				title='Realizace: rekonstrukce bytů před a po'
+				description={`Výběr z více než ${COMPLETED_PROJECTS} dokončených rekonstrukcí bytů s fotkami před, během i po: nová bytová jádra, koupelny, kuchyně a podlahy. U každé místo, plocha a popis prací.`}
 				path={ROUTES.PORTFOLIO}
-				jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd]}
+				jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd, faqJsonLd(faqPortfolio)]}
 			/>
 
 			<Breadcrumbs items={crumbs} />
 
 			<div className={styles.header}>
-				<span className={styles.subtitle}>Naše realizace</span>
+				<span className={styles.subtitle}>Portfolio</span>
 
 				<Heading as='h1' className={styles.title}>
-					Portfolio projektů
+					Naše realizace – rekonstrukce bytů před a po
 				</Heading>
 
-				<p className={styles.description}>
-					Prohlédněte si naše dokončené projekty. Každá realizace je výsledkem
-					individuálního přístupu, kvalitního řemeslného zpracování a důrazu na
-					detail.
-				</p>
+				<div className={styles.description}>
+					<p>
+						Dokončili jsme více než {COMPLETED_PROJECTS} zakázek a tady ukazujeme jejich
+						výběr: {stats.flats} {plural(stats.flats, 'byt', 'byty', 'bytů')} o velikosti{' '}
+						{stats.smallestFlat} až {stats.largestFlat} m² a zateplení fasády. Nejčastěji
+						pracujeme v Teplicích a v Ústeckém kraji, byty v portfoliu jsou ale i odjinud:{' '}
+						{stats.towns}. Každá realizace má vlastní stránku s popisem prací, plochou,
+						rokem dokončení a fotografiemi, u kterých je napsáno, co přesně vidíte.
+					</p>
+					<p>
+						V bytech nejčastěji stavíme nové kuchyně, pokládáme podlahy a předěláváme
+						koupelny – často včetně výměny původního bytového jádra. U{' '}
+						{stats.beforeAfter} {plural(stats.beforeAfter, 'realizace', 'realizací', 'realizací')}{' '}
+						ukazujeme i stav před rekonstrukcí a průběh prací, takže je vidět nejen
+						výsledek, ale i to, co je pod ním.
+					</p>
+				</div>
 			</div>
 
-			<PortfolioFilters
-				items={portfolioCategories}
-				active={category}
-				onChange={setCategory}
-			/>
+			<ul className={styles.stats}>
+				<li>
+					<strong>{stats.projects}</strong>
+					{plural(stats.projects, 'realizace', 'realizace', 'realizací')}
+				</li>
+				<li>
+					<strong>{stats.flatArea} m²</strong>
+					rekonstruovaných bytů
+				</li>
+				<li>
+					<strong>{stats.photos}</strong>
+					{plural(stats.photos, 'fotografie', 'fotografie', 'fotografií')} s popisem
+				</li>
+				<li>
+					<strong>{stats.beforeAfter}×</strong>
+					před a po
+				</li>
+			</ul>
 
-			<PortfolioGrid projects={projects} />
+			<nav className={styles.jump} aria-label='Realizace podle služby'>
+				{sections.map(section => (
+					<a key={section.anchor} className={styles.jumpLink} href={`#${section.anchor}`}>
+						{section.title}
+						<span className={styles.jumpCount}>{section.projects.length}</span>
+					</a>
+				))}
+			</nav>
+
+			{sections.map((section, index) => (
+				<section key={section.anchor} id={section.anchor} className={styles.section}>
+					<div className={styles.sectionHead}>
+						<Heading as='h2' className={styles.sectionTitle}>
+							{section.title}
+						</Heading>
+						<p className={styles.sectionIntro}>{section.intro}</p>
+						{section.service && (
+							<Link className={styles.serviceLink} to={servicePath(section.service.slug)}>
+								Více o službě {section.service.title}
+								<Icon icon='ArrowRight' size={16} aria-hidden='true' />
+							</Link>
+						)}
+					</div>
+
+					{/* Only the first section's first card is above the fold. */}
+					<PortfolioGrid projects={section.projects} priorityFirst={index === 0} />
+				</section>
+			))}
+
+			<PortfolioGuide />
+
+			<Faq items={faqPortfolio} title='Časté dotazy k realizacím' />
 		</section>
 	);
 };

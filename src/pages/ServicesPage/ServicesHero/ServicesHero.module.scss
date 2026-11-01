@@ -6,7 +6,7 @@
 	gap: 45px;
 	align-items: center;
 
-	margin-bottom: 55px;
+	margin-bottom: var(--section-gap);
 }
 
 .content {
@@ -110,7 +110,6 @@
 	.hero {
 		grid-template-columns: 1fr;
 		gap: 30px;
-		margin-bottom: 40px;
 	}
 
 	.advantages {

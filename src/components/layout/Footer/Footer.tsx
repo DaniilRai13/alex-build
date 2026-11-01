@@ -1,5 +1,5 @@
 import { company } from '@/config/company';
-import { servicePath } from '@/config/routes';
+import { ROUTES, servicePath } from '@/config/routes';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
 import { contacts } from '@/data/contacts.data';
 import { services } from '@/data/services.data';
@@ -57,6 +57,12 @@ const Footer: FC = () => {
 										</Link>
 									</li>
 								))}
+								<li className={styles.serviceTitle}>
+									<Link to={ROUTES.PRICING}>
+										<Icon icon='BadgeCheck' />
+										Kolik stojí rekonstrukce
+									</Link>
+								</li>
 							</ul>
 						</FooterAccordionSection>
 

@@ -1,0 +1,681 @@
+[
+	{
+		"id": "c3da1fe0-54bd-42b5-8095-339b43b1e6cf",
+		"slug": "rekonstrukce-paneloveho-bytu",
+		"title": "Rekonstrukce panelového bytu",
+		"description": "Kompletní rekonstrukce panelového bytu na klíč. Byt jsme rozebrali až na nosné konstrukce – demontáž původních příček, podlah i rozvodů. Postavili jsme nové příčky z pórobetonu, provedli nové elektroinstalace a rozvody vody, vyrovnali podlahy a položili velkoformátovou dlažbu v dekoru dřeva. Výsledkem je světlý moderní interiér: kuchyně kombinující bílý lesk s dubem a keramickým obkladem, obývací část s jídelním koutem, klidná ložnice a koupelna s mramorovým dekorem Calacatta.",
+		"category": "renovation",
+		"location": "Teplice",
+		"area": 35,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": "panel",
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": "Byt v panelovém domě s původním bytovým jádrem, opotřebovanými podlahami a starými rozvody. Než jsme začali stavět, rozebrali jsme ho až na nosné konstrukce.",
+			"brief": null,
+			"work": "- demontáž původního jádra, příček, podlah a rozvodů\r\n- nové příčky z pórobetonových tvárnic\r\n- nová elektroinstalace a rozvody vody\r\n- vyrovnání podlah a pokládka velkoformátové dlažby v dekoru dřeva\r\n- nová kuchyňská linka s keramickým obkladem\r\n- koupelna s vanou a obkladem v mramorovém dekoru Calacatta",
+			"challenges": null,
+			"materials": null,
+			"result": "Světlý moderní interiér: kuchyně kombinující bílý lesk s dubem, obývací část s jídelním koutem, klidná ložnice a koupelna s mramorovým dekorem."
+		},
+		"testimonial": null,
+		"seoTitle": "Rekonstrukce panelového bytu 35 m² – Teplice",
+		"seoDescription": "Kompletní rekonstrukce panelového bytu 35 m²: nové příčky z pórobetonu, rozvody, dlažba v dekoru dřeva a koupelna s vanou. Fotky před i po.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"after1.jpg",
+			"after2.jpg",
+			"after3.jpg",
+			"after4.jpg",
+			"after5.jpg",
+			"before1.jpg",
+			"before2.jpg",
+			"before3.jpg",
+			"before4.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Obývací pokoj s kuchyňskou linkou podél stěny a podlahou v dekoru dřeva",
+				"phase": "after"
+			},
+			"after1.jpg": {
+				"caption": "Ložnice po rekonstrukci – světlé stěny a nová podlaha",
+				"phase": "after"
+			},
+			"after2.jpg": {
+				"caption": "Obývací část u okna s novou podlahou v dekoru dřeva",
+				"phase": "after"
+			},
+			"after3.jpg": {
+				"caption": "Kuchyňská linka v kombinaci bílého lesku a dubu s obkladem za pracovní deskou",
+				"phase": "after"
+			},
+			"after4.jpg": {
+				"caption": "Jídelní kout a obývací část v jednom prostoru",
+				"phase": "after"
+			},
+			"after5.jpg": {
+				"caption": "Koupelna s vanou a velkoformátovým obkladem v mramorovém dekoru Calacatta",
+				"phase": "after"
+			},
+			"before1.jpg": {
+				"caption": "Původní bytové jádro během demontáže – odkryté stoupačky a WC",
+				"phase": "before"
+			},
+			"before2.jpg": {
+				"caption": "Byt během bourání – odstraněné původní podlahy",
+				"phase": "before"
+			},
+			"before3.jpg": {
+				"caption": "Zdění nových příček z pórobetonových tvárnic",
+				"phase": "during"
+			},
+			"before4.jpg": {
+				"caption": "Nová příčka z pórobetonu – pohled do chodby",
+				"phase": "during"
+			}
+		}
+	},
+	{
+		"id": "46da7113-32c7-4eae-836f-58c2f8838c20",
+		"slug": "kompaktni-byt-rekonstrukce",
+		"title": "Renovace bytu před nastěhováním",
+		"description": "Renovace bytu připraveného k okamžitému nastěhování. Nová kuchyňská linka v kombinaci bílé a dřevodekoru s efektním obkladem, koupelna s vanou a béžovým velkoformátovým obkladem, nové podlahy, dveře a světlé čisté prostory.",
+		"category": "interior",
+		"location": "Břeclav",
+		"area": 65,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": null,
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": null,
+			"brief": null,
+			"work": "- nová kuchyňská linka v kombinaci bílé a dřevodekoru s obkladem\r\n- koupelna s vanou a béžovým velkoformátovým obkladem\r\n- nové podlahy\r\n- nové interiérové dveře",
+			"challenges": null,
+			"materials": null,
+			"result": "Byt připravený k okamžitému nastěhování – světlé a čisté prostory s novou kuchyní a koupelnou."
+		},
+		"testimonial": null,
+		"seoTitle": "Renovace bytu 65 m² před nastěhováním – Břeclav",
+		"seoDescription": "Byt 65 m² v Břeclavi připravený k nastěhování: nová kuchyňská linka s obkladem, koupelna s vanou a velkoformátovým obkladem, nové podlahy a dveře.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"1.jpg",
+			"2.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Kuchyňská linka v kombinaci bílé a dřevodekoru s obkladem za linkou",
+				"phase": "after"
+			},
+			"1.jpg": {
+				"caption": "Nové interiérové dveře a podlaha v dekoru dřeva",
+				"phase": "after"
+			},
+			"2.jpg": {
+				"caption": "Koupelna s vanou, béžovým velkoformátovým obkladem a skříňkou pod umyvadlem",
+				"phase": "after"
+			}
+		}
+	},
+	{
+		"id": "e3f633d7-8888-4f78-987d-f00fc6d25530",
+		"slug": "rekonstrukce-bytu-koupelna",
+		"title": "Rekonstrukce bytu s novou koupelnou",
+		"description": "Rekonstrukce bytu s výměnou podlah, obkladů a kompletním přepracováním koupelny. Nová vana, obklady v přírodních tónech a nové vinylové podlahy proměnily zastaralý byt v příjemné bydlení. Součástí fotogalerie je i původní stav před rekonstrukcí.",
+		"category": "renovation",
+		"location": "Cheb",
+		"area": 54,
+		"year": 2025,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": null,
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": "Zastaralý byt se starými podlahovými krytinami – v kuchyni ještě linoleum – a s původní koupelnou.",
+			"brief": null,
+			"work": "- výměna podlah za vinylové\r\n- nové obklady, včetně obkladu za kuchyňskou linkou\r\n- kompletní přepracování koupelny s novou vanou\r\n- úprava samostatného WC",
+			"challenges": null,
+			"materials": null,
+			"result": "Nová vana, obklady v přírodních tónech a vinylové podlahy proměnily zastaralý byt v příjemné bydlení."
+		},
+		"testimonial": null,
+		"seoTitle": "Rekonstrukce bytu 54 m² s novou koupelnou – Cheb",
+		"seoDescription": "Byt 54 m² v Chebu: vinylové podlahy, nové obklady a kompletně předělaná koupelna s vanou. Ve fotogalerii stav před rekonstrukcí i hotový byt.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"1.jpg",
+			"2.jpg",
+			"after1.jpg",
+			"after2.jpg",
+			"after3.jpg",
+			"after5.jpg",
+			"after6.jpg",
+			"after7.jpg",
+			"before2.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Pokoj s novou vinylovou podlahou v šedém dekoru dřeva",
+				"phase": "after"
+			},
+			"1.jpg": {
+				"caption": "Samostatné WC během prací – vyspravené stěny",
+				"phase": "during"
+			},
+			"2.jpg": {
+				"caption": "Samostatné WC po rekonstrukci s podlahou v dekoru dřeva",
+				"phase": "after"
+			},
+			"after1.jpg": {
+				"caption": "Světlý pokoj s vinylovou podlahou",
+				"phase": "after"
+			},
+			"after2.jpg": {
+				"caption": "Obklad za kuchyňskou linkou v mramorovém dekoru a LED osvětlení pod skříňkami",
+				"phase": "after"
+			},
+			"after3.jpg": {
+				"caption": "Kuchyňský kout s novým obkladem a podlahou",
+				"phase": "after"
+			},
+			"after5.jpg": {
+				"caption": "Koupelna s vanou a obklady v přírodních tónech",
+				"phase": "after"
+			},
+			"after6.jpg": {
+				"caption": "Předsíň s vinylovou podlahou a vstupními dveřmi",
+				"phase": "after"
+			},
+			"after7.jpg": {
+				"caption": "Chodba s novou podlahou a stropním svítidlem",
+				"phase": "after"
+			},
+			"before2.jpg": {
+				"caption": "Původní stav kuchyně – stará linka a linoleum na podlaze",
+				"phase": "before"
+			}
+		}
+	},
+	{
+		"id": "ee2df911-6731-417b-bd41-c172e99f28dc",
+		"slug": "rekonstrukce-bytu-kuchyne-koupelna",
+		"title": "Rekonstrukce bytu s výměnou bytového jádra",
+		"description": "Rekonstrukce bytu včetně nové kuchyně a koupelny. Původní bytové jádro jsme nahradili novou zděnou koupelnou, osadili kuchyňskou linku a položili nové podlahy. Fotografie zachycují i průběh stavebních prací.",
+		"category": "renovation",
+		"location": "Chomutov",
+		"area": 55,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": null,
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": "Byt s původním bytovým jádrem a starou kuchyňskou linkou.",
+			"brief": null,
+			"work": "- demontáž původního bytového jádra\r\n- nová koupelna s vanou\r\n- osazení nové kuchyňské linky s LED osvětlením\r\n- nové podlahy",
+			"challenges": null,
+			"materials": null,
+			"result": null
+		},
+		"testimonial": null,
+		"seoTitle": "Výměna bytového jádra a nová kuchyně, 55 m² – Chomutov",
+		"seoDescription": "Byt 55 m² v Chomutově: původní bytové jádro jsme nahradili novou koupelnou s vanou, osadili kuchyňskou linku s LED osvětlením a položili nové podlahy.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"1.jpg",
+			"2.jpg",
+			"3.jpg",
+			"4.png",
+			"5.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Nová kuchyňská linka s LED osvětlením pod horními skříňkami",
+				"phase": "after"
+			},
+			"1.jpg": {
+				"caption": "Koupelna během stavby – připravené stěny a nová vana",
+				"phase": "during"
+			},
+			"2.jpg": {
+				"caption": "Osazená vana před obkladem",
+				"phase": "during"
+			},
+			"3.jpg": {
+				"caption": "Připojení odpadu vany a nová podlaha v dekoru dřeva",
+				"phase": "during"
+			},
+			"4.png": {
+				"caption": "Hotová koupelna s obloženou vanou",
+				"phase": "after"
+			},
+			"5.jpg": {
+				"caption": "Původní kuchyně po demontáži linky – staré obklady",
+				"phase": "before"
+			}
+		}
+	},
+	{
+		"id": "a78233b6-5787-4251-9220-390b30b3a10a",
+		"slug": "zatepleni-fasady-panelaku",
+		"title": "Zateplení fasády panelového domu",
+		"description": "Zateplení a rekonstrukce fasády panelového domu. Montáž lešení, zateplovací systém a nová povrchová úprava fasády. Zateplení snižuje náklady na vytápění a prodlužuje životnost celého objektu.",
+		"category": "facade",
+		"location": "Teplice",
+		"area": 2400,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": "panel",
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": null,
+			"brief": null,
+			"work": "- montáž lešení s ochrannými sítěmi po celé fasádě\r\n- montáž zateplovacího systému\r\n- nová povrchová úprava fasády\r\n- odvoz stavebního odpadu",
+			"challenges": null,
+			"materials": null,
+			"result": "Zateplení snižuje náklady na vytápění a prodlužuje životnost celého objektu."
+		},
+		"testimonial": null,
+		"seoTitle": "Zateplení fasády panelového domu, 2 400 m² – Teplice",
+		"seoDescription": "Zateplení a obnova fasády panelového domu na ploše 2 400 m²: lešení, zateplovací systém a nová povrchová úprava. Fotky z průběhu prací.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"before1.jpg",
+			"before2.jpg",
+			"before3.jpg",
+			"before4.jpg",
+			"before5.jpg",
+			"before6.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Panelový dům během zateplení – lešení s ochrannou sítí",
+				"phase": "during"
+			},
+			"before1.jpg": {
+				"caption": "Lešení a ochranné sítě po celé délce fasády",
+				"phase": "during"
+			},
+			"before2.jpg": {
+				"caption": "Vstup do domu chráněný stříškou z lešení",
+				"phase": "during"
+			},
+			"before3.jpg": {
+				"caption": "Kontejner na stavební odpad u domu",
+				"phase": "during"
+			},
+			"before4.jpg": {
+				"caption": "Izolační desky připravené u paty lešení",
+				"phase": "during"
+			},
+			"before5.jpg": {
+				"caption": "Materiál pro zateplovací systém na paletách před domem",
+				"phase": "during"
+			},
+			"before6.jpg": {
+				"caption": "Zadní strana domu s lešením a ochrannou stříškou nad vchodem",
+				"phase": "during"
+			}
+		}
+	},
+	{
+		"id": "c2edf0c6-a4cf-4a38-8baf-3fc5adb8b4d0",
+		"slug": "rekonstrukce-bytu-panelak",
+		"title": "Renovace bytu s novou kuchyní a podlahami",
+		"description": "Rekonstrukce bytu v panelovém domě. Nová kuchyňská linka s betonovým dekorem a černou pracovní deskou, koupelna se sprchovým koutem, nové podlahy a světlé stěny. Byt se nachází v domě, na kterém probíhala i obnova fasády.",
+		"category": "interior",
+		"location": "Kynšperk nad Ohří",
+		"area": 30,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": null,
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": "Byt s opotřebovanými parketami, starou dlažbou v předsíni a kuchyni a s původní koupelnou se sprchovým koutem.",
+			"brief": null,
+			"work": "- nová kuchyňská linka s obkladem v betonovém dekoru a černou pracovní deskou\r\n- koupelna se sprchovým koutem, novým umyvadlem se skříňkou a žebříkovým radiátorem\r\n- nové podlahy v dekoru dřeva\r\n- nové interiérové dveře\r\n- světlá výmalba stěn",
+			"challenges": null,
+			"materials": null,
+			"result": null
+		},
+		"testimonial": null,
+		"seoTitle": "Renovace bytu 30 m² s novou kuchyní – Kynšperk nad Ohří",
+		"seoDescription": "Byt 30 m² v Kynšperku nad Ohří: nová kuchyňská linka s betonovým dekorem, podlahy v dekoru dřeva místo starých parket a úpravy koupelny. Fotky před i po.",
+		"preview": "17.jpg",
+		"images": [
+			"17.jpg",
+			"1.jpg",
+			"3.jpg",
+			"4.jpg",
+			"6.jpg",
+			"7.jpg",
+			"8.jpg",
+			"9.jpg",
+			"10.jpg",
+			"12.jpg",
+			"13.jpg",
+			"14.jpg",
+			"16.jpg",
+			"main.jpg"
+		],
+		"photos": {
+			"17.jpg": {
+				"caption": "Kuchyňská linka s obkladem v betonovém dekoru a černou pracovní deskou",
+				"phase": "after"
+			},
+			"1.jpg": {
+				"caption": "Původní koupelna se sprchovým koutem a starými obklady",
+				"phase": "before"
+			},
+			"3.jpg": {
+				"caption": "Koupelna s novým umyvadlem se skříňkou a žebříkovým radiátorem",
+				"phase": "after"
+			},
+			"4.jpg": {
+				"caption": "Pokoj v původním stavu – opotřebované parkety",
+				"phase": "before"
+			},
+			"6.jpg": {
+				"caption": "Pokoj s novou podlahou v dekoru dřeva",
+				"phase": "after"
+			},
+			"7.jpg": {
+				"caption": "Původní předsíň s dlažbou a starými dveřmi",
+				"phase": "before"
+			},
+			"8.jpg": {
+				"caption": "Nové bílé interiérové dveře s černou klikou",
+				"phase": "after"
+			},
+			"9.jpg": {
+				"caption": "Předsíň během prací – odstraněné obklady",
+				"phase": "during"
+			},
+			"10.jpg": {
+				"caption": "Chodba s novou podlahou a stropním svítidlem",
+				"phase": "after"
+			},
+			"12.jpg": {
+				"caption": "Kuchyňská část během prací – pohled do pokoje s původními parketami",
+				"phase": "during"
+			},
+			"13.jpg": {
+				"caption": "Pokládka nové podlahy",
+				"phase": "during"
+			},
+			"14.jpg": {
+				"caption": "Pokoj s novými dveřmi a podlahou v dekoru dřeva",
+				"phase": "after"
+			},
+			"16.jpg": {
+				"caption": "Kuchyňský kout před rekonstrukcí – parkety a stará dlažba",
+				"phase": "before"
+			},
+			"main.jpg": {
+				"caption": "Obývací pokoj s kuchyňským koutem u okna",
+				"phase": "after"
+			}
+		}
+	},
+	{
+		"id": "206733a4-cba5-481a-872d-1aec64d87202",
+		"slug": "rekonstrukce-bytu-zelena-kuchyne",
+		"title": "Kompletní rekonstrukce bytu se zelenou kuchyní",
+		"description": "Kompletní rekonstrukce bytu od demontáže původního jádra až po finální detaily. Nová kuchyň v jemném pastelově zeleném odstínu s bílým obkladem cihličkou, koupelna se sprchovým koutem a novými podlahami. Součástí galerie je i původní stav před rekonstrukcí.",
+		"category": "renovation",
+		"location": "Letohrad",
+		"area": 57,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": null,
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": "Byt s původním bytovým jádrem. Po jeho demontáži zůstaly jen stoupačky a holé stěny.",
+			"brief": null,
+			"work": "- demontáž původního jádra\r\n- nová koupelna se sprchovým koutem a skleněnými dveřmi\r\n- samostatné WC se závěsnou mísou\r\n- nová kuchyň s obkladem cihličkou\r\n- nové podlahy",
+			"challenges": null,
+			"materials": null,
+			"result": "Kompletní proměna od demontáže jádra až po finální detaily: kuchyň v jemném pastelově zeleném odstínu s bílým obkladem cihličkou, koupelna se sprchovým koutem a nové podlahy."
+		},
+		"testimonial": null,
+		"seoTitle": "Kompletní rekonstrukce bytu 57 m² – Letohrad",
+		"seoDescription": "Byt 57 m² v Letohradu od demontáže jádra po detaily: pastelově zelená kuchyň s obkladem cihličkou, koupelna se sprchovým koutem a WC se závěsnou mísou.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"1.jpg",
+			"2.jpg",
+			"3.jpg",
+			"4.jpg",
+			"5.jpg",
+			"6.jpg",
+			"7.jpg",
+			"8.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Kuchyň v pastelově zeleném odstínu s bílým obkladem cihličkou",
+				"phase": "after"
+			},
+			"1.jpg": {
+				"caption": "Byt po demontáži původního jádra – odkryté stoupačky",
+				"phase": "before"
+			},
+			"2.jpg": {
+				"caption": "WC se závěsnou mísou, obkladem s černým mozaikovým pruhem a vzorovanou dlažbou",
+				"phase": "after"
+			},
+			"3.jpg": {
+				"caption": "Koupelna se sprchovým koutem a umyvadlem se skříňkou",
+				"phase": "after"
+			},
+			"4.jpg": {
+				"caption": "Sprchový kout se skleněnými dveřmi a bílým obkladem s černou linkou",
+				"phase": "after"
+			},
+			"5.jpg": {
+				"caption": "Pokoj během bourání – vybouraná původní vana",
+				"phase": "before"
+			},
+			"6.jpg": {
+				"caption": "Pokoj s balkonovými dveřmi a novou podlahou",
+				"phase": "after"
+			},
+			"7.jpg": {
+				"caption": "Předsíň a vstup do koupelny během prací",
+				"phase": "during"
+			},
+			"8.jpg": {
+				"caption": "Pokoj před pokládkou nové podlahy",
+				"phase": "during"
+			}
+		}
+	},
+	{
+		"id": "c48657b4-a3a2-472b-9009-802ea687b840",
+		"slug": "rekonstrukce-bytu-radova-kuchyne",
+		"title": "Rekonstrukce bytu s řadovou kuchyní",
+		"description": "Rekonstrukce bytu s moderní řadovou kuchyní. Bílé lesklé skříňky, dřevěný obklad s LED podsvícením a betonová pracovní deska s černým dřezem, nové podlahy a koupelna s velkoformátovou dlažbou. Světlý a čistý interiér připravený k bydlení.",
+		"category": "interior",
+		"location": "Radonice u Kadaně",
+		"area": 65,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": null,
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": null,
+			"brief": null,
+			"work": "- řadová kuchyně s bílými lesklými skříňkami\r\n- dřevěný obklad za linkou s LED podsvícením\r\n- betonová pracovní deska s černým dřezem\r\n- nové podlahy a bodová svítidla ve stropě\r\n- koupelna se sprchovým koutem a velkoformátovou dlažbou\r\n- WC se závěsnou mísou",
+			"challenges": null,
+			"materials": null,
+			"result": "Světlý a čistý interiér připravený k bydlení."
+		},
+		"testimonial": null,
+		"seoTitle": "Rekonstrukce bytu 65 m² s řadovou kuchyní – Radonice u Kadaně",
+		"seoDescription": "Byt 65 m² v Radonicích u Kadaně: řadová kuchyně s bílými lesklými skříňkami a LED podsvícením, nové podlahy, bodová svítidla a koupelna se sprchovým koutem.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"1.jpg",
+			"2.jpg",
+			"3.jpg",
+			"4.jpg",
+			"5.jpg",
+			"6.jpg",
+			"7.jpg",
+			"8.jpg",
+			"9.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Řadová kuchyně s bílými lesklými skříňkami a dřevěným obkladem s LED podsvícením",
+				"phase": "after"
+			},
+			"1.jpg": {
+				"caption": "Kuchyňská linka s vestavěnou troubou, varnou deskou a černým dřezem",
+				"phase": "after"
+			},
+			"2.jpg": {
+				"caption": "Pokoj s podlahou v dekoru dřeva a bodovými svítidly ve stropě",
+				"phase": "after"
+			},
+			"3.jpg": {
+				"caption": "Pokoj s bodovým osvětlením a prosklenými dveřmi",
+				"phase": "after"
+			},
+			"4.jpg": {
+				"caption": "Předsíň s výhledem do pokoje",
+				"phase": "after"
+			},
+			"5.jpg": {
+				"caption": "Pokoj s novou podlahou a světlými stěnami",
+				"phase": "after"
+			},
+			"6.jpg": {
+				"caption": "Pokoj s velkým oknem a novou podlahou",
+				"phase": "after"
+			},
+			"7.jpg": {
+				"caption": "WC se závěsnou mísou a velkoformátovým obkladem",
+				"phase": "after"
+			},
+			"8.jpg": {
+				"caption": "Koupelna se sprchovým koutem, skleněnou stěnou a zrcadlem s LED podsvícením",
+				"phase": "after"
+			},
+			"9.jpg": {
+				"caption": "Umyvadlo se skříňkou, oválné podsvícené zrcadlo a dvoubarevný obklad",
+				"phase": "after"
+			}
+		}
+	},
+	{
+		"id": "076ec205-a84d-4449-afdb-dd932b7c2e97",
+		"slug": "rekonstrukce-bytu-moderni-kuchyne",
+		"title": "Rekonstrukce bytu s novým zděným jádrem a kuchyní",
+		"description": "Rekonstrukce bytu s novou kuchyní a koupelnou. Kuchyňská linka kombinuje bílý lesk, dřevodekor a černou pracovní desku se dřezem, koupelna je obložena velkoformátovou dlažbou v dekoru šedého mramoru se závěsným WC. Fotogalerie zachycuje i průběh prací a původní stav.",
+		"category": "renovation",
+		"location": "Teplice",
+		"area": 32,
+		"year": 2026,
+		"updatedAt": "2026-11-01T12:00:00.000Z",
+		"district": null,
+		"buildingType": null,
+		"layout": null,
+		"durationWeeks": null,
+		"story": {
+			"before": "Byt s původním bytovým jádrem.",
+			"brief": null,
+			"work": "- odstranění původního jádra a zdění nových stěn koupelny z pórobetonu\r\n- nové rozvody vody a elektřiny v kuchyni\r\n- obklad koupelny velkoformátovou dlažbou v dekoru šedého mramoru a dřeva\r\n- závěsné WC\r\n- nová kuchyňská linka s černou pracovní deskou",
+			"challenges": null,
+			"materials": null,
+			"result": "Kuchyňská linka kombinuje bílý lesk, dřevodekor a černou pracovní desku se dřezem, koupelna je obložena velkoformátovou dlažbou v dekoru šedého mramoru se závěsným WC."
+		},
+		"testimonial": null,
+		"seoTitle": "Nové zděné jádro a kuchyně, byt 32 m² – Teplice",
+		"seoDescription": "Byt 32 m²: místo původního jádra nová koupelna z pórobetonu s velkoformátovou dlažbou a závěsným WC, k tomu nová kuchyňská linka.",
+		"preview": "main.jpg",
+		"images": [
+			"main.jpg",
+			"1.jpg",
+			"2.jpg",
+			"3.jpg",
+			"4.jpg",
+			"5.jpg",
+			"6.jpg",
+			"7.jpg",
+			"8.jpg",
+			"9.jpg",
+			"10.jpg"
+		],
+		"photos": {
+			"main.jpg": {
+				"caption": "Kuchyňská linka – bílé lesklé horní skříňky, dřevodekor a černá pracovní deska",
+				"phase": "after"
+			},
+			"1.jpg": {
+				"caption": "Zdění nových stěn koupelny z pórobetonu kolem stoupaček",
+				"phase": "during"
+			},
+			"2.jpg": {
+				"caption": "Kuchyňská stěna s novými rozvody a obkladem v dekoru šedého kamene",
+				"phase": "during"
+			},
+			"3.jpg": {
+				"caption": "Osazování kuchyňské linky s černým dřezem",
+				"phase": "during"
+			},
+			"4.jpg": {
+				"caption": "Nové stěny po omítnutí – vstup do koupelny",
+				"phase": "during"
+			},
+			"5.jpg": {
+				"caption": "Obkládání koupelny velkoformátovými deskami",
+				"phase": "during"
+			},
+			"6.jpg": {
+				"caption": "WC se závěsnou mísou a obkladem v dekoru mramoru a dřeva",
+				"phase": "during"
+			},
+			"7.jpg": {
+				"caption": "Velkoformátový obklad v dekoru dřeva s nivelačním systémem",
+				"phase": "during"
+			},
+			"8.jpg": {
+				"caption": "Obklad koupelny v kombinaci šedého mramoru a dřeva",
+				"phase": "during"
+			},
+			"9.jpg": {
+				"caption": "Původní bytové jádro s umyvadlem a vanou",
+				"phase": "before"
+			},
+			"10.jpg": {
+				"caption": "Předsíň se vstupními dveřmi",
+				"phase": null
+			}
+		}
+	}
+]

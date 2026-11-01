@@ -39,8 +39,3 @@ public/telegram-config.php
 # browser bundle.
 public/analytics-config.php
 
-# Portfolio downloaded from Supabase before each build by
-# scripts/fetch-portfolio.mjs. Derived data: the admin app is the source of
-# truth, and re-downloading is cheaper than carrying ~20 MB of photos here.
-src/assets/portfolio-remote
-src/data/portfolio/portfolio.remote.json

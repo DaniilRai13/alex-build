@@ -1,4 +1,5 @@
 import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
+import { COMPLETED_PROJECTS } from '@/config/company';
 
 export interface IAdvantage {
 	icon: IconNames;
@@ -12,7 +13,7 @@ export interface IAdvantage {
  * warranty lengths. Change them in both places or in neither.
  */
 export const advantages: IAdvantage[] = [
-	{ icon: 'Award', title: 'Zkušenosti', text: '40+ dokončených projektů' },
+	{ icon: 'Award', title: 'Zkušenosti', text: `${COMPLETED_PROJECTS}+ dokončených projektů` },
 	{ icon: 'BadgeCheck', title: 'Kvalita', text: 'Ověřené materiály' },
 	{ icon: 'CalendarCheck', title: 'Termíny', text: 'Dodržujeme domluvu' },
 	{ icon: 'ShieldCheck', title: 'Záruka', text: '2 roky na veškeré práce' },

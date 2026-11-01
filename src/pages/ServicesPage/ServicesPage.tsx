@@ -6,16 +6,13 @@ import { ROUTES, servicePath } from '@/config/routes';
 import { featuredProject } from '@/data/portfolio/portfolio.data';
 import { REGIONS_SENTENCE } from '@/data/regions.data';
 import { services } from '@/data/services.data';
-import { useState } from 'react';
-import ServicePreview from './ServicePreview/ServicePreview';
-import ServiceSidebar from './ServiceSidebar/ServiceSidebar';
 import ServicesHero from './ServicesHero/ServicesHero';
-import styles from './ServicesPage.module.scss';
+import ServicesOverview from './ServicesOverview/ServicesOverview';
 
 const crumbs = [{ name: 'Domů', href: ROUTES.HOME }, { name: 'Služby' }];
 
-// The overview doubles as a hub: every service is present in the HTML
-// (only the active tab used to be rendered) and each links to its detail page.
+// The overview doubles as a hub: every service is in the HTML with its
+// description, list and a link to its detail page.
 const itemListJsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'ItemList',
@@ -28,46 +25,28 @@ const itemListJsonLd = {
 	})),
 };
 
-const ServicesPage = () => {
-	// Switching between four services is filtering, not navigation: doing it
-	// through the router meant a page load and a jump back to the top every
-	// time. The full pages still exist at /services/{slug} — the panel's own
-	// button leads there, and the footer links all four from every page.
-	const [active, setActive] = useState(services[0]);
+const ServicesPage = () => (
+	<section>
+		<Seo
+			title='Naše služby – rekonstrukce, renovace a fasády'
+			description='Kompletní i kosmetické rekonstrukce, stavební a řemeslné práce, návrhy interiéru s vizualizacemi. Podívejte se, co pro vás zajistíme.'
+			path={ROUTES.SERVICES}
+			jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd]}
+		/>
 
-	return (
-		<section className={styles.services}>
-			<Seo
-				title='Služby – rekonstrukce bytů a domů Teplice'
-				description='Kompletní i kosmetické rekonstrukce, stavební a řemeslné práce, návrhy interiéru s vizualizacemi. Podívejte se, co pro vás zajistíme.'
-				path={ROUTES.SERVICES}
-				jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd]}
-			/>
+		<Breadcrumbs items={crumbs} />
 
-			<Breadcrumbs items={crumbs} />
+		<ServicesHero
+			eyebrow='Naše služby'
+			heading='Služby: od návrhu interiéru po předání bytu'
+			text='Postaráme se o celý průběh rekonstrukce od návrhu až po finální dokončení. Kvalitní řemeslná práce, ověřené materiály a dodržené termíny jsou pro nás samozřejmostí.'
+			regions={REGIONS_SENTENCE}
+			image={featuredProject.preview}
+			imageAlt={`${featuredProject.title} – ${featuredProject.location}`}
+		/>
 
-			<ServicesHero
-				eyebrow='Naše služby'
-				heading='Kompletní rekonstrukce bytů a domů'
-				text='Postaráme se o celý průběh rekonstrukce od návrhu až po finální dokončení. Kvalitní řemeslná práce, ověřené materiály a dodržené termíny jsou pro nás samozřejmostí.'
-				regions={REGIONS_SENTENCE}
-				image={featuredProject.preview}
-				imageAlt={`${featuredProject.title} – ${featuredProject.location}`}
-			/>
-
-			<div className={styles.board}>
-				<ServiceSidebar activeSlug={active.slug} onSelect={setActive} />
-
-				<ServicePreview
-					service={active}
-					ctaTitle={active.buttonText}
-					ctaTo={servicePath(active.slug)}
-					secondaryTitle='Zobrazit realizace'
-					secondaryTo={ROUTES.PORTFOLIO}
-				/>
-			</div>
-		</section>
-	);
-};
+		<ServicesOverview />
+	</section>
+);
 
 export default ServicesPage;

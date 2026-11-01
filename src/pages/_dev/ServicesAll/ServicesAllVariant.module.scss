@@ -1,0 +1,598 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+// Stand-ins for the services block with all four services on the page at
+// once. Pieces every variant shares come first; each layout after that only
+// says how it arranges them.
+
+// ─── Shared pieces ───────────────────────────────────────────────────────────
+
+// The service name is the link to its page: that gives every link an anchor
+// that says where it goes, instead of four identical "Více informací".
+.title {
+	margin-bottom: 10px;
+
+	color: $text-primary;
+	font-size: 1.35rem;
+	font-weight: 600;
+	line-height: 1.25;
+
+	a {
+		color: inherit;
+		transition: color $transition-fast;
+
+		@media (hover: hover) {
+			&:hover {
+				color: $red;
+			}
+		}
+	}
+}
+
+.desc {
+	max-width: 620px;
+	margin-bottom: 20px;
+
+	color: $text-secondary;
+	font-size: 0.97rem;
+	line-height: 1.65;
+}
+
+// Same tick list as ServicePreview, so the copy wraps the way it will live.
+.features {
+	display: grid;
+	gap: 10px 28px;
+
+	margin: 0 0 24px;
+	padding: 0;
+	list-style: none;
+
+	li {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+
+		color: $text-primary;
+		font-size: 0.93rem;
+		line-height: 1.4;
+
+		&::before {
+			content: '✓';
+			flex-shrink: 0;
+			color: $red;
+			font-weight: 700;
+			line-height: 1.35;
+		}
+	}
+}
+
+.twoCol {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+
+	@media (max-width: $screen-md) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.more {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+
+	color: $red;
+	font-weight: 600;
+	transition: 0.25s;
+
+	@media (hover: hover) {
+		&:hover {
+			color: $red-dark;
+			transform: translateX(3px);
+		}
+	}
+}
+
+.badge {
+	display: grid;
+	place-items: center;
+
+	width: 44px;
+	height: 44px;
+	margin-bottom: 18px;
+
+	border-radius: $radius-md;
+	background: rgba($red, 0.1);
+	color: $red;
+}
+
+// The faint sketch behind a panel — the treatment the live panel already uses.
+.sketch {
+	position: absolute;
+	right: -16px;
+	bottom: 0;
+	z-index: -1;
+
+	width: 70%;
+	max-width: 440px;
+	max-height: 100%;
+	height: auto;
+	object-fit: contain;
+	object-position: right bottom;
+
+	opacity: 0.14;
+	mix-blend-mode: multiply;
+	pointer-events: none;
+}
+
+.button {
+	background: $red;
+	padding: 0.8rem 2rem;
+	color: $text-white;
+}
+
+// ─── 00 · As it is today ─────────────────────────────────────────────────────
+
+.now {
+	@include service-board;
+}
+
+// ─── 01 · 2×2 grid ───────────────────────────────────────────────────────────
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.gridCard {
+	@include card;
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: column;
+	padding: 30px 32px;
+
+	// The link sits on the bottom edge whatever the copy length, so the four
+	// cards end on one line.
+	.more {
+		margin-top: auto;
+	}
+
+	@media (max-width: $screen-tb) {
+		padding: 26px 22px;
+	}
+}
+
+// ─── 02 · Rail kept, services stacked ────────────────────────────────────────
+
+.railBoard {
+	@include card;
+
+	display: grid;
+	grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+
+	// No overflow: hidden here, unlike the live board: it would make the board
+	// the scroll container and the rail would have nothing to stick to. The
+	// rail and the panels round their own corners instead.
+
+	@media (max-width: $screen-tb) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.rail {
+	padding: 22px 0 22px 18px;
+	border-radius: $radius-lg 0 0 $radius-lg;
+	background: $bg-dark-warm;
+
+	@media (max-width: $screen-tb) {
+		position: sticky;
+		top: $header-height;
+		z-index: 2;
+
+		padding: 0;
+		border-radius: $radius-lg $radius-lg 0 0;
+	}
+}
+
+.railNav {
+	position: sticky;
+	top: calc(#{$header-height} + 24px);
+
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+
+	// Stacked, the rail itself sticks and the list becomes a strip you swipe.
+	@media (max-width: $screen-tb) {
+		position: static;
+		flex-direction: row;
+		gap: 0;
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+}
+
+.railItem {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	padding: 14px 16px;
+	border-radius: 12px 0 0 12px;
+
+	color: rgba($text-white, 0.72);
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.3;
+	transition: 0.25s;
+
+	svg {
+		flex-shrink: 0;
+		color: rgba($text-white, 0.45);
+		transition: 0.25s;
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			background: rgba($text-white, 0.07);
+			color: $text-white;
+		}
+	}
+
+	@media (max-width: $screen-tb) {
+		flex-shrink: 0;
+		padding: 14px 16px;
+		border-radius: 0;
+		font-size: 0.875rem;
+		white-space: nowrap;
+
+		&:first-child {
+			border-top-left-radius: $radius-lg;
+		}
+	}
+}
+
+.railActive {
+	background: $red;
+	color: $text-white;
+
+	svg {
+		color: $text-white;
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			background: $red;
+		}
+	}
+}
+
+.stack {
+	min-width: 0;
+}
+
+.stackItem {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+
+	padding: 34px 38px;
+
+	// Lands below the sticky site header, not under it.
+	scroll-margin-top: calc(#{$header-height} + 16px);
+
+	& + & {
+		border-top: 1px solid $border-warm;
+	}
+
+	&:last-child {
+		border-bottom-right-radius: $radius-lg;
+	}
+
+	@media (max-width: $screen-tb) {
+		padding: 26px 20px;
+		// The rail strip sticks under the header here, so leave room for both.
+		scroll-margin-top: calc(#{$header-height} + 64px);
+	}
+}
+
+// ─── 03 · Zigzag ─────────────────────────────────────────────────────────────
+
+.zigzag {
+	display: grid;
+	gap: 64px;
+
+	@media (max-width: $screen-tb-lg2) {
+		gap: 48px;
+	}
+}
+
+.zigRow {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+	align-items: center;
+	gap: 56px;
+
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 24px;
+	}
+}
+
+// Every other row puts the sketch on the right. Only above the breakpoint:
+// stacked, the sketch always leads.
+.zigFlip {
+	grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+
+	.zigArt {
+		order: 2;
+	}
+
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: minmax(0, 1fr);
+
+		.zigArt {
+			order: 0;
+		}
+	}
+}
+
+.zigArt {
+	@include card;
+
+	display: grid;
+	place-items: center;
+	padding: 28px;
+
+	// The sketches are ~450px wide: capping them there keeps them crisp rather
+	// than stretching them to fill the column.
+	img {
+		width: 100%;
+		max-width: 440px;
+		height: auto;
+		mix-blend-mode: multiply;
+		opacity: 0.85;
+	}
+}
+
+.zigNum {
+	display: block;
+	margin-bottom: 10px;
+
+	color: $red;
+	font-size: 0.78rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.12em;
+}
+
+.zigText .title {
+	font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+}
+
+// ─── 04 · Catalogue rows ─────────────────────────────────────────────────────
+
+.catalog {
+	@include card;
+	overflow: hidden;
+}
+
+.catRow {
+	display: grid;
+	grid-template-columns: 44px minmax(0, 1.3fr) minmax(0, 1fr) 40px;
+	align-items: start;
+	gap: 0 28px;
+
+	padding: 28px 32px;
+	transition: background $transition-fast;
+
+	& + & {
+		border-top: 1px solid $border-warm;
+	}
+
+	@media (hover: hover) {
+		&:hover {
+			background: rgba($text-primary, 0.025);
+		}
+	}
+
+	.features {
+		gap: 7px;
+		margin: 4px 0 0;
+
+		li {
+			font-size: 0.9rem;
+		}
+	}
+
+	.desc {
+		margin-bottom: 0;
+		font-size: 0.93rem;
+	}
+
+	// Below the full width the list drops under the description instead of
+	// squeezing into a third column.
+	@media (max-width: $screen-tb-xl) {
+		grid-template-columns: 44px minmax(0, 1fr) 40px;
+
+		.features {
+			grid-column: 2;
+			grid-row: 2;
+			margin-top: 16px;
+		}
+	}
+
+	@media (max-width: $screen-md) {
+		grid-template-columns: minmax(0, 1fr) 40px;
+		padding: 24px 20px;
+
+		.features {
+			grid-column: 1;
+		}
+	}
+}
+
+.catNum {
+	padding-top: 5px;
+
+	color: $red;
+	font-size: 0.85rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+
+	@media (max-width: $screen-md) {
+		display: none;
+	}
+}
+
+.catTitle {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	svg {
+		flex-shrink: 0;
+		color: $text-secondary;
+	}
+}
+
+.catArrow {
+	display: grid;
+	place-items: center;
+	align-self: center;
+
+	width: 40px;
+	height: 40px;
+
+	border: 1px solid rgba($text-primary, 0.14);
+	border-radius: 50%;
+	color: $text-primary;
+	transition: 0.25s;
+
+	@media (hover: hover) {
+		&:hover {
+			border-color: $red;
+			background: $red;
+			color: $text-white;
+		}
+	}
+
+	@media (max-width: $screen-tb-xl) {
+		grid-column: 3;
+		grid-row: 1;
+	}
+
+	@media (max-width: $screen-md) {
+		grid-column: 2;
+		align-self: start;
+	}
+}
+
+// ─── 05 · Lead service + three ───────────────────────────────────────────────
+
+.featured {
+	display: grid;
+	gap: 24px;
+}
+
+.featMain {
+	@include card($bg-dark-warm);
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
+	align-items: center;
+	gap: 40px;
+
+	padding: 40px 44px;
+
+	.title {
+		color: $text-white;
+		font-size: clamp(1.5rem, 2.4vw, 2rem);
+
+		a:hover {
+			color: $red-on-dark;
+		}
+	}
+
+	.desc {
+		color: rgba($text-white, 0.72);
+	}
+
+	.features li {
+		color: rgba($text-white, 0.9);
+
+		&::before {
+			// $red drops to 1.95:1 on this surface.
+			color: $red-on-dark;
+		}
+	}
+
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: minmax(0, 1fr);
+		padding: 30px 24px;
+	}
+}
+
+// A pencil sketch is dark lines on white. Inverted it becomes light lines on
+// black, and `screen` drops the black — what is left reads as chalk on the
+// dark panel.
+.featArt img {
+	display: block;
+	width: 100%;
+	max-width: 440px;
+	height: auto;
+	margin-left: auto;
+
+	filter: invert(1);
+	mix-blend-mode: screen;
+	opacity: 0.55;
+
+	@media (max-width: $screen-tb-lg2) {
+		display: none;
+	}
+}
+
+.featRest {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+
+	@media (max-width: $screen-tb-lg2) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.featCard {
+	@include card;
+
+	display: flex;
+	flex-direction: column;
+	padding: 28px 28px 26px;
+
+	.title {
+		font-size: 1.2rem;
+	}
+
+	.desc {
+		font-size: 0.93rem;
+	}
+
+	.more {
+		margin-top: auto;
+	}
+
+	@media (max-width: $screen-tb) {
+		padding: 26px 22px;
+	}
+}

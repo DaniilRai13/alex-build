@@ -1,4 +1,5 @@
 @import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
 
 .services {
 	display: grid;
@@ -14,16 +15,12 @@
 	// Tighter between the copy and the button beneath it than between columns.
 	gap: 24px 48px;
 
-	padding-top: 80px;
+	padding-top: var(--section-gap);
 
 	@media (max-width: 992px) {
 		grid-template-columns: 1fr;
 		grid-template-rows: none;
 		gap: 32px;
-	}
-
-	@media (max-width: $screen-tb) {
-		padding-top: 60px;
 	}
 }
 
@@ -62,30 +59,18 @@
 	min-width: 0;
 }
 
-.eyebrow {
-	display: block;
-	margin-bottom: 10px;
+// No measure on the lead here, nor on the claim below it. In the two-column
+// layout the column is already narrower than any sensible measure, so a cap
+// did nothing there; the moment the block stacked it clamped the text to 46
+// characters and left the right half of the row empty.
+.head {
+	--lead-measure: none;
 
-	color: $red;
-	font-size: 0.85rem;
-	font-weight: 600;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-// Nested so it beats the single-class rule in Heading.module.scss. The red now
-// lives in the eyebrow above, so the heading itself keeps the dark text.
-.intro .heading {
-	margin-bottom: 1rem;
-	letter-spacing: 0;
-}
-
-// No max-width on either of these. In the two-column layout the column is
-// already narrower than any sensible measure, so the cap did nothing there; the
-// moment the block stacked it clamped the text to 46 characters and left the
-// right half of the row empty.
-.description {
 	margin-bottom: 1.25rem;
+
+	@media (max-width: $screen-tb) {
+		margin-bottom: 1.5rem;
+	}
 }
 
 // The block's actual claim, marked by the short red rule the site uses beside
@@ -203,35 +188,31 @@
 			opacity: 0;
 			transition: 0.25s;
 		}
-
-		.mobileArrow {
-			display: none;
-		}
 	}
 }
 
+// A swipe strip on a phone, like the portfolio further down. Stacked, the four
+// cards ran to some 1,250px — a screen and a half before the next block. The
+// edge of the second card shows, which is what says the row goes on.
 @media (max-width: $screen-tb) {
 	.grid {
-		grid-template-columns: 1fr;
-		gap: 16px;
+		@include swipe-strip;
 
 		.card {
-			position: relative;
+			flex: 0 0 min(320px, 82vw);
+			scroll-snap-align: start;
 
-			.cardLink {
-				display: flex;
-				align-items: flex-start;
-				gap: 20px;
-				padding: 24px;
+			// No lift: inside the scrolling row it would be clipped at the top.
+			&:hover {
+				transform: none;
+				box-shadow: none;
 			}
 
-			.icons {
-				margin-bottom: 0;
+			.cardLink {
+				padding: 24px 20px;
 			}
 
 			.content {
-				flex: 1;
-
 				.title {
 					font-size: 18px;
 				}
@@ -241,19 +222,10 @@
 				}
 			}
 
-			.desktopArrow {
-				display: none;
-			}
-
-			.mobileArrow {
-				display: block;
+			// There is no hover on a phone to reveal it.
+			.arrow {
 				opacity: 1;
-				margin-top: 0;
 			}
 		}
-	}
-
-	.description {
-		margin-bottom: 1.5rem;
 	}
 }

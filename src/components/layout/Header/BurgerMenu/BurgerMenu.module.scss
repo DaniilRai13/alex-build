@@ -1,65 +1,248 @@
 @import '@styles/abstracts/var';
 
+// Dark drawer from the right. It shows logo-on-dark.png: the header logo with
+// the black turned white, so it needs no card behind it.
+
+$ink-muted: rgba(255, 255, 255, 0.55);
+$line: rgba(255, 255, 255, 0.12);
+$soft: rgba(255, 255, 255, 0.07);
+
 .overlay {
 	position: fixed;
 	inset: 0;
-	background: rgba(0, 0, 0, 0.45);
 	z-index: 39;
+	background: rgba(0, 0, 0, 0.5);
 }
 
-.mobileMenu {
+.drawer {
 	position: fixed;
-	display: none;
-	align-items: center;
-	justify-content: center;
-	top: 0px;
-	left: 40%;
+	top: 0;
 	right: 0;
 	bottom: 0;
-	height: 100vh;
-	background-color: $red;
 	z-index: 40;
 
-	@media (max-width: $screen-tb-lg2) {
-		display: flex;
+	display: flex;
+	flex-direction: column;
+	width: 88%;
+	max-width: 420px;
+
+	padding: 14px 16px calc(18px + env(safe-area-inset-bottom));
+	background: $bg-dark-warm;
+	box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
+	color: #fff;
+}
+
+// The header hides the menu button from here up; a menu left open while the
+// window widens goes with it.
+.overlay,
+.drawer {
+	@media (min-width: $screen-tb-lg2) {
+		display: none;
 	}
-	@media (max-width: $screen-md) {
-		left: 30%;
+}
+
+.top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	margin: 0 -16px 16px;
+	padding: 0 16px 14px;
+	border-bottom: 1px solid $line;
+}
+
+.brand {
+	display: inline-flex;
+	padding: 6px 0;
+
+	img {
+		display: block;
+		width: auto;
+		height: 30px;
 	}
-	@media (max-width: $screen-sm) {
-		left: 0%;
+}
+
+.close {
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+
+	border: 1px solid $line;
+	border-radius: 12px;
+	background: transparent;
+
+	color: #fff;
+	cursor: pointer;
+}
+
+.tabs {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 4px;
+
+	margin-bottom: 16px;
+	padding: 4px;
+	border-radius: 999px;
+	background: $soft;
+}
+
+.tab {
+	padding: 11px;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+
+	color: $ink-muted;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background 0.2s,
+		color 0.2s;
+}
+
+.tabActive {
+	background: $red;
+	color: #fff;
+}
+
+.body {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+}
+
+.rows {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 15px 12px;
+	border-radius: 12px;
+
+	color: #fff;
+	font-size: 1.15rem;
+	font-weight: 600;
+
+	svg {
+		color: $ink-muted;
 	}
-	.closeButton {
-		position: absolute;
-		top: 20px;
-		right: 20px;
-		box-shadow: none;
+
+	&:hover {
+		background: $soft;
+
 		svg {
-			color: #fff;
+			color: $red-on-dark;
 		}
 	}
-	.mobileNav {
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		gap: 1rem;
-		.burgerNav {
-			flex-direction: column;
-			align-items: center;
-			display: flex;
-			margin-bottom: 20px;
-			a {
-				color: #fff;
-				font-size: 1.75rem;
-			}
-		}
+}
+
+.rowActive {
+	color: $red-on-dark;
+}
+
+.allServices {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	margin-bottom: 8px;
+	padding: 14px;
+	border: 1px solid $line;
+	border-radius: 12px;
+
+	color: $red-on-dark;
+	font-weight: 700;
+}
+
+.serviceRow {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+
+	padding: 8px 4px;
+	border-radius: 12px;
+
+	color: #fff;
+	font-size: 0.98rem;
+	font-weight: 500;
+
+	&:hover {
+		background: $soft;
 	}
-	.mobileActionBtn {
-		padding: 10px 20px;
-		color: $red;
-		background-color: #ffffff;
-		h3 {
-			margin-right: 5px;
-		}
+}
+
+.serviceRowActive {
+	color: $red-on-dark;
+	font-weight: 600;
+}
+
+.iconTile {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+
+	border-radius: 10px;
+	background: $soft;
+	color: $red-on-dark;
+}
+
+.footer {
+	display: grid;
+	gap: 12px;
+
+	margin: 12px -16px 0;
+	padding: 14px 16px 0;
+	border-top: 1px solid $line;
+}
+
+.footerRow {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px 10px;
+
+	color: $ink-muted;
+	font-size: 0.85rem;
+}
+
+.mail,
+.hours {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+}
+
+.mail {
+	color: #fff;
+	font-weight: 600;
+}
+
+.call {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+
+	padding: 16px;
+	border-radius: 14px;
+	background: $red;
+
+	color: #fff;
+	font-size: 1.05rem;
+	font-weight: 700;
+
+	&:hover {
+		background: $red-dark;
 	}
 }
