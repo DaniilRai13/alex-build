@@ -31,7 +31,7 @@ Edit an existing project the same way and bump its `updatedAt` (it drives the si
 
 ## Rules
 - `<Seo>` renders through `<Head>`, which drops tags inside fragments — put them in directly.
-- Never invent project facts (town, district, layout, duration, prices, reviews); they come from the owner. Towns given 1 Nov; "Teplice" is still a placeholder on rekonstrukce-paneloveho-bytu, rekonstrukce-bytu-moderni-kuchyne and the facade.
+- Never invent project facts (town, district, layout, duration, prices, reviews); they come from the owner. All 9 towns confirmed by the owner on 1 Nov (the three Teplice projects really are in Teplice).
 - Geography: Teplice and Ústecký kraj first, also other Czech cities; not "all of Czechia".
 - No inline enquiry form on service or project pages; only /contacts plus the site-wide CTA banner.
 - `main` deploys on push; changes reach it through a PR from `dev`.
