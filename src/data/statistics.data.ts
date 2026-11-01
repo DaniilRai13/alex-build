@@ -1,5 +1,5 @@
 import type { IconNames } from '@/components/ui/LucidIcon/LucidIcons.types';
-import { company } from '@/config/company';
+import { company, COMPLETED_PROJECTS } from '@/config/company';
 
 export interface IStatisticsData {
 	/** The figure itself — the bold half of the pair. */
@@ -21,7 +21,7 @@ const hour = (time: string) => String(Number(time.split(':')[0]));
 // Both are taken from what the company actually commits to now; the hours come
 // from config/company.ts, so they cannot drift from the footer.
 export const statisticsData: IStatisticsData[] = [
-	{ title: '40+', sub: 'Dokončených projektů', icon: 'Award' },
+	{ title: `${COMPLETED_PROJECTS}+`, sub: 'Dokončených projektů', icon: 'Award' },
 	{ title: 'Pevná cena', sub: 'bez skrytých poplatků', icon: 'BadgeCheck' },
 	{
 		title: `Po–Pá ${hour(company.openingHours.opens)}–${hour(company.openingHours.closes)}`,

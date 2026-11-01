@@ -1,3 +1,5 @@
+import { COMPLETED_PROJECTS } from '@/config/company';
+
 /**
  * Questions customers arrive with, answered on the service pages.
  *
@@ -53,7 +55,7 @@ export const faqHome: IFaqItem[] = [
 	},
 	{
 		q: 'Kde působíte?',
-		a: 'Pracujeme v Teplicích a v celém Ústeckém kraji, po dohodě i v dalších městech České republiky. Většina našich realizací je z Teplic a okolí.',
+		a: 'Pracujeme v Teplicích a v celém Ústeckém kraji, po dohodě i v dalších městech České republiky.',
 	},
 ];
 
@@ -73,7 +75,7 @@ export const faqPortfolio: IFaqItem[] = [
 	},
 	{
 		q: 'Kde jste tyto zakázky realizovali?',
-		a: 'Většina realizací je z Teplic. Pracujeme v Teplicích a v celém Ústeckém kraji, po dohodě i v dalších městech České republiky.',
+		a: `V různých městech Česka – místo je uvedené u každé realizace. Nejčastěji pracujeme v Teplicích a v celém Ústeckém kraji, po dohodě i jinde v České republice. V portfoliu je jen výběr z více než ${COMPLETED_PROJECTS} dokončených zakázek.`,
 	},
 	{
 		q: 'Jakou službu si objednat, když chci podobný výsledek?',
@@ -85,7 +87,7 @@ export const faqPortfolio: IFaqItem[] = [
 const shared: IFaqItem[] = [
 	{
 		q: 'Kde působíte?',
-		a: 'Pracujeme v Teplicích a v celém Ústeckém kraji, po dohodě i v dalších městech České republiky. Většina našich realizací je z Teplic a okolí.',
+		a: 'Pracujeme v Teplicích a v celém Ústeckém kraji, po dohodě i v dalších městech České republiky.',
 	},
 	{
 		q: 'Jakou dostanu záruku?',

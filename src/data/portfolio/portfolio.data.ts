@@ -166,6 +166,11 @@ export const portfolioStats = (() => {
 		largestFlat: Math.max(...areas),
 		photos: portfolioData.reduce((sum, project) => sum + project.images.length, 0),
 		beforeAfter: portfolioData.filter(hasBeforeAfter).length,
+		// Read from the data rather than typed into the copy: until 1 Nov every
+		// project said "Teplice" as a placeholder, and the text claimed it too.
+		towns: new Intl.ListFormat('cs', { type: 'conjunction' }).format(
+			[...new Set(portfolioData.map(project => project.location))],
+		),
 	};
 })();
 

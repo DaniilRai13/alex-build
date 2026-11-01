@@ -21,6 +21,12 @@ export const company = {
 	url: 'https://kartstav.cz',
 };
 
+/**
+ * Jobs finished in total, confirmed by the owner on 1 Nov 2026. The portfolio
+ * shows a selection of them, and the copy says so wherever both appear.
+ */
+export const COMPLETED_PROJECTS = 40;
+
 /** Formats +420774896027 as +420 774 896 027. */
 export const displayPhone = company.phone.replace(
 	/^(\+\d{3})(\d{3})(\d{3})(\d{3})$/,

@@ -3,7 +3,7 @@ import Faq from '@/components/common/Faq/Faq';
 import Seo from '@/components/common/Seo/Seo';
 import Heading from '@/components/ui/Heading/Heading';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
-import { company } from '@/config/company';
+import { company, COMPLETED_PROJECTS } from '@/config/company';
 import { breadcrumbJsonLd, faqJsonLd } from '@/config/jsonLd';
 import { projectPath, ROUTES, servicePath } from '@/config/routes';
 import { faqPortfolio } from '@/data/faq.data';
@@ -50,8 +50,8 @@ const PortfolioPage: FC = () => {
 	return (
 		<section className={styles.portfolio}>
 			<Seo
-				title='Realizace: rekonstrukce bytů před a po – Teplice'
-				description='Dokončené rekonstrukce bytů z Teplic s fotkami před, během i po: nová bytová jádra, koupelny, kuchyně a podlahy. U každé realizace popis prací, plocha a rok.'
+				title='Realizace: rekonstrukce bytů před a po'
+				description={`Výběr z více než ${COMPLETED_PROJECTS} dokončených rekonstrukcí bytů s fotkami před, během i po: nová bytová jádra, koupelny, kuchyně a podlahy. U každé místo, plocha a popis prací.`}
 				path={ROUTES.PORTFOLIO}
 				jsonLd={[breadcrumbJsonLd(crumbs), itemListJsonLd, faqJsonLd(faqPortfolio)]}
 			/>
@@ -62,16 +62,17 @@ const PortfolioPage: FC = () => {
 				<span className={styles.subtitle}>Portfolio</span>
 
 				<Heading as='h1' className={styles.title}>
-					Naše realizace – rekonstrukce bytů v Teplicích
+					Naše realizace – rekonstrukce bytů před a po
 				</Heading>
 
 				<div className={styles.description}>
 					<p>
-						Na této stránce najdete naše dokončené zakázky, většinou z Teplic:{' '}
-						{stats.flats} {plural(stats.flats, 'byt', 'byty', 'bytů')} o velikosti{' '}
-						{stats.smallestFlat} až {stats.largestFlat} m² a zateplení fasády. Každá
-						realizace má vlastní stránku s popisem prací, plochou, rokem dokončení a
-						fotografiemi, u kterých je napsáno, co přesně vidíte.
+						Dokončili jsme více než {COMPLETED_PROJECTS} zakázek a tady ukazujeme jejich
+						výběr: {stats.flats} {plural(stats.flats, 'byt', 'byty', 'bytů')} o velikosti{' '}
+						{stats.smallestFlat} až {stats.largestFlat} m² a zateplení fasády. Nejčastěji
+						pracujeme v Teplicích a v Ústeckém kraji, byty v portfoliu jsou ale i odjinud:{' '}
+						{stats.towns}. Každá realizace má vlastní stránku s popisem prací, plochou,
+						rokem dokončení a fotografiemi, u kterých je napsáno, co přesně vidíte.
 					</p>
 					<p>
 						V bytech nejčastěji stavíme nové kuchyně, pokládáme podlahy a předěláváme

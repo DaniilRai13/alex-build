@@ -2,6 +2,7 @@ import { animationTransition } from '@/components/common/animation/transition';
 import { animations } from '@/components/common/animation/variants';
 import SectionHead from '@/components/common/SectionHead/SectionHead';
 import Button from '@/components/ui/Button/Button';
+import { COMPLETED_PROJECTS } from '@/config/company';
 import { ROUTES } from '@/config/routes';
 import { homeStripProjects } from '@/data/portfolio/portfolio.data';
 import type { IPortfolioProject } from '@/types/portfolio.interface';
@@ -39,17 +40,20 @@ export const PortfolioSection = () => {
 				transition={animationTransition.defaultTransition}
 			>
 				{/*
-					The region, not a town: "v Teplicích" was true only while every
-					project carried Teplice as a placeholder location.
+					No place in the heading: the projects are from towns across the
+					country (Cheb, Chomutov, Břeclav…), not one region. It said "v
+					Teplicích", then "v Ústeckém kraji", while every project carried
+					Teplice as a placeholder.
 
 					The lead says what the jobs actually were, where "závazek k
 					designu, excelenci, inovaci" used to be — every word of that fits
-					any company and none of it names a kitchen or a bathroom.
+					any company and none of it names a kitchen or a bathroom — and
+					that the strip is a selection of the 40+ jobs the stats claim.
 				*/}
 				<SectionHead
 					eyebrow='Portfolio'
-					title='Realizace v Ústeckém kraji'
-					lead='Byty po rekonstrukci: nové kuchyně, koupelny a podlahy, výměny bytových jader i zateplení fasády panelového domu. U každé realizace najdete fotografie a popis prací.'
+					title='Vybrané realizace'
+					lead={`Výběr z více než ${COMPLETED_PROJECTS} dokončených zakázek: nové kuchyně, koupelny a podlahy, výměny bytových jader i zateplení fasády panelového domu. U každé realizace najdete fotografie a popis prací.`}
 				/>
 			</motion.div>
 
