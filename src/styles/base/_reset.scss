@@ -11,10 +11,13 @@ html {
 body {
 	// 'Inter Variable' is the family name the self-hosted variable font
 	// registers; plain 'Inter' stays behind it for anyone who has the static
-	// version installed locally.
+	// version installed locally. The two fallbacks are Arial and Roboto resized
+	// to Inter's metrics (fonts.css), so text does not reflow when Inter loads.
 	font-family:
 		'Inter Variable',
 		'Inter',
+		'Inter Fallback',
+		'Inter Fallback Roboto',
 		-apple-system,
 		BlinkMacSystemFont,
 		'Segoe UI',
