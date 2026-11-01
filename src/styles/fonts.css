@@ -38,6 +38,56 @@
 		U+FEFF, U+FFFD;
 }
 
+/*
+ * Fallbacks shaped like Inter, for the moment before it arrives. Plain Arial
+ * or Roboto set the same text narrower, so a paragraph wrapped to fewer lines
+ * and jumped when Inter swapped in (CLS 0.15 on /portfolio). size-adjust is
+ * Inter's width over theirs, measured in the browser on the site's copy:
+ * body text at 400, headings at 700, where Arial Bold is the wider one. The
+ * ascent/descent overrides are Inter's (1984 / 494 of 2048) over size-adjust.
+ * Arial covers Windows, macOS and iOS; Roboto is Android, which has no Arial.
+ */
+
+@font-face {
+	font-family: 'Inter Fallback';
+	font-weight: 100 549;
+	src: local('Arial'), local('ArialMT');
+	size-adjust: 106.5%;
+	ascent-override: 90.97%;
+	descent-override: 22.65%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Inter Fallback';
+	font-weight: 550 900;
+	src: local('Arial Bold'), local('Arial-BoldMT');
+	size-adjust: 101.65%;
+	ascent-override: 95.3%;
+	descent-override: 23.73%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Inter Fallback Roboto';
+	font-weight: 100 549;
+	src: local('Roboto'), local('Roboto-Regular');
+	size-adjust: 107.83%;
+	ascent-override: 89.84%;
+	descent-override: 22.37%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Inter Fallback Roboto';
+	font-weight: 550 900;
+	src: local('Roboto Bold'), local('Roboto-Bold');
+	size-adjust: 108.77%;
+	ascent-override: 89.06%;
+	descent-override: 22.18%;
+	line-gap-override: 0%;
+}
+
 @font-face {
 	font-family: 'Inter Variable';
 	font-style: normal;
