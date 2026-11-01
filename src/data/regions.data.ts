@@ -6,8 +6,9 @@ export interface IRegion {
 	type: RegionType;
 	/**
 	 * The home area. Named first everywhere it is shown, because a geo signal
-	 * only carries weight where there is evidence behind it — and every one of
-	 * the nine projects is in Teplice.
+	 * only carries weight where there is evidence behind it — and the portfolio
+	 * is in Teplice and the rest of Ústecký kraj. (Until 31 Oct 2026 every
+	 * project said Teplice, but that was a placeholder, not the real town.)
 	 */
 	primary?: boolean;
 }

@@ -21,5 +21,11 @@ export const company = {
 	url: 'https://kartstav.cz',
 };
 
+/** Formats +420774896027 as +420 774 896 027. */
+export const displayPhone = company.phone.replace(
+	/^(\+\d{3})(\d{3})(\d{3})(\d{3})$/,
+	'$1 $2 $3 $4',
+);
+
 /** Anchor the per-page entities (services, projects) point at. */
 export const ORGANIZATION_ID = `${company.url}/#organization`;

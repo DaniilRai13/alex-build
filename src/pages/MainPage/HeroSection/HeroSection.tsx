@@ -1,20 +1,40 @@
 import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
+import Image from '@/components/ui/Image/Image';
+import { Icon } from '@/components/ui/LucidIcon/Icon';
 import Subtitle from '@/components/ui/Subtitle/Subtitle';
-import { ROUTES } from '@/config/routes';
-import img from '@assets/hero-bg.jpg';
+import { company, displayPhone } from '@/config/company';
+import { projectPath, ROUTES } from '@/config/routes';
+import { heroImage } from '@/data/hero.data';
+import { heroProjects, portfolioStats } from '@/data/portfolio/portfolio.data';
 import { type FC } from 'react';
+import { preload } from 'react-dom';
+import { Link } from 'react-router-dom';
 import styles from './HeroSection.module.scss';
-import { primaryRegions } from '@/data/regions.data';
 
 const HeroSection: FC = () => {
+	// Inside the <picture> that Image renders for the WebP variants React does
+	// not preload the image by itself, so the biggest image on the first screen
+	// would wait for the stylesheet. Asked for explicitly; vite.config.ts moves
+	// React's preloads into <head>.
+	if (heroImage.srcSet)
+		preload(heroImage.src, {
+			as: 'image',
+			imageSrcSet: heroImage.srcSet,
+			imageSizes: '100vw',
+			type: 'image/webp',
+			fetchPriority: 'high',
+		});
+
 	return (
 		<div className={styles.banner}>
-			<img
+			<Image
 				className={styles.image}
-				src={img}
-				alt='Moderní přízemní rodinný dům s cihlovou fasádou a prosklenými vchodovými dveřmi'
-				fetchPriority='high'
+				src={heroImage.src}
+				srcSet={heroImage.srcSet}
+				sizes='100vw'
+				alt={heroImage.alt}
+				priority
 			/>
 			<div className={styles.overlay} />
 			{/*
@@ -31,45 +51,75 @@ const HeroSection: FC = () => {
 			*/}
 			<div className={styles.content}>
 				{/*
-					The badge carries the geography so the heading can stay the line
-					it has always been. Naming the town in both would put "Teplice"
-					twice in two adjacent elements.
-				*/}
-				<span className={styles.badge}>
-					{/*
-						Built from the same list that feeds areaServed rather than typed
-						here, so the badge and the structured data cannot drift apart —
-						which is exactly what had happened: this said Teplice while the
-						markup opened with "po celé České republice".
-					*/}
-					{primaryRegions.map(region => region.name).join(' · ')}
-				</span>
-
-				{/*
+					What the company does and where, in the words people search for.
 					No forced line break: the heading is set in a fluid clamp, so a
 					<br /> that lands well on a laptop splits it mid-thought on a
-					phone. text-wrap: balance lets the browser pick the point.
+					phone. text-wrap: balance lets the browser pick the point. The
+					&nbsp;s only keep "v" and "a" off the end of a line, which Czech
+					typesetting does not allow.
 				*/}
 				<Heading as='h1' className={styles.title}>
-					Vaše první volba pro kompletní stavby a rekonstrukce.
+					Rekonstrukce bytů na klíč v&nbsp;Teplicích a&nbsp;okolí
 				</Heading>
 				<Subtitle className={styles.description}>
-					Měníme vaše představy v realitu s důrazem na poctivé řemeslo a
-					špičkový výsledek. Působíme v Ústeckém kraji i v dalších městech
-					České republiky.
+					Kompletní rekonstrukce i kosmetické úpravy bytů a domů – od návrhu
+					až po předání. Celou zakázku vede jeden dodavatel a pevnou cenu
+					i harmonogram znáte ještě před zahájením prací.
 				</Subtitle>
-			</div>
-			<div className={styles.buttonContainer}>
-				{/* Same reason as above: the call to action is on the first
-				    screen and must not wait for hydration to become visible. */}
-				<div className={styles.buttonIn}>
+				<div className={styles.actions}>
 					<Button
 						title='Získat konzultaci'
 						className={styles.button}
 						to={ROUTES.CONTACTS}
 					/>
+					<a className={styles.phone} href={`tel:${company.phone}`}>
+						<Icon icon='Phone' size={18} aria-hidden='true' />
+						{displayPhone}
+					</a>
 				</div>
 			</div>
+
+			{/*
+				The photo above is stock and says so by saying nothing: it links
+				nowhere and claims no project. The proof is this card — real jobs,
+				one click from the first screen.
+			*/}
+			<aside className={styles.proof} aria-label='Naše realizace'>
+				<div className={styles.proofHead}>
+					<span>Naše realizace</span>
+					<Link to={ROUTES.PORTFOLIO}>
+						Všech {portfolioStats.projects}
+						<Icon icon='ArrowRight' size={14} aria-hidden='true' />
+					</Link>
+				</div>
+				<ul>
+					{heroProjects.map(project => (
+						<li key={project.slug}>
+							<Link to={projectPath(project.slug)}>
+								<Image
+									src={project.preview.src}
+									srcSet={project.preview.srcSet}
+									sizes='64px'
+									alt=''
+								/>
+								<span>
+									<b>{project.title}</b>
+									<span className={styles.place}>{project.location} · </span>
+									{project.area} m²
+								</span>
+							</Link>
+						</li>
+					))}
+					{/* On a phone the card turns into a row of circles and the
+					    "Všech 9" link in its head becomes the last circle. */}
+					<li className={styles.proofAll}>
+						<Link to={ROUTES.PORTFOLIO}>
+							<span className={styles.proofCount}>{portfolioStats.projects}</span>
+							všechny
+						</Link>
+					</li>
+				</ul>
+			</aside>
 		</div>
 	);
 };

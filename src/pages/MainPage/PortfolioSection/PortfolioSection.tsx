@@ -1,8 +1,7 @@
 import { animationTransition } from '@/components/common/animation/transition';
 import { animations } from '@/components/common/animation/variants';
+import SectionHead from '@/components/common/SectionHead/SectionHead';
 import Button from '@/components/ui/Button/Button';
-import Heading from '@/components/ui/Heading/Heading';
-import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { ROUTES } from '@/config/routes';
 import { homeStripProjects } from '@/data/portfolio/portfolio.data';
 import type { IPortfolioProject } from '@/types/portfolio.interface';
@@ -32,27 +31,27 @@ const portfolioItems: IPortfolioItems[] = homeStripProjects
 export const PortfolioSection = () => {
 	return (
 		<section className={styles.portfolio}>
-			<div className={styles.info}>
-				<motion.div
-					initial='hidden'
-					whileInView='visible'
-					variants={animations.fadeLeft}
-					transition={animationTransition.defaultTransition}
-				>
-					<Heading className={styles.infoTitle}>Naše portfolio</Heading>
-				</motion.div>
-				<motion.div
-					initial='hidden'
-					whileInView='visible'
-					variants={animations.fadeLeft}
-					transition={{ ...animationTransition.defaultTransition, delay: 0.4 }}
-				>
-					<Subtitle className={styles.description}>
-						Prohlédněte si naše vybrané práce, které demonstrují náš závazek k
-						designu, excelenci, inovaci a spokojenosti klientů.
-					</Subtitle>
-				</motion.div>
-			</div>
+			<motion.div
+				className={styles.info}
+				initial='hidden'
+				whileInView='visible'
+				variants={animations.fadeLeft}
+				transition={animationTransition.defaultTransition}
+			>
+				{/*
+					The region, not a town: "v Teplicích" was true only while every
+					project carried Teplice as a placeholder location.
+
+					The lead says what the jobs actually were, where "závazek k
+					designu, excelenci, inovaci" used to be — every word of that fits
+					any company and none of it names a kitchen or a bathroom.
+				*/}
+				<SectionHead
+					eyebrow='Portfolio'
+					title='Realizace v Ústeckém kraji'
+					lead='Byty po rekonstrukci: nové kuchyně, koupelny a podlahy, výměny bytových jader i zateplení fasády panelového domu. U každé realizace najdete fotografie a popis prací.'
+				/>
+			</motion.div>
 
 			<div className={styles.gallery}>
 				{portfolioItems.map(item => (

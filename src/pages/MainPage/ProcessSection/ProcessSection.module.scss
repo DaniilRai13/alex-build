@@ -1,0 +1,129 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+.process {
+	padding-top: var(--section-gap);
+}
+
+.head {
+	margin-bottom: 28px;
+
+	@media (max-width: $screen-md) {
+		margin-bottom: 20px;
+	}
+}
+
+.steps {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 20px;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+
+	@media (max-width: $screen-tb-xl) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	// One card with a timeline inside, as on /contacts. Four stacked cards
+	// took over a thousand pixels on a phone — more than a full screen for
+	// four short steps.
+	@media (max-width: $screen-md) {
+		@include card;
+
+		grid-template-columns: 1fr;
+		gap: 22px;
+
+		padding: 22px 20px;
+	}
+}
+
+.step {
+	@include card;
+
+	padding: 26px 24px 28px;
+
+	@media (max-width: $screen-md) {
+		position: relative;
+
+		display: grid;
+		grid-template-columns: 36px minmax(0, 1fr);
+		column-gap: 14px;
+
+		padding: 0;
+
+		background: none;
+		box-shadow: none;
+		border-radius: 0;
+
+		// The line down to the next step's number.
+		&:not(:last-child)::after {
+			content: '';
+			position: absolute;
+			left: 17px;
+			top: 36px;
+			bottom: -22px;
+
+			width: 2px;
+
+			background: rgba($red, 0.3);
+		}
+	}
+}
+
+// Same marker as the timeline on /contacts, so the two read as one process.
+.number {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 42px;
+	height: 42px;
+	margin-bottom: 18px;
+
+	border: 2px solid $red;
+	border-radius: 50%;
+
+	color: $red;
+	font-size: 0.95rem;
+	font-weight: 700;
+
+	@media (max-width: $screen-md) {
+		grid-row: 1 / span 2;
+
+		width: 36px;
+		height: 36px;
+		margin-bottom: 0;
+
+		background: $bg-card;
+		font-size: 0.85rem;
+	}
+}
+
+.step .stepTitle {
+	margin-bottom: 8px;
+
+	font-size: 1.15rem;
+	font-weight: 600;
+	letter-spacing: 0;
+
+	@media (max-width: $screen-md) {
+		margin-bottom: 4px;
+		padding-top: 7px;
+		font-size: 1.05rem;
+	}
+}
+
+.text {
+	margin: 0;
+
+	color: $text-secondary;
+	font-size: 0.95rem;
+	line-height: 1.55;
+
+	@media (max-width: $screen-md) {
+		font-size: 0.9rem;
+	}
+}

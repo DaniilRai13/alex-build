@@ -1,12 +1,12 @@
 import { animationTransition } from '@/components/common/animation/transition';
 import { animations } from '@/components/common/animation/variants';
+import SectionHead from '@/components/common/SectionHead/SectionHead';
 import Button from '@/components/ui/Button/Button';
-import Heading from '@/components/ui/Heading/Heading';
 import Image from '@/components/ui/Image/Image';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
-import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { projectPath, ROUTES } from '@/config/routes';
 import { aboutProject } from '@/data/portfolio/portfolio.data';
+import { categoryLabel } from '@/data/portfolio/portfolioCategories.data';
 import { statisticsData } from '@/data/statistics.data';
 import { motion } from 'framer-motion';
 import type { FC } from 'react';
@@ -52,7 +52,7 @@ const AboutSection: FC = () => {
 						className={styles.photo}
 					/>
 
-					<span className={styles.badge}>{aboutProject.categoryLabel}</span>
+					<span className={styles.badge}>{categoryLabel(aboutProject.category)}</span>
 
 					<span className={styles.caption}>
 						<b>{aboutProject.title}</b>
@@ -73,15 +73,12 @@ const AboutSection: FC = () => {
 				transition={{ ...animationTransition.defaultTransition, delay: 0.15 }}
 				variants={animations.fadeUp}
 			>
-				<span className={styles.eyebrow}>O společnosti</span>
-
-				<Heading className={styles.title}>Kdo jsme a co děláme</Heading>
-
-				<Subtitle className={styles.text}>
-					Specializujeme se na kompletní rekonstrukce bytů a domů. Spojujeme
-					kvalitní řemeslné zpracování, moderní design a individuální přístup,
-					abychom vytvořili interiéry, které budou sloužit mnoho let.
-				</Subtitle>
+				<SectionHead
+					eyebrow='O společnosti'
+					title='Kdo jsme a co děláme'
+					lead='Specializujeme se na kompletní rekonstrukce bytů a domů. Spojujeme kvalitní řemeslné zpracování, moderní design a individuální přístup, abychom vytvořili interiéry, které budou sloužit mnoho let.'
+					className={styles.head}
+				/>
 
 				<div className={styles.stats}>
 					{statisticsData.map(item => (

@@ -6,8 +6,11 @@ import { ROUTES } from '@/config/routes';
 import { faqHome } from '@/data/faq.data';
 import { type FC } from 'react';
 import AboutSection from './AboutSection/AboutSection';
+import BeforeAfterSection from './BeforeAfterSection/BeforeAfterSection';
 import HeroSection from './HeroSection/HeroSection';
 import { PortfolioSection } from './PortfolioSection/PortfolioSection';
+import ProcessSection from './ProcessSection/ProcessSection';
+import RegionsSection from './RegionsSection/RegionsSection';
 import ServicesSection from './ServicesSection/ServicesSection';
 
 // Names the site itself for search engines; the company entity that owns it
@@ -26,8 +29,12 @@ const websiteJsonLd = {
 const MainPage: FC = () => {
 	return (
 		<div>
+			{/* "Rekonstrukce bytů" + Teplice belongs to this page alone. Four pages
+			    competing for one query is how none of them wins it, so the other
+			    titles are meant to move to queries of their own — see
+			    docs/google-seo/13-keywords.md for which page owns what. */}
 			<Seo
-				title='Váš partner pro rekonstrukce bytů – Teplice'
+				title='Rekonstrukce bytů v Teplicích a Ústeckém kraji'
 				description='Kompletní i kosmetické rekonstrukce bytů a domů v Teplicích, stavební a řemeslné práce, fasády a návrhy interiérů. Pevná cena bez skrytých poplatků.'
 				path={ROUTES.HOME}
 				jsonLd={[websiteJsonLd, faqJsonLd(faqHome)]}
@@ -35,7 +42,11 @@ const MainPage: FC = () => {
 			<HeroSection />
 			<AboutSection />
 			<ServicesSection />
+			{/* What, then how, then the proof, then where. */}
+			<ProcessSection />
 			<PortfolioSection />
+			<BeforeAfterSection />
+			<RegionsSection />
 			{/* Last before the site-wide CTA banner: objections answered right
 			    where the visitor is about to decide whether to write. */}
 			<Faq items={faqHome} />

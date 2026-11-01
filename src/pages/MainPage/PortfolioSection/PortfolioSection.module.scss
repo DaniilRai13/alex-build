@@ -1,4 +1,5 @@
 @import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
 
 .portfolio {
 	display: grid;
@@ -7,25 +8,17 @@
 		'info restaurant house'
 		'office hotel house'
 		'office hotel button';
-	grid-template-rows: 260px 260px 60px;
+	// The first row grows with the head when it has to. Fixed at 260px it held
+	// the old one-line red title, but an eyebrow, a heading that wraps and a
+	// four-line lead spill over the photo below on a narrower laptop.
+	grid-template-rows: minmax(260px, auto) 260px 60px;
 
 	gap: 15px;
-	padding-top: 80px;
+	padding-top: var(--section-gap);
 }
 
 .info {
 	grid-area: info;
-
-	.infoTitle {
-		margin-bottom: 20px;
-		text-transform: uppercase;
-		letter-spacing: 8px;
-		color: $red;
-	}
-
-	.description {
-		line-height: 1.4;
-	}
 }
 
 .buttonWrapper {
@@ -74,12 +67,6 @@
 		.info {
 			width: 80%;
 			margin-bottom: 15px;
-			.infoTitle {
-				letter-spacing: 2px;
-			}
-			.description {
-				margin-top: 10px;
-			}
 		}
 	}
 }
@@ -88,7 +75,6 @@
 	.portfolio {
 		display: flex;
 		flex-direction: column;
-		padding-top: 60px;
 		.info {
 			margin-bottom: 10px;
 			width: 100%;
@@ -99,30 +85,7 @@
 		padding: 12px 0;
 	}
 	.gallery {
-		display: flex;
-		gap: 15px;
-
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		padding-bottom: 12px;
-
-		&::-webkit-scrollbar {
-			height: 4px;
-		}
-
-		&::-webkit-scrollbar-track {
-			background: rgba($red, 0.1);
-			border-radius: 999px;
-		}
-
-		&::-webkit-scrollbar-thumb {
-			background: rgba($red, 0.8);
-			border-radius: 999px;
-		}
-
-		&::-webkit-scrollbar-thumb:hover {
-			background: rgba(0, 0, 0, 0.4);
-		}
+		@include swipe-strip;
 	}
 }
 

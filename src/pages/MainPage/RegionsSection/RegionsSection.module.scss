@@ -1,0 +1,76 @@
+@import '@styles/abstracts/var';
+@import '@styles/abstracts/mixins';
+
+.regions {
+	display: grid;
+	grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+	align-items: center;
+	gap: 48px;
+
+	padding-top: var(--section-gap);
+
+	@media (max-width: 992px) {
+		grid-template-columns: 1fr;
+		gap: 28px;
+	}
+}
+
+.copy {
+	min-width: 0;
+}
+
+.panel {
+	@include card;
+
+	padding: 28px 30px 30px;
+
+	@media (max-width: $screen-md) {
+		padding: 22px 20px 24px;
+	}
+}
+
+.panelTitle {
+	display: block;
+	margin-bottom: 14px;
+
+	color: $text-secondary;
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.list {
+	margin: 0 0 24px;
+	padding: 0;
+
+	list-style: none;
+
+	li {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+
+		padding: 12px 0;
+		border-bottom: 1px solid $border-warm;
+
+		b {
+			color: $text-primary;
+			font-size: 1.1rem;
+			font-weight: 600;
+		}
+
+		span {
+			color: $text-secondary;
+			font-size: 0.95rem;
+		}
+	}
+}
+
+.panel .button {
+	width: 100%;
+	padding: 13px;
+	// Button defaults to dark text; every filled red button sets its own.
+	color: $text-white;
+}

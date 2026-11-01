@@ -1,12 +1,11 @@
 import { animationTransition } from '@/components/common/animation/transition';
 import { animations } from '@/components/common/animation/variants';
+import SectionHead from '@/components/common/SectionHead/SectionHead';
 import Button from '@/components/ui/Button/Button';
 import Heading from '@/components/ui/Heading/Heading';
 import { Icon } from '@/components/ui/LucidIcon/Icon';
-import Subtitle from '@/components/ui/Subtitle/Subtitle';
 import { ROUTES, servicePath } from '@/config/routes';
 import { services } from '@/data/services.data';
-import cn from 'classnames';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { type FC } from 'react';
@@ -30,14 +29,14 @@ const ServicesSection: FC = () => {
 				transition={animationTransition.defaultTransition}
 				variants={animations.fadeLeft}
 			>
-				<span className={styles.eyebrow}>Co nabízíme</span>
-
-				<Heading className={styles.heading}>Naše služby</Heading>
-
-				<Subtitle className={styles.description}>
-					Vybíráme řešení pro úkoly jakékoli složitosti – od konceptu až po
-					realizaci.
-				</Subtitle>
+				{/* The eyebrow already says these are the services; the heading
+				    says what they add up to, instead of saying it twice. */}
+				<SectionHead
+					eyebrow='Co nabízíme'
+					title='Od návrhu po hotový byt'
+					lead='Vybíráme řešení pro úkoly jakékoli složitosti – od konceptu až po realizaci.'
+					className={styles.head}
+				/>
 
 				{/*
 					Set off by the red rule rather than run as a second grey paragraph:
@@ -65,10 +64,7 @@ const ServicesSection: FC = () => {
 							<Link className={styles.cardLink} to={servicePath(service.slug)}>
 								<div className={styles.icons}>
 									<Icon icon={service.icon} />
-									<ChevronRight
-										className={cn(styles.arrow, styles.desktopArrow)}
-										size={18}
-									/>
+									<ChevronRight className={styles.arrow} size={18} />
 								</div>
 								<div className={styles.content}>
 									<Heading as='h3' className={styles.title}>
@@ -88,10 +84,6 @@ const ServicesSection: FC = () => {
 										))}
 									</ul>
 								</div>
-								<ChevronRight
-									className={cn(styles.arrow, styles.mobileArrow)}
-									size={18}
-								/>
 							</Link>
 						</article>
 					);
