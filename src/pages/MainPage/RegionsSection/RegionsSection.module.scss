@@ -2,75 +2,147 @@
 @import '@styles/abstracts/mixins';
 
 .regions {
-	display: grid;
-	grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-	align-items: center;
-	gap: 48px;
-
 	padding-top: var(--section-gap);
+}
 
-	@media (max-width: 992px) {
+.head {
+	margin-bottom: var(--group-gap);
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 20px;
+
+	@media (max-width: $screen-tb) {
 		grid-template-columns: 1fr;
-		gap: 28px;
 	}
 }
 
-.copy {
-	min-width: 0;
-}
+.homeCard,
+.workedCard {
+	display: flex;
+	flex-direction: column;
 
-.panel {
-	@include card;
-
-	padding: 28px 30px 30px;
+	padding: 32px;
+	border-radius: $radius-lg;
+	box-shadow: $shadow-md;
 
 	@media (max-width: $screen-md) {
-		padding: 22px 20px 24px;
+		padding: 24px 20px;
 	}
 }
 
-.panelTitle {
-	display: block;
-	margin-bottom: 14px;
-
-	color: $text-secondary;
-	font-size: 0.8rem;
-	font-weight: 600;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
+// Dark like the hero on phones: the home region is the one to remember.
+.homeCard {
+	background: $bg-dark-warm;
+	color: #fff;
 }
 
-.list {
-	margin: 0 0 24px;
+.workedCard {
+	background: $bg-card;
+}
+
+.kicker {
+	display: block;
+	margin-bottom: 10px;
+
+	color: $red;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+
+	.homeCard & {
+		color: $red-on-dark;
+	}
+}
+
+.cardTitle {
+	margin-bottom: 10px;
+
+	color: $text-primary;
+	font-size: clamp(1.5rem, 1rem + 1.4vw, 2rem);
+	font-weight: 700;
+	line-height: 1.15;
+
+	.homeCard & {
+		color: #fff;
+	}
+}
+
+.cardText {
+	margin-bottom: 20px;
+
+	color: $text-secondary;
+	line-height: 1.6;
+
+	.homeCard & {
+		color: rgba(255, 255, 255, 0.75);
+	}
+}
+
+.homeTowns,
+.towns {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+
+	margin: 0;
 	padding: 0;
 
 	list-style: none;
+}
 
-	li {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 16px;
+.homeTowns li {
+	padding: 6px 12px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 999px;
 
-		padding: 12px 0;
-		border-bottom: 1px solid $border-warm;
+	color: rgba(255, 255, 255, 0.85);
+	font-size: 0.88rem;
+}
 
-		b {
-			color: $text-primary;
-			font-size: 1.1rem;
-			font-weight: 600;
-		}
+.towns a {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
 
-		span {
-			color: $text-secondary;
-			font-size: 0.95rem;
-		}
+	padding: 8px 14px;
+	border: 1px solid $border-warm;
+	border-radius: 999px;
+	background: $bg-card;
+
+	color: $text-primary;
+	font-size: 0.9rem;
+	font-weight: 600;
+
+	svg {
+		color: $red;
+	}
+
+	span {
+		padding: 1px 7px;
+		border-radius: 999px;
+		background: rgba($red, 0.12);
+
+		color: $red;
+		font-size: 0.75rem;
+	}
+
+	&:hover {
+		border-color: $red;
 	}
 }
 
-.panel .button {
-	width: 100%;
-	padding: 13px;
+.workedCard .button {
+	align-self: flex-start;
+	margin-top: 24px;
+	padding: 13px 26px;
 	// Button defaults to dark text; every filled red button sets its own.
 	color: $text-white;
+
+	@media (max-width: $screen-md) {
+		align-self: stretch;
+	}
 }

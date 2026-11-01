@@ -30,10 +30,31 @@ export const regions: IRegion[] = [
 	{ name: 'Karlovarský kraj', type: 'AdministrativeArea' },
 	{ name: 'Liberecký kraj', type: 'AdministrativeArea' },
 	{ name: 'Plzeňský kraj', type: 'AdministrativeArea' },
+	// Added 1 Nov 2026: the portfolio has jobs in Letohrad and Břeclav.
+	{ name: 'Pardubický kraj', type: 'AdministrativeArea' },
+	{ name: 'Jihomoravský kraj', type: 'AdministrativeArea' },
 	{ name: 'Brno', type: 'City' },
 ];
 
 export const primaryRegions = regions.filter(region => region.primary);
+
+/** The main towns of the home region, named on the home page as reach, not as finished work. */
+export const HOME_TOWNS = ['Teplice', 'Ústí nad Labem', 'Most', 'Chomutov', 'Děčín', 'Litoměřice', 'Louny'];
+
+/**
+ * The kraj of every town in the portfolio, so the home page can say how many
+ * regions the work spans. A new town missing here is still listed, just not
+ * counted towards a region — add it when adding the project.
+ */
+export const TOWN_REGIONS: Record<string, string> = {
+	Teplice: 'Ústecký kraj',
+	Chomutov: 'Ústecký kraj',
+	'Radonice u Kadaně': 'Ústecký kraj',
+	Cheb: 'Karlovarský kraj',
+	'Kynšperk nad Ohří': 'Karlovarský kraj',
+	Letohrad: 'Pardubický kraj',
+	Břeclav: 'Jihomoravský kraj',
+};
 
 /**
  * Reads as a sentence under the hero heading. Leads with the home area and
@@ -44,4 +65,5 @@ export const primaryRegions = regions.filter(region => region.primary);
 export const REGIONS_SENTENCE =
 	'Nejčastěji pracujeme v Teplicích a v Ústeckém kraji. ' +
 	'Zakázky bereme i v dalších částech České republiky – v Praze, ' +
-	'Středočeském, Karlovarském, Libereckém a Plzeňském kraji a v Brně.';
+	'Středočeském, Karlovarském, Libereckém, Plzeňském, Pardubickém ' +
+	'a Jihomoravském kraji včetně Brna.';
