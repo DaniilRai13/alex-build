@@ -16,14 +16,15 @@ const ssgOptions: ViteReactSSGOptions = {
 		if (headEnd === -1) return html;
 
 		// 1) Zahodit slepé image preloady, které do <head> přidal vite-react-ssg.
-		// Font preloads too, except the two subsets Czech text uses: the plugin
-		// preloads every subset of Inter, so Cyrillic, Greek and Vietnamese
-		// (~85 KB) downloaded at high priority beside the hero image.
+		// Font preloads too, except the two files Czech text uses (latin and
+		// the Czech cut, see fonts.css): the plugin preloads every font file it
+		// finds, so subsets no page needs downloaded at high priority beside
+		// the hero image.
 		const head = html
 			.slice(0, headEnd)
 			.replace(/<link\b[^>]*\bas=["']image["'][^>]*>/gi, '')
 			.replace(/<link\b[^>]*\bas=["']font["'][^>]*>/gi, link =>
-				/inter-latin(-ext)?-wght/.test(link) ? link : '',
+				/inter-(latin|czech)-wght/.test(link) ? link : '',
 			);
 		let body = html.slice(headEnd);
 
